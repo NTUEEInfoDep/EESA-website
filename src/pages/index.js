@@ -5,18 +5,21 @@ import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
+import Bulletin from '../components/Bulletin'
 
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
+    const bulletins = get(this, 'props.data.allContentfulBulletinBoard')
 
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
+          <Bulletin data={bulletins.edges[0].node} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
@@ -83,6 +86,22 @@ export const pageQuery = graphql`
             ) {
               ...GatsbyContentfulFluid_tracedSVG
             }
+          }
+        }
+      }
+    }
+    allContentfulBulletinBoard(filter: {}) {
+      edges {
+        node {
+          date
+          departmentTag
+          id
+          node_locale
+          title
+          createdAt
+          announcementTypeTag
+          post {
+            post
           }
         }
       }
