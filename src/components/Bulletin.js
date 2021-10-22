@@ -1,7 +1,7 @@
 import React from 'react'
 import Img from 'gatsby-image'
 
-export default ({ data }) => (
+export default () => (
   <div>
     <div>
       <table>
@@ -15,13 +15,7 @@ export default ({ data }) => (
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{data.title}</td>
-            <td>{data.departmentTag}</td>
-            <td>{data.announcementTypeTag}</td>
-            <td>{data.createdAt.split('T')[0]}</td>
-            <td>{data.post.post}</td>
-          </tr>
+          
         </tbody>
       </table>
     </div>
