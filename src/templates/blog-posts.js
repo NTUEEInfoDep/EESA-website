@@ -16,22 +16,32 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={`${post.title} | ${siteTitle}`} />
-          <div className={heroStyles.hero}>
-            <Img
-              className={heroStyles.heroImage}
-              alt={post.title}
-              fluid={post.titleImage.fluid}
-            />
+          <div>
+            <div>
+              <Img alt={post.title} fluid={post.titleImage.fluid} />
+            </div>
+            <div>
+              <h1>{post.title}</h1>
+              <div
+                style={{
+                  display: 'block',
+                }}
+              >
+                {post.publishDate}
+              </div>
+              <div>
+                {post.tag.map((item) => {
+                  return <p>{item}</p>
+                })}
+              </div>
+              <div>
+                {post.departments.map((item) => {
+                  return <p>{item}</p>
+                })}
+              </div>
+            </div>
           </div>
           <div className="wrapper">
-            <h1 className="section-headline">{post.title}</h1>
-            <p
-              style={{
-                display: 'block',
-              }}
-            >
-              {post.publishDate}
-            </p>
             <div
               dangerouslySetInnerHTML={{
                 __html: post.body.childMarkdownRemark.html,
@@ -50,6 +60,7 @@ export const pageQuery = graphql`
   query BlogPostsBySlug($slug: String!) {
     contentfulBlogPosts(slug: { eq: $slug }) {
       title
+      publishDate(formatString: "MMMM Do, YYYY")
       titleImage {
         fluid(maxWidth: 1180, background: "rgb:000000") {
           ...GatsbyContentfulFluid_tracedSVG
