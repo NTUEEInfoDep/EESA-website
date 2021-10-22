@@ -7,11 +7,17 @@
     "url": "https://github.com/contentful-userland/gatsby-contentful-starter/issues"
   },
   "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.4",
+    "@mui/lab": "^5.0.0-alpha.51",
+    "@mui/material": "^5.0.4",
+    "cordova-res": "^0.15.3",
     "core-js": "^3.18.0",
     "gatsby-image": "^2.3.4",
     "gatsby-plugin-react-helmet": "^3.2.4",
-    "gatsby-plugin-sharp": "^2.5.6",
-    "gatsby-source-contentful": "^2.2.9",
+    "gatsby-plugin-sharp": "^2.14.4",
+    "gatsby-source-contentful": "^2.3.56",
     "gatsby-transformer-remark": "^2.7.3",
     "gatsby-transformer-sharp": "^2.4.6",
     "lodash": "^4.17.15",
@@ -19,7 +25,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
-    "sharp": "^0.25.2"
+    "sharp": "^0.28.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

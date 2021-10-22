@@ -5,12 +5,14 @@ import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
+import TimeLine from '../components/timeline'
 
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
+    const activities = get(this, 'props.data.allContentfulActivity.edges')
 
     return (
       <Layout location={this.props.location}>
@@ -29,6 +31,7 @@ class RootIndex extends React.Component {
               })}
             </ul>
           </div>
+          <TimeLine data={activities}/>
         </div>
       </Layout>
     )
@@ -42,6 +45,15 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+      }
+    }
+    allContentfulActivity(sort: { fields: dateTime, order: ASC }) {
+      edges {
+        node {
+          name
+          dateTime(formatString: "YYYY/MM/D h:mma")
+          shortIntro
+        }
       }
     }
     allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
