@@ -1,5 +1,8 @@
 import React from 'react'
-import Img from 'gatsby-image'
+import { Table, Tag, TagGroup, Button, Panel, Drawer } from 'rsuite';
+import { isMobile } from "react-device-detect";
+
+const { Column, HeaderCell, Cell, Pagination } = Table;
 
 export default () => (
   <div>

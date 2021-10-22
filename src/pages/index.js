@@ -89,5 +89,26 @@ export const pageQuery = graphql`
         }
       }
     }
+    contentfulBulletinBoard {
+      posts {
+        title
+        slug
+        description {
+          content {
+            content {
+              value
+            }
+          }
+        }
+        body {
+          childMarkdownRemark {
+            html
+          }
+        }
+        tag
+        departments
+        updatedAt
+      }
+    }
   }
 `
