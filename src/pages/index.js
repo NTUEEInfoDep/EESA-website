@@ -12,14 +12,14 @@ class RootIndex extends React.Component {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
-    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.edges')
+    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.edges[0]')
 
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
-          <Bulletin data={bulletin.node}/>
+          <Bulletin data={bulletin.node} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
