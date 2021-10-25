@@ -6,6 +6,8 @@ import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
 import TimeLine from '../components/timeline'
+import TimeLine2 from '../components/timeline2'
+import TimeLine3 from '../components/timeline3'
 
 class RootIndex extends React.Component {
   render() {
@@ -32,6 +34,8 @@ class RootIndex extends React.Component {
             </ul>
           </div>
           <TimeLine data={activities}/>
+          <TimeLine2 data={activities}/>
+          <TimeLine3 data={activities}/>
         </div>
       </Layout>
     )
