@@ -24,6 +24,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
+    "react-timeline-scribble": "^1.0.14",
+    "react-vertical-timeline-component": "^3.5.2",
     "sharp": "^0.28.3"
   },
   "devDependencies": {
