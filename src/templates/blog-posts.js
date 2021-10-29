@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet'
 import get from 'lodash/get'
 import Img from 'gatsby-image'
 import Layout from '../components/layout'
-
+import Chip from '@material-ui/core/Chip'
+import FaceIcon from '@material-ui/icons/Face'
+import { container, title, box_2, box_3, img } from './blog-post.module.css'
 import heroStyles from '../components/hero.module.css'
 
 class BlogPostTemplate extends React.Component {
@@ -14,39 +16,56 @@ class BlogPostTemplate extends React.Component {
 
     return (
       <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
+        <div
+          style={{
+            // background: '#fff',
+            height: '100vh',
+            opacity: '.8',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
           <Helmet title={`${post.title} | ${siteTitle}`} />
-          <div>
-            <div>
+          <div className={container}>
+            <div className={img}>
               <Img alt={post.title} fluid={post.titleImage.fluid} />
             </div>
-            <div>
-              <h1>{post.title}</h1>
-              <div
-                style={{
-                  display: 'block',
-                }}
-              >
-                {post.publishDate}
-              </div>
-              <div>
+            <div
+              className={box_2}
+              // style={{
+              //   backgroundImage: `url(${post.titleImage.fluid})`,
+              //   backgroundSize: 'cover',
+              //   backgroundColor: 'rgba(0,0,0,0.5)',
+              // }}
+            >
+              <h1 className={title}>{post.title}</h1>
+              <ul>
                 {post.tag.map((item) => {
-                  return <p>{item}</p>
+                  return (
+                    <Chip
+                      label={item}
+                      icon={<FaceIcon />}
+                      // variant="outlined"
+                      // color="primary"
+                      style={{ listStyleType: 'none' }}
+                    />
+                  )
                 })}
-              </div>
+              </ul>
               <div>
                 {post.departments.map((item) => {
-                  return <p>{item}</p>
+                  return <p style={{ display: 'block' }}>{item}</p>
                 })}
               </div>
+              <div>{post.publishDate}</div>
             </div>
-          </div>
-          <div className="wrapper">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: post.body.childMarkdownRemark.html,
-              }}
-            />
+            <section className={box_3}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: post.body.childMarkdownRemark.html,
+                }}
+              />
+            </section>
           </div>
         </div>
       </Layout>
