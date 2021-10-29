@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Tag, TagGroup, Button, Panel, Drawer } from 'rsuite'
+import { Table, Tag, TagGroup, Button, Panel, Drawer, Dropdown } from 'rsuite'
 import { isMobile } from 'react-device-detect'
 import 'rsuite/dist/rsuite.min.css'
 const { Column, HeaderCell, Cell } = Table
@@ -18,6 +18,8 @@ export default class Bulletin extends React.Component {
       size: 'sm',
       show: false,
       limit: 10,
+      filter_tag: ['緊急'],
+      filter_department: [''],
     }
     this.tagColor = {
       重要: 'orange',
@@ -42,9 +44,9 @@ export default class Bulletin extends React.Component {
       displayLength: dataKey,
     })
   }
-  getData() {
+  getData(datas) {
     const { displayLength, page } = this.state
-    return this.props.data.posts.filter((v, i) => {
+    return datas.filter((v, i) => {
       const start = displayLength * (page - 1)
       const end = start + displayLength
       return i >= start && i < end
@@ -64,14 +66,47 @@ export default class Bulletin extends React.Component {
 
   render() {
     const data = this.props.data
-    const posts = this.getData()
+    let datas = this.props.data.posts
+    if (this.state.filter_tag !== '') {
+      datas = datas.filter((item) => {
+        const tmp = item.tag.filter((value) =>
+          this.state.filter_tag.includes(value)
+        )
+        if (tmp.length > 0) {
+          return true
+        }
+        return false
+      })
+    }
+    console.log(datas)
+    const posts = this.getData(datas)
     const { loading, displayLength, page, size, placement, show, drawerData } =
       this.state
     const header = (
       <div style={{ display: 'flex' }}>
-        <div>{data.title}</div>
-        <div style={{ marginRight: 'auto' }}>
-          <Button>Default</Button>
+        <h1>消息公告</h1>
+        <div
+          style={{
+            marginTop: 'auto',
+            marginLeft: 'auto',
+          }}
+        >
+          <Dropdown title="種類" placement="downStart">
+            <Dropdown.Item active={this.state.filter_tag.includes('公告')}>
+              公告
+            </Dropdown.Item>
+            <Dropdown.Item active={this.state.filter_tag.includes('緊急')}>
+              緊急
+            </Dropdown.Item>
+          </Dropdown>
+          <Dropdown
+            title="部門"
+            placement="downStart"
+            style={{ marginLeft: '5px' }}
+          >
+            <Dropdown.Item>資訊部</Dropdown.Item>
+            <Dropdown.Item>系學會</Dropdown.Item>
+          </Dropdown>
         </div>
       </div>
     )
@@ -124,7 +159,7 @@ export default class Bulletin extends React.Component {
             </Table>
             <Pagination
               activePage={page}
-              total={data.posts.length}
+              total={datas.length}
               limit={10}
               onChangePage={this.handleChangePage}
             />
