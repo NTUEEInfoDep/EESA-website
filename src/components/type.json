@@ -1,0 +1,22 @@
+[
+  {
+    "label": "緊急",
+    "value": "緊急",
+    "role": "Type"
+  },
+  {
+    "label": "重要",
+    "value": "重要",
+    "role": "Type"
+  },
+  {
+    "label": "公告",
+    "value": "公告",
+    "role": "Type"
+  },
+  {
+    "label": "活動",
+    "value": "活動",
+    "role": "Type"
+  }
+]

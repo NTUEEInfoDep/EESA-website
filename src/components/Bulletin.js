@@ -1,16 +1,31 @@
 import React from 'react'
-import { Table, Tag, TagGroup, Button, Panel, Drawer, Dropdown } from 'rsuite'
+import {
+  Table,
+  Tag,
+  TagGroup,
+  Button,
+  Panel,
+  Drawer,
+  TagPicker,
+  Input,
+  InputGroup,
+} from 'rsuite'
+import SearchIcon from '@rsuite/icons/Search'
 import { isMobile } from 'react-device-detect'
 import 'rsuite/dist/rsuite.min.css'
 const { Column, HeaderCell, Cell } = Table
 import { Pagination } from 'rsuite'
+import tags from './type.json'
+import departments from './department.json'
+
+let keyword = ''
 
 export default class Bulletin extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       // pagination
-      displayLength: 1,
+      displayLength: 10,
       loading: false,
       page: 1,
       // drawer
@@ -18,8 +33,10 @@ export default class Bulletin extends React.Component {
       size: 'sm',
       show: false,
       limit: 10,
-      filter_tag: ['緊急'],
-      filter_department: [''],
+      filter_tag: [],
+      filter_department: [],
+      tag: [],
+      keyword: '',
     }
     this.tagColor = {
       重要: 'orange',
@@ -30,6 +47,7 @@ export default class Bulletin extends React.Component {
       系學會: 'blue',
       學術部: 'blue',
     }
+
     this.handleChangePage = this.handleChangePage.bind(this)
     this.handleChangeLength = this.handleChangeLength.bind(this)
     this.close = this.close.bind(this)
@@ -69,7 +87,7 @@ export default class Bulletin extends React.Component {
   render() {
     const data = this.props.data
     let datas = this.props.data.posts
-    if (this.state.filter_tag !== '') {
+    if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
         const tmp = item.tag.filter((value) =>
           this.state.filter_tag.includes(value)
@@ -80,7 +98,24 @@ export default class Bulletin extends React.Component {
         return false
       })
     }
-    console.log(datas)
+    if (this.state.filter_department.length > 0) {
+      datas = datas.filter((item) => {
+        const tmp = item.departments.filter((value) =>
+          this.state.filter_department.includes(value)
+        )
+        if (tmp.length > 0) {
+          return true
+        }
+        return false
+      })
+    }
+    if (this.state.keyword !== '') {
+      datas = datas.filter((item) => {
+        return item.title.search(this.state.keyword) > -1
+      })
+    }
+    //console.log(this.state.filter_department)
+    //console.log(this.state.filter_tag)
     const posts = this.getData(datas)
     const { loading, displayLength, page, size, placement, show, drawerData } =
       this.state
@@ -93,22 +128,30 @@ export default class Bulletin extends React.Component {
             marginLeft: 'auto',
           }}
         >
-          <Dropdown title="種類" placement="downStart">
-            <Dropdown.Item active={this.state.filter_tag.includes('公告')}>
-              公告
-            </Dropdown.Item>
-            <Dropdown.Item active={this.state.filter_tag.includes('緊急')}>
-              緊急
-            </Dropdown.Item>
-          </Dropdown>
-          <Dropdown
-            title="部門"
-            placement="downStart"
-            style={{ marginLeft: '5px' }}
-          >
-            <Dropdown.Item>資訊部</Dropdown.Item>
-            <Dropdown.Item>系學會</Dropdown.Item>
-          </Dropdown>
+          <InputGroup style={{ width: 300, marginLeft: 'auto' }}>
+            <Input onChange={(value) => (keyword = value)} />
+            <InputGroup.Button
+              onClick={(value) => {
+                this.setState({ keyword: keyword })
+              }}
+            >
+              <SearchIcon />
+            </InputGroup.Button>
+          </InputGroup>
+          <TagPicker
+            onSelect={(value) => {
+              this.setState({ filter_tag: value })
+            }}
+            data={tags}
+            style={{ width: 170 }}
+          />
+          <TagPicker
+            onSelect={(value) => {
+              this.setState({ filter_department: value })
+            }}
+            data={departments}
+            style={{ width: 170 }}
+          />
         </div>
       </div>
     )
@@ -118,6 +161,7 @@ export default class Bulletin extends React.Component {
           <Panel bordered header={header}>
             <Table
               width={isMobile ? 320 : undefined}
+              height={300}
               data={posts}
               onRowClick={(rowData) => {
                 this.toggleDrawer(rowData)
