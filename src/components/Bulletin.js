@@ -10,7 +10,7 @@ export default class Bulletin extends React.Component {
     super(props)
     this.state = {
       // pagination
-      displayLength: 10,
+      displayLength: 1,
       loading: false,
       page: 1,
       // drawer
@@ -23,8 +23,10 @@ export default class Bulletin extends React.Component {
       重要: 'orange',
       緊急: 'red',
       公告: 'yellow',
-      資訊部: 'cyan',
+      活動: 'purple',
+      資訊部: 'blue',
       系學會: 'blue',
+      學術部: 'blue',
     }
     this.handleChangePage = this.handleChangePage.bind(this)
     this.handleChangeLength = this.handleChangeLength.bind(this)
@@ -123,10 +125,28 @@ export default class Bulletin extends React.Component {
               </Column>
             </Table>
             <Pagination
+              lengthMenu={[
+                {
+                  value: 10,
+                  label: 10,
+                },
+                {
+                  value: 20,
+                  label: 20,
+                },
+              ]}
+              prev
+              last
+              next
+              first
               activePage={page}
+              showInfo={!isMobile}
+              showLengthMenu={!isMobile}
+              displayLength={displayLength}
               total={data.posts.length}
-              limit={10}
+              limit={displayLength}
               onChangePage={this.handleChangePage}
+              onChangeLength={this.handleChangeLength}
             />
           </Panel>
 
