@@ -16,6 +16,11 @@ export default () => (
           資訊部
         </Link>
       </li>
+      <li className={styles.navigationItem}>
+        <Link to="/department" state={{ depName: '學術部' }}>
+          學術部
+        </Link>
+      </li>
     </ul>
   </nav>
 )
