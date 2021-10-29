@@ -2,8 +2,15 @@ import React from 'react'
 import { Table, Tag, TagGroup, Button, Panel, Drawer } from 'rsuite'
 import { isMobile } from 'react-device-detect'
 import { pageQuery } from '../pages/index.js'
-
+import 'rsuite/dist/rsuite.min.css'
 const { Column, HeaderCell, Cell, Pagination } = Table
+
+const color = {
+  緊急: 'red',
+  公告: 'yellow',
+  資訊部: 'cyan',
+  系學會: 'blue',
+}
 
 export default class Bulletin extends React.Component {
   constructor(props) {
@@ -65,14 +72,40 @@ export default class Bulletin extends React.Component {
       <div>
         <div>
           <Panel bordered header={data.title}>
-            <Table width={isMobile ? 320 : undefined} data={data.title}>
+            <Table width={isMobile ? 320 : undefined} data={data.posts}>
               <Column width={120}>
                 <HeaderCell>{data.description[0]}</HeaderCell>
-                <Cell dataKey="tags"></Cell>
+                <Cell dataKey="tags">
+                  {(rowData) => {
+                    console.log(rowData)
+                    return (
+                      <TagGroup>
+                        {rowData.tag.map((item, idx) => {
+                          return (
+                            <Tag key={idx} color={color[item]}>
+                              {item}
+                            </Tag>
+                          )
+                        })}
+                        {rowData.departments.map((item, idx) => {
+                          return (
+                            <Tag key={idx} color={color[item]}>
+                              {item}
+                            </Tag>
+                          )
+                        })}
+                      </TagGroup>
+                    )
+                  }}
+                </Cell>
               </Column>
               <Column width={120}>
                 <HeaderCell>{data.description[1]}</HeaderCell>
-                <Cell dataKey="tags"></Cell>
+                <Cell dataKey="updatedAt"></Cell>
+              </Column>
+              <Column width={120}>
+                <HeaderCell>{data.description[2]}</HeaderCell>
+                <Cell dataKey="title"></Cell>
               </Column>
             </Table>
           </Panel>

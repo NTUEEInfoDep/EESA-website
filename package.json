@@ -16,6 +16,7 @@
     "gatsby-transformer-sharp": "^2.4.6",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
+    "react-device-detect": "^2.1.2",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "rsuite": "^5.0.3",
