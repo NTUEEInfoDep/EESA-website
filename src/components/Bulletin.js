@@ -3,14 +3,8 @@ import { Table, Tag, TagGroup, Button, Panel, Drawer } from 'rsuite'
 import { isMobile } from 'react-device-detect'
 import { pageQuery } from '../pages/index.js'
 import 'rsuite/dist/rsuite.min.css'
-const { Column, HeaderCell, Cell, Pagination } = Table
-
-const color = {
-  緊急: 'red',
-  公告: 'yellow',
-  資訊部: 'cyan',
-  系學會: 'blue',
-}
+const { Column, HeaderCell, Cell } = Table
+import { Pagination } from 'rsuite'
 
 export default class Bulletin extends React.Component {
   constructor(props) {
@@ -24,11 +18,13 @@ export default class Bulletin extends React.Component {
       placement: !isMobile ? 'right' : 'bottom',
       size: 'sm',
       show: false,
+      limit: 10,
     }
     this.tagColor = {
-      公告: 'blue',
-      活動: 'green',
-      部課: 'violet',
+      緊急: 'red',
+      公告: 'yellow',
+      資訊部: 'cyan',
+      系學會: 'blue',
     }
     this.handleChangePage = this.handleChangePage.bind(this)
     this.handleChangeLength = this.handleChangeLength.bind(this)
@@ -48,8 +44,7 @@ export default class Bulletin extends React.Component {
   }
   getData() {
     const { displayLength, page } = this.state
-
-    return this.props.data.edges.filter((v, i) => {
+    return this.props.data.posts.filter((v, i) => {
       const start = displayLength * (page - 1)
       const end = start + displayLength
       return i >= start && i < end
@@ -68,28 +63,30 @@ export default class Bulletin extends React.Component {
 
   render() {
     const data = this.props.data
+    const posts = this.getData()
+    const { loading, displayLength, page, size, placement, show, drawerData } =
+      this.state
     return (
       <div>
         <div>
           <Panel bordered header={data.title}>
-            <Table width={isMobile ? 320 : undefined} data={data.posts}>
+            <Table width={isMobile ? 320 : undefined} data={posts}>
               <Column width={120}>
                 <HeaderCell>{data.description[0]}</HeaderCell>
                 <Cell dataKey="tags">
                   {(rowData) => {
-                    console.log(rowData)
                     return (
                       <TagGroup>
                         {rowData.tag.map((item, idx) => {
                           return (
-                            <Tag key={idx} color={color[item]}>
+                            <Tag key={idx} color={this.tagColor[item]}>
                               {item}
                             </Tag>
                           )
                         })}
                         {rowData.departments.map((item, idx) => {
                           return (
-                            <Tag key={idx} color={color[item]}>
+                            <Tag key={idx} color={this.tagColor[item]}>
                               {item}
                             </Tag>
                           )
@@ -108,6 +105,12 @@ export default class Bulletin extends React.Component {
                 <Cell dataKey="title"></Cell>
               </Column>
             </Table>
+            <Pagination
+              activePage={page}
+              total={data.posts.length}
+              limit={10}
+              onChangePage={this.handleChangePage}
+            />
           </Panel>
 
           <Drawer size="lg" placement="right" show={true} onHide={this.close}>
