@@ -1,6 +1,5 @@
 .intro {
-  background: #e1e1e1;
-  margin: -1em -2.5em 1em;
+  background: #333333;
 }
 
 .leadershort {
@@ -9,6 +8,6 @@
 }
 
 .leadershort > img {
-  width: 100px;
-  height: 100px;
+  width: 128px;
+  height: 128px;
 }
