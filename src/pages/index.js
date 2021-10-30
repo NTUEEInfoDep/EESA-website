@@ -6,8 +6,9 @@ import Hero from '../components/hero'
 import Layout from '../components/layout'
 import ArticlePreview from '../components/article-preview'
 import TimeLine from '../components/timeline'
-import TimeLine2 from '../components/timeline2'
 import TimeLine3 from '../components/timeline3'
+import EventLine from '../components/EventLine/EventLine'
+
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
@@ -33,8 +34,8 @@ class RootIndex extends React.Component {
             </ul>
           </div>
           <TimeLine data={activities} />
-          <TimeLine2 data={activities} />
           <TimeLine3 data={activities} />
+          <EventLine data={activities} />
         </div>
       </Layout>
     )
