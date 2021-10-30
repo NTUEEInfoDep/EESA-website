@@ -33,7 +33,7 @@ const TimeLineItem = ({ date, name, content }) => {
 
 export default function TimeLine3({ data }) {
   return (
-    <VerticalTimeline lineColor={'grey'}>
+    <VerticalTimeline lineColor={'grey'} layout="1-column-left">
       {data.map((element) => (
         <TimeLineItem
           date={element.node.dateTime}
