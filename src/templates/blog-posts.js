@@ -6,7 +6,14 @@ import Img from 'gatsby-image'
 import Layout from '../components/layout'
 import Chip from '@material-ui/core/Chip'
 import FaceIcon from '@material-ui/icons/Face'
-import { container, title, box_2, box_3, img } from './blog-post.module.css'
+import {
+  container,
+  title,
+  box_2,
+  box_3,
+  img,
+  tag_div,
+} from './blog-post.module.css'
 import heroStyles from '../components/hero.module.css'
 
 class BlogPostTemplate extends React.Component {
@@ -39,7 +46,7 @@ class BlogPostTemplate extends React.Component {
               // }}
             >
               <h1 className={title}>{post.title}</h1>
-              <ul>
+              <div className={tag_div}>
                 {post.tag.map((item) => {
                   return (
                     <Chip
@@ -51,10 +58,19 @@ class BlogPostTemplate extends React.Component {
                     />
                   )
                 })}
-              </ul>
+              </div>
               <div>
                 {post.departments.map((item) => {
-                  return <p style={{ display: 'block' }}>{item}</p>
+                  return (
+                    <p
+                      style={{
+                        display: 'inline-block',
+                        padding: '0rem 0.5rem',
+                      }}
+                    >
+                      {item}
+                    </p>
+                  )
                 })}
               </div>
               <div>{post.publishDate}</div>
