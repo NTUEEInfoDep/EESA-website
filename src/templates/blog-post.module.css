@@ -66,6 +66,28 @@
     grid-column-end: 13;
 }
 
+.box_3 p{
+    text-indent:2rem;
+    line-height: 1.8;
+    font-size:1.2rem;
+    padding: 0 1rem;
+}
+.box_3 img{
+    margin-top: 2rem;
+    border-radius: 5%;
+    opacity: .9;
+    background-size:cover;
+}
+h1{
+    font-weight: bold;
+}
+h2{
+    text-align:start;
+    text-decoration: underline 3px #F19483;
+}
+h3{
+    text-decoration: underline #58B2DC;
+}
 @media screen and (max-width: 600px) {
     .container {
         grid-template-columns: 1fr;
