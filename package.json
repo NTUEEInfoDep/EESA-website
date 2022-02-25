@@ -27,11 +27,13 @@
     "mozjpeg": "^7.1.1",
     "material-ui": "^0.20.2",
     "react": "^16.13.1",
+    "react-device-detect": "^2.1.2",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-timeline-scribble": "^1.0.14",
     "react-vertical-timeline-component": "^3.5.2",
-    "sharp": "^0.28.3"
+    "sharp": "^0.28.3",
+    "rsuite": "^5.0.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

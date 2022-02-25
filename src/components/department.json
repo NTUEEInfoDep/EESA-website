@@ -1,0 +1,67 @@
+[
+  {
+    "label": "資訊部",
+    "value": "資訊部",
+    "role": "Department"
+  },
+  {
+    "label": "學術部",
+    "value": "學術部",
+    "role": "Department"
+  },
+  {
+    "label": "系學會",
+    "value": "系學會",
+    "role": "Department"
+  },
+  {
+    "label": "衛生部",
+    "value": "衛生部",
+    "role": "Department"
+  },
+  {
+    "label": "課改部",
+    "value": "課改部",
+    "role": "Department"
+  },
+  {
+    "label": "場活部",
+    "value": "場活部",
+    "role": "Department"
+  },
+  {
+    "label": "NTUEE+",
+    "value": "NTUEE+",
+    "role": "Department"
+  },
+  {
+    "label": "文書部",
+    "value": "文書部",
+    "role": "Department"
+  },
+  {
+    "label": "公關部",
+    "value": "公關部",
+    "role": "Department"
+  },
+  {
+    "label": "MKS",
+    "value": "MKS",
+    "role": "Department"
+  },
+  {
+    "label": "體育部",
+    "value": "體育部",
+    "role": "Department"
+  },
+  {
+    "label": "總務",
+    "value": "總務",
+    "role": "Department"
+  },
+  {
+    "label": "行銷部",
+    "value": "行銷部",
+    "role": "Department"
+  }
+]
