@@ -13,7 +13,7 @@ import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 import Stack from '@mui/material/Stack'
 import Layout from '../layouts/department'
-//  import LeaderCard from '../components/leadercard';
+import LeaderCards from '../components/leaderCard'
 
 class department extends Component {
   render() {
@@ -42,59 +42,8 @@ class department extends Component {
             style={{ background: '#5e5e5e', color: '#ffffff' }}
             className="leader-container"
           >
-            <Typography variant="h6">部長</Typography>
-            <Grid container>
-              {depinfo.leaders.map((leader) => {
-                return (
-                  <Grid
-                    item
-                    style={{ border: 'solid' }}
-                    xs={12 / depinfo.leaders.length}
-                    className={styles.leadershort}
-                  >
-                    <CardMedia
-                      component="img"
-                      image={leader.leaderSelfie.file.url}
-                      alt={leader.leaderName}
-                    ></CardMedia>
-                    <Stack>
-                      <Chip
-                        style={{ background: '#e5e5e5' }}
-                        label={leader.title}
-                        variant="subtitle1"
-                      />
-                      <Typography variant="body2">
-                        {leader.leaderName}
-                      </Typography>
-                    </Stack>
-                    <CardContent
-                      style={{ color: '#34c3ff', textAlign: 'left' }}
-                    >
-                      <a href={leader.leaderGithub}>
-                        <GitHubIcon />
-                        <Typography variant="caption">
-                          {leader.leaderGithub}
-                        </Typography>
-                      </a>
-                      <br />
-                      <a href={leader.leaderFacebook}>
-                        <FacebookIcon />
-                        <Typography variant="caption">
-                          {leader.leaderName}
-                        </Typography>
-                      </a>
-                      <br />
-                      <a href={leader.leaderEmail}>
-                        <EmailIcon />
-                        <Typography variant="caption">
-                          {leader.leaderEmail}
-                        </Typography>
-                      </a>
-                    </CardContent>
-                  </Grid>
-                )
-              })}
-            </Grid>
+            <Typography variant="h6">Owners</Typography>
+            <LeaderCards depinfo={depinfo} />
           </Card>
         </div>
         <div className="special-requirements"></div>
@@ -127,6 +76,9 @@ export const pageQuery = graphql`
             leaderEmail
             leaderFacebook
             leaderGithub
+            leaderIntroduction {
+              leaderIntroduction
+            }
             leaderName
             title
             leaderSelfie {
