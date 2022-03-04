@@ -39,6 +39,7 @@ class BlogPostTemplate extends React.Component {
               alt={post.title}
               fluid={post.titleImage.fluid}
             />
+            {console.log(post.titleImage.fluid)}
             <div
               className={box_2}
               // style={{

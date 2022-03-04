@@ -16,14 +16,13 @@ class RootIndex extends React.Component {
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
-    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.edges[0]')
-
+    const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
-          <Bulletin data={bulletin.node} />
+          <Bulletin data={bulletin} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
             <ul className="article-list">
@@ -80,6 +79,29 @@ export const pageQuery = graphql`
               html
             }
           }
+        }
+      }
+    }
+    allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
+      edges {
+        node {
+          title
+          slug
+          publishDate(formatString: "MMMM Do, YYYY")
+          tag
+          titleImage {
+            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+              ...GatsbyContentfulFluid_tracedSVG
+            }
+          }
+          description {
+            content {
+              content {
+                value
+              }
+            }
+          }
+          departments
         }
       }
     }

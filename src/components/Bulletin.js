@@ -85,8 +85,8 @@ export default class Bulletin extends React.Component {
   }
 
   render() {
-    const data = this.props.data
-    let datas = this.props.data.posts
+    const datas = this.props.data
+    let data = datas
     if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
         const tmp = item.tag.filter((value) =>
@@ -167,20 +167,20 @@ export default class Bulletin extends React.Component {
                 this.toggleDrawer(rowData)
               }}
             >
-              <Column width={120}>
-                <HeaderCell>{data.description[0]}</HeaderCell>
+              <Column width={240}>
+                <HeaderCell>Tags</HeaderCell>
                 <Cell dataKey="tags">
                   {(rowData) => {
                     return (
                       <TagGroup>
-                        {rowData.tag.map((item, idx) => {
+                        {rowData.node.tag.map((item, idx) => {
                           return (
                             <Tag key={idx} color={this.tagColor[item]}>
                               {item}
                             </Tag>
                           )
                         })}
-                        {rowData.departments.map((item, idx) => {
+                        {rowData.node.departments.map((item, idx) => {
                           return (
                             <Tag key={idx} color={this.tagColor[item]}>
                               {item}
@@ -192,15 +192,15 @@ export default class Bulletin extends React.Component {
                   }}
                 </Cell>
               </Column>
-              <Column width={120}>
-                <HeaderCell>{data.description[1]}</HeaderCell>
+              <Column width={200}>
+                <HeaderCell>Date</HeaderCell>
                 <Cell dataKey="updatedAt">
-                  {(date) => date.updatedAt.split('T')[0]}
+                  {(rowData) => rowData.node.publishDate}
                 </Cell>
               </Column>
-              <Column width={120}>
-                <HeaderCell>{data.description[2]}</HeaderCell>
-                <Cell dataKey="title"></Cell>
+              <Column width={200}>
+                <HeaderCell>Title</HeaderCell>
+                <Cell dataKey="title">{(rowData) => rowData.node.title}</Cell>
               </Column>
             </Table>
             <Pagination
@@ -228,7 +228,6 @@ export default class Bulletin extends React.Component {
               onChangeLength={this.handleChangeLength}
             />
           </Panel>
-
           {drawerData ? (
             <Drawer
               size="lg"
@@ -238,7 +237,7 @@ export default class Bulletin extends React.Component {
             >
               <Drawer.Header>
                 <Drawer.Title className="title">
-                  <h1>{drawerData.title}</h1>
+                  <h1>{drawerData.node.title}</h1>
                 </Drawer.Title>
                 <span className="date">
                   <i className="fas fa-calendar-alt"></i>{' '}
@@ -247,7 +246,7 @@ export default class Bulletin extends React.Component {
                   <Button
                     size="lg"
                     appearance="primary"
-                    href={`/post/${drawerData.slug}`}
+                    href={`/blog/${drawerData.node.slug}`}
                   >
                     View Full Post
                   </Button>
@@ -258,7 +257,9 @@ export default class Bulletin extends React.Component {
                   <div className="details">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: drawerData.body.childMarkdownRemark.html,
+                        __html:
+                          drawerData.node.description.content[0].content[0]
+                            .value,
                       }}
                     ></div>
                   </div>
