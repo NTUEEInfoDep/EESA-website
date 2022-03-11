@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet'
 import get from 'lodash/get'
 import Img from 'gatsby-image'
 import Layout from '../components/layout'
-import Chip from '@material-ui/core/Chip'
-import FaceIcon from '@material-ui/icons/Face'
+import Chip from '@mui/material/Chip'
+import FaceIcon from '@mui/icons-material/Face'
 import {
   container,
   title,
