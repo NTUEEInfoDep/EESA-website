@@ -78,11 +78,6 @@ export const pageQuery = graphql`
           html
         }
       }
-      references {
-        images {
-          id
-        }
-      }
       backgroundImage {
         file {
           url
