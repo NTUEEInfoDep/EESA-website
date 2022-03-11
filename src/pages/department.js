@@ -135,10 +135,10 @@ export const pageQuery = graphql`
               }
             }
           }
-          references {
-            name
-            reference
-          }
+          # references {
+          #   name
+          #   reference
+          # }
         }
       }
     }
