@@ -45,7 +45,6 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
-
         departments.forEach((node) => {
           createPage({
             path: `/department/${node.node.name}`,
