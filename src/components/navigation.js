@@ -16,10 +16,10 @@ export default class navigation extends Component {
             <Link to="/blog/">Blog</Link>
           </li>
           {nodes.map((node) => {
-            const { name, contentful_id } = node
+            const { name, slug, contentful_id } = node
             return (
               <li className={styles.navigationItem}>
-                <Link to={`/department/${name}`} state={{ contentful_id }}>
+                <Link to={`/department/${slug}`} state={{ contentful_id }}>
                   {name}
                 </Link>
               </li>

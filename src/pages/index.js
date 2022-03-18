@@ -130,6 +130,7 @@ export const pageQuery = graphql`
       nodes {
         name
         contentful_id
+        slug
       }
     }
   }

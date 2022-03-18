@@ -54,7 +54,7 @@ export default department
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
-    contentfulDepartmentMainPage(name: { eq: $slug }) {
+    contentfulDepartmentMainPage(slug: { eq: $slug }) {
       name
       department {
         name
