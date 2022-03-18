@@ -245,7 +245,7 @@ export default class Bulletin extends React.Component {
                   <Button
                     size="lg"
                     appearance="primary"
-                    href={`/blog/${drawerData.node.slug}`}
+                    href={`/post/${drawerData.node.slug}`}
                   >
                     View Full Post
                   </Button>
