@@ -47,24 +47,10 @@ class BlogPostTemplate extends React.Component {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug {
     site {
       siteMetadata {
         title
-      }
-    }
-    contentfulBlogPost(slug: { eq: $slug }) {
-      title
-      publishDate(formatString: "MMM DD, YYYY")
-      heroImage {
-        fluid(maxWidth: 1180, background: "rgb:000000") {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
-      }
-      body {
-        childMarkdownRemark {
-          html
-        }
       }
     }
   }
