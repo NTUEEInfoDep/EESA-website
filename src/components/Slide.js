@@ -2,7 +2,7 @@ import React from 'react'
 import Carousel from 'react-elastic-carousel'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-
+import styles from './Slide.module.css'
 import get from 'lodash/get'
 import { graphql } from 'gatsby'
 import Img from 'gatsby-image'
@@ -13,7 +13,7 @@ const SportsItem = ({ description, photo }) => {
       {photo ? (
         photo.fluid ? (
           <div style={{ border: 10 }}>
-            <Paper variant="outlined">
+            <Paper variant="outlined" elevation={3}>
               <Img
                 alt={photo.fluid.src}
                 fluid={photo.fluid}
@@ -35,7 +35,7 @@ const SportsItem = ({ description, photo }) => {
         dangerouslySetInnerHTML={{
           __html: description,
         }}
-        style={{ overflow: scroll }}
+        className={styles.description}
       ></div>
       <div></div>
     </Box>
