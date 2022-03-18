@@ -8,12 +8,16 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import LeaderCards from '../components/leaderCard'
 import Box from '@mui/material/Box'
+import TimeLine3 from '../components/timeline3'
+import Bulletin from '../components/Bulletin'
 
 // TODO: render all department bodies
 class department extends Component {
   render() {
     const depinfo = get(this.props, 'data.contentfulDepartmentMainPage')
-    console.log(depinfo)
+    const activities = get(this, 'props.data.allContentfulActivity.edges')
+    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.node[0]')
+    const { slug, body } = depinfo
     return (
       //  <Layout>
       <Container style={{ background: '#fff' }}>
@@ -44,6 +48,15 @@ class department extends Component {
             </Grid>
           </Grid>
         </Box>
+        {body.map((type) =>
+          type === 'Activity' ? (
+            <TimeLine3 data={activities} />
+          ) : type === 'Bullitin' ? (
+            <Bulletin data={bulletin} />
+          ) : (
+            <></>
+          )
+        )}
       </Container>
       //  </Layout>
     )
@@ -56,6 +69,8 @@ export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     contentfulDepartmentMainPage(slug: { eq: $slug }) {
       name
+      slug
+      body
       department {
         name
         leaders {
@@ -84,6 +99,43 @@ export const pageQuery = graphql`
           file {
             url
           }
+        }
+      }
+    }
+    allContentfulActivity(
+      filter: { reference: { slug: { eq: $slug } } }
+      sort: { fields: dateTime, order: ASC }
+    ) {
+      edges {
+        node {
+          name
+          dateTime(formatString: "YYYY/MM/D h:mma")
+          shortIntro
+        }
+      }
+    }
+    allContentfulBulletinBoard {
+      nodes {
+        title
+        description
+        posts {
+          title
+          slug
+          description {
+            content {
+              content {
+                value
+              }
+            }
+          }
+          body {
+            childMarkdownRemark {
+              html
+            }
+          }
+          tag
+          departments
+          updatedAt
         }
       }
     }

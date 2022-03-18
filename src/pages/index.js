@@ -4,17 +4,13 @@ import get from 'lodash/get'
 import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
-import TimeLine from '../components/timeline'
-import TimeLine3 from '../components/timeline3'
-import EventLine from '../components/EventLine/EventLine'
-import Bulletin from '../components/Bulletin'
+import ArticlePreview from '../components/article-preview'
 
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
+    const posts = get(this, 'props.data.allContentfulBlogPost.edges')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
-    const activities = get(this, 'props.data.allContentfulActivity.edges')
-    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.edges[0]')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     return (
@@ -22,13 +18,18 @@ class RootIndex extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
-          {/* <Bulletin data={bulletin} /> */}
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
+            <ul className="article-list">
+              {posts.map(({ node }) => {
+                return (
+                  <li key={node.slug}>
+                    <ArticlePreview article={node} />
+                  </li>
+                )
+              })}
+            </ul>
           </div>
-          <TimeLine data={activities} />
-          <TimeLine3 data={activities} />
-          <EventLine data={activities} />
         </div>
       </Layout>
     )
@@ -44,35 +45,23 @@ export const pageQuery = graphql`
         title
       }
     }
-    allContentfulActivity(sort: { fields: dateTime, order: ASC }) {
-      edges {
-        node {
-          name
-          dateTime(formatString: "YYYY/MM/D h:mma")
-          shortIntro
-        }
-      }
-    }
-    allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
+    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
       edges {
         node {
           title
           slug
-          publishDate(formatString: "MMM Do, YYYY")
-          tag
-          titleImage {
-            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
+          publishDate(formatString: "MMMM Do, YYYY")
+          tags
+          heroImage {
+            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid_tracedSVG
             }
           }
           description {
-            content {
-              content {
-                value
-              }
+            childMarkdownRemark {
+              html
             }
           }
-          departments
         }
       }
     }
@@ -95,33 +84,6 @@ export const pageQuery = graphql`
             ) {
               ...GatsbyContentfulFluid_tracedSVG
             }
-          }
-        }
-      }
-    }
-    allContentfulBulletinBoard {
-      edges {
-        node {
-          title
-          description
-          posts {
-            title
-            slug
-            description {
-              content {
-                content {
-                  value
-                }
-              }
-            }
-            body {
-              childMarkdownRemark {
-                html
-              }
-            }
-            tag
-            departments
-            updatedAt
           }
         }
       }
