@@ -78,5 +78,8 @@
     "start": "npm run develop",
     "heroku-postbuild": "gatsby build",
     "cleanup-repository": "yarn remove contentful-import chalk inquirer && node ./bin/cleanup.js && rimraf bin contentful"
-  }
+  },
+  "resolutions": {
+    "remark-mdx": "1.6.22"
+}
 }
