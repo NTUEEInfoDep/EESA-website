@@ -9,11 +9,14 @@ import Img from 'gatsby-image'
 
 const SportsItem = ({ description, photo }) => {
   return (
-    <Box sx={{ width: 1000, height: 300, bgcolor: '#A0E7E5' }}>
+    <Box
+      sx={{ width: 1000, height: 300, bgcolor: '#00ADB5' }}
+      className={styles.sportsBox}
+    >
       {photo ? (
         photo.fluid ? (
-          <div style={{ border: 10 }}>
-            <Paper variant="outlined" elevation={3}>
+          <div>
+            <Paper variant="outlined">
               <Img
                 alt={photo.fluid.src}
                 fluid={photo.fluid}
