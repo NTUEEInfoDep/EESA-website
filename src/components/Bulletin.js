@@ -85,8 +85,7 @@ export default class Bulletin extends React.Component {
   }
 
   render() {
-    const datas = this.props.data
-    let data = datas
+    const data = this.props.data
     if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
         const tmp = item.tag.filter((value) =>
@@ -99,7 +98,7 @@ export default class Bulletin extends React.Component {
       })
     }
     if (this.state.filter_department.length > 0) {
-      datas = datas.filter((item) => {
+      data = data.filter((item) => {
         const tmp = item.departments.filter((value) =>
           this.state.filter_department.includes(value)
         )
@@ -110,13 +109,13 @@ export default class Bulletin extends React.Component {
       })
     }
     if (this.state.keyword !== '') {
-      datas = datas.filter((item) => {
+      data = data.filter((item) => {
         return item.title.search(this.state.keyword) > -1
       })
     }
     //console.log(this.state.filter_department)
     //console.log(this.state.filter_tag)
-    const posts = this.getData(datas)
+    const posts = this.getData(data)
     const { loading, displayLength, page, size, placement, show, drawerData } =
       this.state
     const header = (
@@ -222,7 +221,7 @@ export default class Bulletin extends React.Component {
               showInfo={!isMobile}
               showLengthMenu={!isMobile}
               displayLength={displayLength}
-              total={datas.length}
+              total={data.length}
               limit={displayLength}
               onChangePage={this.handleChangePage}
               onChangeLength={this.handleChangeLength}

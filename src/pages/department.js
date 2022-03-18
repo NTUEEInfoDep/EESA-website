@@ -102,7 +102,6 @@ class department extends Component {
           {
             //TODO: add customize reference
           }
-          <a href={depinfo.references.reference}>{depinfo.references.name}</a>
         </div>
       </div>
       //  </Layout>
@@ -134,10 +133,6 @@ export const pageQuery = graphql`
                 url
               }
             }
-          }
-          references {
-            name
-            reference
           }
         }
       }

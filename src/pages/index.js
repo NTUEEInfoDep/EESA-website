@@ -9,6 +9,7 @@ import TimeLine from '../components/timeline'
 import TimeLine3 from '../components/timeline3'
 import EventLine from '../components/EventLine/EventLine'
 import Bulletin from '../components/Bulletin'
+import Slide from '../components/Slide'
 
 class RootIndex extends React.Component {
   render() {
@@ -17,6 +18,7 @@ class RootIndex extends React.Component {
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
+    const sports = get(this, 'props.data.allContentfulSports.edges')
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
@@ -35,6 +37,7 @@ class RootIndex extends React.Component {
               })}
             </ul>
           </div>
+          <Slide data={sports} />
           <TimeLine data={activities} />
           <TimeLine3 data={activities} />
           <EventLine data={activities} />
@@ -67,7 +70,7 @@ export const pageQuery = graphql`
         node {
           title
           slug
-          publishDate(formatString: "MMMM Do, YYYY")
+          publishDate(formatString: "MMM DD, YYYY")
           tags
           heroImage {
             fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
@@ -87,10 +90,10 @@ export const pageQuery = graphql`
         node {
           title
           slug
-          publishDate(formatString: "MMMM Do, YYYY")
+          publishDate(formatString: "MMM Do, YYYY")
           tag
           titleImage {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid_tracedSVG
             }
           }
@@ -151,6 +154,23 @@ export const pageQuery = graphql`
             tag
             departments
             updatedAt
+          }
+        }
+      }
+    }
+    allContentfulSports {
+      edges {
+        node {
+          description {
+            childMarkdownRemark {
+              html
+            }
+          }
+          photo {
+            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+              ...GatsbyContentfulFluid_tracedSVG
+              src
+            }
           }
         }
       }

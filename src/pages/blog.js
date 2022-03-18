@@ -10,7 +10,7 @@ class BlogIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-
+    console.log('posts: ', posts)
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
@@ -48,7 +48,7 @@ export const pageQuery = graphql`
         node {
           title
           slug
-          publishDate(formatString: "MMMM Do, YYYY")
+          publishDate(formatString: "MMM DD, YYYY")
           tag
           titleImage {
             fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
