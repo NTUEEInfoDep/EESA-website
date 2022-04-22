@@ -4,12 +4,17 @@ import get from 'lodash/get'
 import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
+import TimeLine from '../components/timeline'
+import TimeLine3 from '../components/timeline3'
+import EventLine from '../components/EventLine/EventLine'
+import Bulletin from '../components/Bulletin'
 
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
+    const activities = get(this, 'props.data.allContentfulActivity.edges')
+    const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     return (
@@ -17,9 +22,13 @@ class RootIndex extends React.Component {
         <div style={{ background: '#fff' }}>
           <Helmet title={siteTitle} />
           <Hero data={author.node} />
+          <Bulletin data={bulletin} />
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
           </div>
+          <TimeLine data={activities} />
+          <TimeLine3 data={activities} />
+          <EventLine data={activities} />
         </div>
       </Layout>
     )
@@ -86,6 +95,33 @@ export const pageQuery = graphql`
             ) {
               ...GatsbyContentfulFluid_tracedSVG
             }
+          }
+        }
+      }
+    }
+    allContentfulBulletinBoard {
+      edges {
+        node {
+          title
+          description
+          posts {
+            title
+            slug
+            description {
+              content {
+                content {
+                  value
+                }
+              }
+            }
+            body {
+              childMarkdownRemark {
+                html
+              }
+            }
+            tag
+            departments
+            updatedAt
           }
         }
       }
