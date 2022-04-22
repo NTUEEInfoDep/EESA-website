@@ -10,7 +10,12 @@ import Img from 'gatsby-image'
 const SportsItem = ({ description, photo }) => {
   return (
     <Box
-      sx={{ width: 1000, height: 300, bgcolor: '#00ADB5' }}
+      sx={{
+        width: 1000,
+        height: 300,
+        bgcolor: '#74c5c0',
+        borderRadius: 2,
+      }}
       className={styles.sportsBox}
     >
       {photo ? (
