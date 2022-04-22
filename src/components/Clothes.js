@@ -3,7 +3,7 @@ import Slider from "@farbenmeer/react-spring-slider";
 import PropTypes from 'prop-types'
 
 export default function Clothes({ data }) {
-    const setSlideCustom = () => 1;
+    //const setSlideCustom = () => 1;
     const BulletComponent = ({ onClick, isActive }) => (
         <li
             style={{
@@ -59,7 +59,7 @@ export default function Clothes({ data }) {
             hasBullets
             BulletComponent={BulletComponent}
             ArrowComponent={ArrowComponent}
-            setSlideCustom={setSlideCustom}
+        //setSlideCustom={setSlideCustom}
         >
             {data.map((clothesData) => {
                 console.log(clothesData);
