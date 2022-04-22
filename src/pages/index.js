@@ -11,6 +11,7 @@ import EventLine from '../components/EventLine/EventLine'
 import Bulletin from '../components/Bulletin'
 import LostAndFound from '../components/lostandfound'
 import Sports from '../components/Sports'
+import Clothes from '../components/Clothes'
 
 class RootIndex extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class RootIndex extends React.Component {
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
+    const clothes = get(this, 'props.data.allContentfulClothes.edges')
 
     const sportsHonorRoll = get(
       this,
@@ -43,6 +45,7 @@ class RootIndex extends React.Component {
             <div>
               <LostAndFound />
             </div>
+            <Clothes data={clothes} />
           </div>
         </Layout>
       </CustomProvider>
@@ -176,6 +179,20 @@ export const pageQuery = graphql`
           name
           practicePlace
           practiceTime
+        }
+      }
+    }
+    allContentfulClothes {
+      edges {
+        node {
+          name
+          clothesPicture {
+            file {
+              url
+            }
+          }
+          left
+          price
         }
       }
     }
