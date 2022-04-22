@@ -131,6 +131,7 @@ export const pageQuery = graphql`
         name
         contentful_id
         slug
+        body
       }
     }
   }

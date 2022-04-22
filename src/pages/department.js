@@ -16,7 +16,8 @@ class department extends Component {
   render() {
     const depinfo = get(this.props, 'data.contentfulDepartmentMainPage')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
-    const bulletin = get(this, 'props.data.allContentfulBulletinBoard.node[0]')
+    const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
+    console.log(bulletin)
     const { slug, body } = depinfo
     return (
       //  <Layout>
@@ -51,7 +52,7 @@ class department extends Component {
         {body.map((type) =>
           type === 'Activity' ? (
             <TimeLine3 data={activities} />
-          ) : type === 'Bullitin' ? (
+          ) : type === 'Bulletin' ? (
             <Bulletin data={bulletin} />
           ) : (
             <></>
@@ -114,13 +115,18 @@ export const pageQuery = graphql`
         }
       }
     }
-    allContentfulBulletinBoard {
-      nodes {
-        title
-        description
-        posts {
+    allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
+      edges {
+        node {
           title
           slug
+          publishDate(formatString: "MMM Do, YYYY")
+          tag
+          titleImage {
+            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
+              ...GatsbyContentfulFluid_tracedSVG
+            }
+          }
           description {
             content {
               content {
@@ -128,14 +134,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          body {
-            childMarkdownRemark {
-              html
-            }
-          }
-          tag
           departments
-          updatedAt
         }
       }
     }
