@@ -1,7 +1,6 @@
 import React from 'react'
 import Carousel from 'react-elastic-carousel'
 import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
 import styles from './Slide.module.css'
 import get from 'lodash/get'
 import { graphql } from 'gatsby'
@@ -13,29 +12,32 @@ const SportsItem = ({ description, photo }) => {
       sx={{
         width: 1000,
         height: 300,
-        bgcolor: '#74c5c0',
+        bgcolor: '#fcab64',
         borderRadius: 2,
+        p: 2,
+        overflowY: 'scroll',
       }}
       className={styles.sportsBox}
     >
-      {photo ? (
-        photo.fluid ? (
+      {photo && photo.fluid ? (
+        <Box
+          sx={{
+            pl: 3,
+            pb: 1,
+          }}
+        >
           <div>
-            <Paper variant="outlined">
-              <Img
-                alt={photo.fluid.src}
-                fluid={photo.fluid}
-                style={{
-                  width: '30%',
-                  height: '40%',
-                  float: 'right',
-                }}
-              />
-            </Paper>
+            <Img
+              alt={photo.fluid.src}
+              fluid={photo.fluid}
+              style={{
+                width: '30%',
+                height: '40%',
+                float: 'right',
+              }}
+            />
           </div>
-        ) : (
-          <div />
-        )
+        </Box>
       ) : (
         <div />
       )}
@@ -45,7 +47,6 @@ const SportsItem = ({ description, photo }) => {
         }}
         className={styles.description}
       ></div>
-      <div></div>
     </Box>
   )
 }
