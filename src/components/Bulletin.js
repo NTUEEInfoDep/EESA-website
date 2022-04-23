@@ -10,6 +10,7 @@ import {
   Input,
   InputGroup,
 } from 'rsuite'
+
 import SearchIcon from '@rsuite/icons/Search'
 import { isMobile } from 'react-device-detect'
 import 'rsuite/dist/rsuite.min.css'
@@ -113,8 +114,7 @@ export default class Bulletin extends React.Component {
         return item.title.search(this.state.keyword) > -1
       })
     }
-    //console.log(this.state.filter_department)
-    //console.log(this.state.filter_tag)
+
     const posts = this.getData(data)
     const { loading, displayLength, page, size, placement, show, drawerData } =
       this.state
