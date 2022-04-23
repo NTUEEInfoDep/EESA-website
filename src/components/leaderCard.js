@@ -34,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
   actionArea: {
     borderRadius: 16,
-    transition: '0.2s',
-    '&:hover': {
-      transform: 'scale(0.95)',
-    },
   },
   card: ({ color }) => ({
     minWidth: 256,
@@ -69,14 +65,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1rem',
     fontWeight: 500,
     fontSize: 18,
+    textAlign: 'start',
   },
   cardModal: {
     borderRadius: 12,
-    height: '100%',
     minWidth: 256,
+    height: '100%',
     textAlign: 'center',
     maxWidth: '300px',
     backgroundColor: '#4f4f4f',
+    transition: '0.2s',
   },
   avatar: {
     width: 60,
@@ -151,43 +149,17 @@ const CustomCard = ({ leader }) => {
       <a.div
         className={classes.card}
         style={{
-          opacity: opacity.to((o) => 1 - o),
-          transform,
-          zIndex: 2,
-        }}
-        onClick={() => set((state) => !state)}
-      >
-        <CardActionArea className={classes.actionArea}>
-          <Card className={classes.card}>
-            <CardMedia
-              classes={mediaStyles}
-              image={leader.leaderSelfie.file.url}
-            />
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} variant={'h2'}>
-                {leader.leaderName}
-              </Typography>
-              <Typography className={classes.subtitle}>
-                {leader.title}
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardActionArea>
-      </a.div>
-      <a.div
-        className={classes.card}
-        style={{
           position: 'absolute',
           top: 0,
           opacity,
           transform,
           rotateX: '180deg',
-          height: '95%',
+          height: '100%',
         }}
         onClick={() => set((state) => !state)}
       >
         <Card className={cx(classes.cardModal, shadowStyles.root)}>
-          <CardContent>
+          <CardContent sx={{ height: '50%' }}>
             <Avatar
               className={classes.avatar}
               src={leader.leaderSelfie.file.url}
@@ -196,8 +168,14 @@ const CustomCard = ({ leader }) => {
             <span className={classes.subheader}>{leader.title}</span>
           </CardContent>
           <Divider light sx={{ color: 'white' }} />
-          <Grid container>
-            <Grid p={2} xs={7} flexGrow="1" className={borderedGridStyles.item}>
+          <Grid container sx={{ height: '50%' }}>
+            <Grid
+              p={2}
+              xs={7}
+              flexGrow="1"
+              className={borderedGridStyles.item}
+              sx={{ padding: 1 }}
+            >
               <p className={classes.statLabel}>Introdution</p>
               <div
                 dangerouslySetInnerHTML={{
@@ -206,7 +184,13 @@ const CustomCard = ({ leader }) => {
                 className={classes.statValue}
               />
             </Grid>
-            <Grid p={2} xs={5} flexGrow="1" className={borderedGridStyles.item}>
+            <Grid
+              p={2}
+              xs={5}
+              flexGrow="1"
+              className={borderedGridStyles.item}
+              sx={{ padding: 1 }}
+            >
               <p className={classes.statLabel} style={{ marginBottom: '10px' }}>
                 Contact
               </p>
@@ -222,6 +206,32 @@ const CustomCard = ({ leader }) => {
             </Grid>
           </Grid>
         </Card>
+      </a.div>
+      <a.div
+        className={classes.card}
+        style={{
+          opacity: opacity.to((o) => 1 - o),
+          transform,
+          zIndex: 2,
+        }}
+        onClick={() => set((state) => !state)}
+      >
+        <CardActionArea className={cx(classes.cardModal, shadowStyles.root)}>
+          <Card className={classes.card}>
+            <CardMedia
+              classes={mediaStyles}
+              image={leader.leaderSelfie.file.url}
+            />
+            <CardContent className={classes.content}>
+              <Typography className={classes.title} variant={'h2'}>
+                {leader.leaderName}
+              </Typography>
+              <Typography className={classes.subtitle}>
+                {leader.title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </CardActionArea>
       </a.div>
     </>
   )
