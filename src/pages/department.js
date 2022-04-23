@@ -8,66 +8,76 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import LeaderCards from '../components/leaderCard'
 import Box from '@mui/material/Box'
+import { CustomProvider } from 'rsuite'
+
 import TimeLine3 from '../components/timeline3'
-import Bulletin from '../components/Bulletin'
+// import Bulletin from '../components/Bulletin'
+import Navigation from '../components/navigation'
+import { FUNC_CONST, CLASS_CONST } from '../static/constant'
 
 // TODO: render all department bodies
 class department extends Component {
   render() {
     const depinfo = get(this.props, 'data.contentfulDepartmentMainPage')
-    const activities = get(this, 'props.data.allContentfulActivity.edges')
-    const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
-    const CONST = {
-      Activity: 'Activity',
-      Bulletin: 'BlogPosts',
-    }
-    console.log(bulletin)
+    // console.log(CONST['Activity'][1] instanceof Component)
+    // console.log(CONST['Bulletin'][1] instanceof Component)
+
     const { slug, body } = depinfo
     return (
-      //  <Layout>
-      <Container style={{ background: '#fff' }}>
-        <CardMedia
-          component="img"
-          height="540"
-          image={depinfo.department.backgroundImage.file.url}
-          alt="dep-image"
-        />
-        <Typography variant="h2" className="section-headline">
-          {depinfo.name}
-        </Typography>
-        <Box style={{ backgroundColor: 'dimgrey' }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <LeaderCards depinfo={depinfo.department} />
+      <CustomProvider theme="dark">
+        <Container style={{ background: '#fff' }}>
+          {/* <Navigation depinfo={depinfo} /> */}
+          <CardMedia
+            component="img"
+            height="540"
+            image={depinfo.department.backgroundImage.file.url}
+            alt="dep-image"
+          />
+          <Typography variant="h2" className="section-headline" color={'black'}>
+            {depinfo.name}
+          </Typography>
+          <Box style={{ backgroundColor: 'dimgrey' }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <LeaderCards depinfo={depinfo.department} />
+              </Grid>
+              <Grid item xs={12}>
+                <Card sx={{ margin: '5px', padding: '15px' }}>
+                  <Typography variant="body2">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          depinfo.department.intro.childMarkdownRemark.html,
+                      }}
+                    />
+                  </Typography>
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Card sx={{ margin: '5px', padding: '15px' }}>
-                <Typography variant="body2">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: depinfo.department.intro.childMarkdownRemark.html,
-                    }}
-                  />
-                </Typography>
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
-        {body.map((type) =>
-          type === 'Activity' ? (
-            <TimeLine3
-              data={get(this, `props.data.allContentful${CONST[type]}.edges`)}
-            />
-          ) : type === 'Bulletin' ? (
-            <Bulletin
-              data={get(this, `props.data.allContentful${CONST[type]}.edges`)}
-            />
-          ) : (
-            <></>
-          )
-        )}
-      </Container>
-      //  </Layout>
+          </Box>
+          {body.map((type) => {
+            if (Object.keys(CLASS_CONST).includes(type)) {
+              const cls = new CLASS_CONST[type][1]()
+              cls.props = {
+                data: get(
+                  this,
+                  `props.data.allContentful${CLASS_CONST[type][0]}.edges`
+                ),
+              }
+              return cls.render()
+            } else if (Object.keys(FUNC_CONST).includes(type)) {
+              return FUNC_CONST[type][1]({
+                data: get(
+                  this,
+                  `props.data.allContentful${FUNC_CONST[type][0]}.edges`
+                ),
+              })
+            } else {
+              return <></>
+            }
+          })}
+        </Container>
+      </CustomProvider>
     )
   }
 }
