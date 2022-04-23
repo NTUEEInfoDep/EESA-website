@@ -17,6 +17,10 @@ class department extends Component {
     const depinfo = get(this.props, 'data.contentfulDepartmentMainPage')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
+    const CONST = {
+      Activity: 'Activity',
+      Bulletin: 'BlogPosts',
+    }
     console.log(bulletin)
     const { slug, body } = depinfo
     return (
@@ -51,9 +55,13 @@ class department extends Component {
         </Box>
         {body.map((type) =>
           type === 'Activity' ? (
-            <TimeLine3 data={activities} />
+            <TimeLine3
+              data={get(this, `props.data.allContentful${CONST[type]}.edges`)}
+            />
           ) : type === 'Bulletin' ? (
-            <Bulletin data={bulletin} />
+            <Bulletin
+              data={get(this, `props.data.allContentful${CONST[type]}.edges`)}
+            />
           ) : (
             <></>
           )
