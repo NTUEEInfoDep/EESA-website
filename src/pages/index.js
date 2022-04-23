@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
+import { CustomProvider } from 'rsuite'
 import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
@@ -18,19 +19,21 @@ class RootIndex extends React.Component {
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     return (
-      <Layout location={this.props.location} depinfo={depinfo}>
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <Hero data={author.node} />
-          <Bulletin data={bulletin} />
-          <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
+      <CustomProvider theme="dark">
+        <Layout location={this.props.location} depinfo={depinfo}>
+          <div style={{ background: '#222' }}>
+            <Helmet title={siteTitle} />
+            <Hero data={author.node} />
+            <Bulletin data={bulletin} />
+            <div className="wrapper">
+              <h2 className="section-headline">Recent articles</h2>
+            </div>
+            <TimeLine data={activities} />
+            <TimeLine3 data={activities} />
+            <EventLine data={activities} />
           </div>
-          <TimeLine data={activities} />
-          <TimeLine3 data={activities} />
-          <EventLine data={activities} />
-        </div>
-      </Layout>
+        </Layout>
+      </CustomProvider>
     )
   }
 }
