@@ -10,7 +10,6 @@ import EmailIcon from '@mui/icons-material/Email'
 import { makeStyles } from '@mui/styles'
 import Paper from '@mui/material/Paper'
 import Modal from '@mui/material/Modal'
-import { Box } from '@mui/system'
 import Color from 'color'
 import cx from 'clsx'
 import CardActionArea from '@mui/material/CardActionArea'
@@ -21,7 +20,8 @@ import Avatar from '@mui/material/Avatar'
 import Divider from '@mui/material/Divider'
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded'
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered'
-import ReactMarkdown from 'react-markdown'
+import { useSpring, a } from '@react-spring/web'
+import style from './leaderCard.module.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     margin: '10px',
+    position: 'relative',
   },
   actionArea: {
     borderRadius: 16,
@@ -71,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardModal: {
     borderRadius: 12,
+    height: '100%',
     minWidth: 256,
     textAlign: 'center',
     maxWidth: '300px',
@@ -108,28 +110,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
-
 export default function LeaderCards(props) {
   const { depinfo } = props
   const classes = useStyles({ color: '#2f2f2f' })
-  const shadowStyles = useFadedShadowStyles()
-  const borderedGridStyles = useGutterBorderedGridStyles({
-    borderColor: 'rgba(0, 0, 0, 0.08)',
-    height: '50%',
-    maxHeight: '60%',
-  })
-  const [open, setOpen] = React.useState(
-    Array(depinfo.leaders.length).fill(false)
-  )
-
-  const handleClose = (index) => {
-    let open_copy = open.slice()
-    open_copy[index] = false
-    setOpen(open_copy)
-  }
 
   return (
     <Grid container flex justifyContent="space-evenly" classes={classes.root}>
@@ -137,72 +120,8 @@ export default function LeaderCards(props) {
         return (
           <>
             <Grid item className={classes.item}>
-              <CustomCard
-                classes={classes}
-                open={open}
-                setOpen={setOpen}
-                leader={leader}
-                index={index}
-              />
+              <CustomCard leader={leader} />
             </Grid>
-            <Modal
-              open={open[index]}
-              onClose={() => handleClose(index)}
-              sx={{
-                position: 'absolute',
-                left: '50%',
-                marginLeft: '-150px',
-                top: '40%',
-              }}
-            >
-              <Card className={cx(classes.cardModal, shadowStyles.root)}>
-                <CardContent>
-                  <Avatar
-                    className={classes.avatar}
-                    src={leader.leaderSelfie.file.url}
-                  />
-                  <h3 className={classes.heading}>{leader.leaderName}</h3>
-                  <span className={classes.subheader}>{leader.title}</span>
-                </CardContent>
-                <Divider light sx={{ color: 'white' }} />
-                <Grid container>
-                  <Grid
-                    p={2}
-                    xs={7}
-                    flexGrow="1"
-                    className={borderedGridStyles.item}
-                  >
-                    <p className={classes.statLabel}>Introdution</p>
-                    <ReactMarkdown
-                      children={leader.leaderIntroduction.leaderIntroduction}
-                      className={classes.statValue}
-                    />
-                  </Grid>
-                  <Grid
-                    p={2}
-                    xs={5}
-                    flexGrow="1"
-                    className={borderedGridStyles.item}
-                  >
-                    <p
-                      className={classes.statLabel}
-                      style={{ marginBottom: '10px' }}
-                    >
-                      Contact
-                    </p>
-                    <a href={leader.leaderGithub} style={{ margin: 2 }}>
-                      <GitHubIcon fontSize="large" />
-                    </a>
-                    <a href={leader.leaderFacebook} style={{ margin: 2 }}>
-                      <FacebookIcon fontSize="large" />
-                    </a>
-                    <a href={leader.leaderEmail} style={{ margin: 2 }}>
-                      <EmailIcon fontSize="large" />
-                    </a>
-                  </Grid>
-                </Grid>
-              </Card>
-            </Modal>
           </>
         )
       })}
@@ -210,28 +129,100 @@ export default function LeaderCards(props) {
   )
 }
 
-const CustomCard = ({ classes, leader, open, setOpen, index }) => {
+const CustomCard = ({ leader }) => {
   const mediaStyles = useFourThreeCardMediaStyles()
-  const handleClickOpen = (index) => {
-    let open_copy = open.slice()
-    console.log(index)
-    open_copy[index] = true
-    setOpen(open_copy)
-  }
+  const shadowStyles = useFadedShadowStyles()
+  const borderedGridStyles = useGutterBorderedGridStyles({
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+    height: '50%',
+    maxHeight: '60%',
+  })
+  const classes = useStyles({ color: '#2f2f2f' })
+
+  const [flipped, set] = React.useState(false)
+  const { transform, opacity } = useSpring({
+    opacity: flipped ? 1 : 0,
+    transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
+    config: { mass: 5, tension: 500, friction: 80 },
+  })
+
   return (
-    <CardActionArea
-      className={classes.actionArea}
-      onClick={() => handleClickOpen(index)}
-    >
-      <Card className={classes.card}>
-        <CardMedia classes={mediaStyles} image={leader.leaderSelfie.file.url} />
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} variant={'h2'}>
-            {leader.leaderName}
-          </Typography>
-          <Typography className={classes.subtitle}>{leader.title}</Typography>
-        </CardContent>
-      </Card>
-    </CardActionArea>
+    <>
+      <a.div
+        className={classes.card}
+        style={{
+          opacity: opacity.to((o) => 1 - o),
+          transform,
+          zIndex: 2,
+        }}
+        onClick={() => set((state) => !state)}
+      >
+        <CardActionArea className={classes.actionArea}>
+          <Card className={classes.card}>
+            <CardMedia
+              classes={mediaStyles}
+              image={leader.leaderSelfie.file.url}
+            />
+            <CardContent className={classes.content}>
+              <Typography className={classes.title} variant={'h2'}>
+                {leader.leaderName}
+              </Typography>
+              <Typography className={classes.subtitle}>
+                {leader.title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </CardActionArea>
+      </a.div>
+      <a.div
+        className={classes.card}
+        style={{
+          position: 'absolute',
+          top: 0,
+          opacity,
+          transform,
+          rotateX: '180deg',
+          height: '95%',
+        }}
+        onClick={() => set((state) => !state)}
+      >
+        <Card className={cx(classes.cardModal, shadowStyles.root)}>
+          <CardContent>
+            <Avatar
+              className={classes.avatar}
+              src={leader.leaderSelfie.file.url}
+            />
+            <h3 className={classes.heading}>{leader.leaderName}</h3>
+            <span className={classes.subheader}>{leader.title}</span>
+          </CardContent>
+          <Divider light sx={{ color: 'white' }} />
+          <Grid container>
+            <Grid p={2} xs={7} flexGrow="1" className={borderedGridStyles.item}>
+              <p className={classes.statLabel}>Introdution</p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: leader.leaderIntroduction.childMarkdownRemark.html,
+                }}
+                className={classes.statValue}
+              />
+            </Grid>
+            <Grid p={2} xs={5} flexGrow="1" className={borderedGridStyles.item}>
+              <p className={classes.statLabel} style={{ marginBottom: '10px' }}>
+                Contact
+              </p>
+              <a href={leader.leaderGithub} style={{ margin: 2 }}>
+                <GitHubIcon fontSize="large" />
+              </a>
+              <a href={leader.leaderFacebook} style={{ margin: 2 }}>
+                <FacebookIcon fontSize="large" />
+              </a>
+              <a href={leader.leaderEmail} style={{ margin: 2 }}>
+                <EmailIcon fontSize="large" />
+              </a>
+            </Grid>
+          </Grid>
+        </Card>
+      </a.div>
+    </>
   )
 }
