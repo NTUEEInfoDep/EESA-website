@@ -15,8 +15,8 @@ import cx from 'clsx'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
-import TextInfoContent from '@mui-treasury/components/content/textInfo'
 import Grid from '@mui/material/Grid'
+import Stach from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { Stack } from '@mui/material'
 import Paper from '@mui/material/Paper'
@@ -28,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#5e5e5e',
+    marginBottom: '20px',
   },
   paper: {
     width: '100%',
     height: '100%',
   },
   navbar: {
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#111111',
     width: '100%',
     padding: 10,
     display: 'flex',
@@ -169,12 +170,11 @@ export default function LostAndFound() {
                   }
                 />
                 <CardContent>
-                  <TextInfoContent
-                    classes={textCardContentStyles}
-                    overline={'Date'}
-                    heading={'Object name'}
-                    body={'Description'}
-                  />
+                  <Stack>
+                    <Typography>Date</Typography>
+                    <Typography>Title</Typography>
+                    <Typography>Location</Typography>
+                  </Stack>
                 </CardContent>
               </Card>
             </Grid>
