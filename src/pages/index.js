@@ -20,11 +20,7 @@ class RootIndex extends React.Component {
 
     return (
       <CustomProvider theme="dark">
-<<<<<<< HEAD
         <Layout location={this.props.location} depinfo={depinfo}>
-=======
-        <Layout location={this.props.location}>
->>>>>>> 461ac2a (fix backgroundcolor)
           <div style={{ background: '#222' }}>
             <Helmet title={siteTitle} />
             <Hero data={author.node} />

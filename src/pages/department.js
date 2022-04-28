@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { graphql } from 'gatsby'
-import get from 'lodash/get'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
@@ -10,79 +9,66 @@ import LeaderCards from '../components/leaderCard'
 import Box from '@mui/material/Box'
 import { CustomProvider } from 'rsuite'
 
-import TimeLine3 from '../components/timeline3'
-// import Bulletin from '../components/Bulletin'
-import Navigation from '../components/navigation'
 import { FUNC_CONST, CLASS_CONST } from '../static/constant'
 
-// TODO: render all department bodies
-class department extends Component {
-  render() {
-    const depinfo = get(this.props, 'data.contentfulDepartmentMainPage')
-    // console.log(CONST['Activity'][1] instanceof Component)
-    // console.log(CONST['Bulletin'][1] instanceof Component)
+const Department = (props) => {
+  const depinfo = props.data.contentfulDepartmentMainPage
+  const { body } = depinfo
 
-    const { slug, body } = depinfo
-    return (
-      <CustomProvider theme="dark">
-        <Container style={{ background: '#fff' }}>
-          {/* <Navigation depinfo={depinfo} /> */}
-          <CardMedia
-            component="img"
-            height="540"
-            image={depinfo.department.backgroundImage.file.url}
-            alt="dep-image"
-          />
-          <Typography variant="h2" className="section-headline" color={'black'}>
-            {depinfo.name}
-          </Typography>
-          <Box style={{ backgroundColor: 'dimgrey' }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <LeaderCards depinfo={depinfo.department} />
-              </Grid>
-              <Grid item xs={12}>
-                <Card sx={{ margin: '5px', padding: '15px' }}>
-                  <Typography variant="body2">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          depinfo.department.intro.childMarkdownRemark.html,
-                      }}
-                    />
-                  </Typography>
-                </Card>
-              </Grid>
+  return (
+    <CustomProvider theme="dark">
+      <Container style={{ background: '#fff' }}>
+        {/* <Navigation depinfo={depinfo} /> */}
+        <CardMedia
+          component="img"
+          height="540"
+          image={depinfo.department.backgroundImage.file.url}
+          alt="dep-image"
+        />
+        <Typography variant="h2" className="section-headline" color={'black'}>
+          {depinfo.name}
+        </Typography>
+        <Box style={{ backgroundColor: 'dimgrey' }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <LeaderCards depinfo={depinfo.department} />
             </Grid>
-          </Box>
-          {body.map((type) => {
-            if (Object.keys(CLASS_CONST).includes(type)) {
-              const cls = new CLASS_CONST[type][1]()
-              cls.props = {
-                data: get(
-                  this,
-                  `props.data.allContentful${CLASS_CONST[type][0]}.edges`
-                ),
-              }
-              return cls.render()
-            } else if (Object.keys(FUNC_CONST).includes(type)) {
-              return FUNC_CONST[type][1]({
-                data: get(
-                  this,
-                  `props.data.allContentful${FUNC_CONST[type][0]}.edges`
-                ),
-              })
-            } else {
-              return <></>
+            <Grid item xs={12}>
+              <Card sx={{ margin: '5px', padding: '15px' }}>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: depinfo.department.intro.childMarkdownRemark.html,
+                  }}
+                />
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+        {body.map((type) => {
+          if (Object.keys(CLASS_CONST).includes(type)) {
+            const cls = new CLASS_CONST[type][1]()
+            cls.props = {
+              data: props.data[`allContentful${CLASS_CONST[type][0]}`].edges,
             }
-          })}
-        </Container>
-      </CustomProvider>
-    )
-  }
+            return <div key={type}>{cls.render()}</div>
+          } else if (Object.keys(FUNC_CONST).includes(type)) {
+            return (
+              <div key={type}>
+                {FUNC_CONST[type][1]({
+                  data: props.data[`allContentful${FUNC_CONST[type][0]}`].edges,
+                })}
+              </div>
+            )
+          } else {
+            return <div key={type}></div>
+          }
+        })}
+      </Container>
+    </CustomProvider>
+  )
 }
 
-export default department
+export default Department
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
