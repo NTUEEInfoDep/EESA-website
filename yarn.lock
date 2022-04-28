@@ -5572,6 +5572,13 @@ dom-walk@^0.1.0:
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.2.tgz#0c548bef048f4d1f2a97249002236060daa3fd84"
   integrity sha512-6QvTW9mrGeIegrFXdtQi9pk7O/nSK6lSdXW2eqUspN5LWD7UTji2Fqw5V2YLjBpHEoU9Xl/eUWNpDeZvoyOv2w==
 
+dom7@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/dom7/-/dom7-4.0.4.tgz#8b68c5d8e5e2ed0fddb1cb93e433bc9060c8f3fb"
+  integrity sha512-DSSgBzQ4rJWQp1u6o+3FVwMNnT5bzQbMb+o31TjYYeRi05uAcpF8koxdfzeoe5ElzPmua7W7N28YJhF7iEKqIw==
+  dependencies:
+    ssr-window "^4.0.0"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -13353,10 +13360,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rsuite-table@^5.3.6:
-  version "5.3.6"
-  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.3.6.tgz#e9347e0615dfdec07883b153937a4f0ff5227c5e"
-  integrity sha512-PNW0X62hDqxaV2MCLJvLs1nulHfHeTzGIC6B3RBS6GZM8jjc06z33CPBReX/T2wLNZ+d6znimLTZKujvfIZipw==
+rsuite-table@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.5.0.tgz#17abfcc6290c76cb1414492d0d04acda8a562ebf"
+  integrity sha512-Bh4VUWsN8Q8q1oTvBx+Q4N05OpScsL7nEBi82M9ryY0gss7V0W8jaqBlJdvbxMZhZow3yfka0BLcbzeZfNADCA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@juggle/resize-observer" "^3.3.1"
@@ -13366,10 +13373,10 @@ rsuite-table@^5.3.6:
     lodash "^4.17.21"
     react-is "^17.0.2"
 
-rsuite@^5.0.3:
-  version "5.6.5"
-  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.6.5.tgz#f1a627425eea863500e4531422f221e190889c0c"
-  integrity sha512-GuxYHlopA71rYIRcY9UGWxYQ3SGdbgXaoytEVgYzo2378Li1TEgnXlG+L6PdVJjb1PiApJkOUUXFydXMglQOuA==
+rsuite@^5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.9.0.tgz#3fc62e93273d77c6efa95c5f1f32737d8dd67055"
+  integrity sha512-WbfqB3keQmB2dnAhN7+edP+8E162PZ45vMni1X2I3ZT+0r+KU66ZI358cUvLE/Iq76d6T/YvpzVRXJu1KDS8QA==
   dependencies:
     "@babel/runtime" "^7.8.4"
     "@juggle/resize-observer" "^3.3.1"
@@ -13384,7 +13391,7 @@ rsuite@^5.0.3:
     lodash "^4.17.11"
     prop-types "^15.7.2"
     react-virtualized "^9.22.3"
-    rsuite-table "^5.3.6"
+    rsuite-table "^5.5.0"
     schema-typed "^2.0.2"
 
 run-async@^2.2.0, run-async@^2.4.0:
@@ -14088,6 +14095,11 @@ sprintf-js@~1.0.2:
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
+ssr-window@^4.0.0, ssr-window@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-4.0.2.tgz#dc6b3ee37be86ac0e3ddc60030f7b3bc9b8553be"
+  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
+
 ssri@^6.0.1:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
@@ -14553,6 +14565,14 @@ svgo@1.3.2, svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+swiper@^8.1.4:
+  version "8.1.4"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-8.1.4.tgz#c105050c06d2a105fcc9e707894ddf20afd238ba"
+  integrity sha512-ho6ceKxqbDxV51qymVxwn1oB4CqTrsG3Y5pGW2aKlZxsT6NMdlow8ICUa+wD/m5l2T5ZD2B0yyqTihSSmLBV4A==
+  dependencies:
+    dom7 "^4.0.4"
+    ssr-window "^4.0.2"
 
 symbol-observable@^1.0.4, symbol-observable@^1.1.0:
   version "1.2.0"

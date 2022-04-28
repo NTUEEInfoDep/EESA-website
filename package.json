@@ -34,9 +34,10 @@
     "react-markdown": "^8.0.0",
     "react-timeline-scribble": "^1.0.14",
     "react-vertical-timeline-component": "^3.5.2",
-    "rsuite": "^5.0.3",
+    "rsuite": "^5.9.0",
     "sharp": "^0.28.3",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "swiper": "^8.1.4"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

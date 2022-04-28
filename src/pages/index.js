@@ -9,7 +9,7 @@ import TimeLine from '../components/timeline'
 import TimeLine3 from '../components/timeline3'
 import EventLine from '../components/EventLine/EventLine'
 import Bulletin from '../components/Bulletin'
-import Slide from '../components/Slide'
+import Sports from '../components/Sports'
 
 class RootIndex extends React.Component {
   render() {
@@ -17,7 +17,14 @@ class RootIndex extends React.Component {
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
-    const sports = get(this, 'props.data.allContentfulSports.edges')
+    const sportsHonorRoll = get(
+      this,
+      'props.data.allContentfulSportsHonorRoll.edges'
+    )
+    const sportsInformationBar = get(
+      this,
+      'props.data.allContentfulSportsInformationBar.nodes'
+    )
     return (
       <Layout location={this.props.location}>
         <div style={{ background: '#fff' }}>
@@ -27,7 +34,10 @@ class RootIndex extends React.Component {
           <div className="wrapper">
             <h2 className="section-headline">Recent articles</h2>
           </div>
-          <Slide data={sports} />
+          <Sports
+            honorRoll={sportsHonorRoll}
+            informationBar={sportsInformationBar}
+          />
           <TimeLine data={activities} />
           <TimeLine3 data={activities} />
           <EventLine data={activities} />
@@ -129,20 +139,27 @@ export const pageQuery = graphql`
         }
       }
     }
-    allContentfulSports {
+    allContentfulSportsHonorRoll {
       edges {
         node {
-          description {
-            childMarkdownRemark {
-              html
-            }
-          }
-          photo {
+          honorRoll {
             fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid_tracedSVG
-              src
             }
           }
+        }
+      }
+    }
+    allContentfulSportsInformationBar {
+      nodes {
+        name
+        practicePlace
+        practiceTime
+        contactPeople {
+          name
+          email
+          facebook
+          phoneNumber
         }
       }
     }
