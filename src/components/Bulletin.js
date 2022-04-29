@@ -165,7 +165,7 @@ export default class Bulletin extends React.Component {
                 this.toggleDrawer(rowData)
               }}
             >
-              <Column width={240}>
+              <Column width={400}>
                 <HeaderCell>Tags</HeaderCell>
                 <Cell dataKey="tags">
                   {(rowData) => {
@@ -190,13 +190,13 @@ export default class Bulletin extends React.Component {
                   }}
                 </Cell>
               </Column>
-              <Column width={200}>
+              <Column width={400}>
                 <HeaderCell>Date</HeaderCell>
                 <Cell dataKey="updatedAt">
                   {(rowData) => rowData.node.publishDate}
                 </Cell>
               </Column>
-              <Column width={200}>
+              <Column width={400}>
                 <HeaderCell>Title</HeaderCell>
                 <Cell dataKey="title">{(rowData) => rowData.node.title}</Cell>
               </Column>

@@ -24,9 +24,9 @@ class RootIndex extends React.Component {
     )
     const sportsInformationBar = get(
       this,
-      'props.data.allContentfulSportsInformationBar.nodes'
+      'props.data.allContentfulSportsInformationBar.edges'
     )
-
+    console.log('sportsInformationBar :', sportsInformationBar)
     return (
       <CustomProvider theme="dark">
         <Layout location={this.props.location}>
@@ -154,15 +154,21 @@ export const pageQuery = graphql`
       }
     }
     allContentfulSportsInformationBar {
-      nodes {
-        name
-        practicePlace
-        practiceTime
-        contactPeople {
+      edges {
+        node {
+          contactPeople1 {
+            leaderEmail
+            leaderFacebook
+            leaderName
+          }
+          contactPeople2 {
+            leaderName
+            leaderEmail
+            leaderFacebook
+          }
           name
-          email
-          facebook
-          phoneNumber
+          practicePlace
+          practiceTime
         }
       }
     }
