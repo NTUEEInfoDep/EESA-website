@@ -16,10 +16,11 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
-import Stach from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { Stack } from '@mui/material'
-import Paper from '@mui/material/Paper'
+import CircularProgress from '@mui/material/CircularProgress'
+import useGoogleSheets from 'use-google-sheets'
+import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -111,7 +112,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function LostAndFound() {
   const [value, setValue] = React.useState([null, null])
-  const [checked, setChecked] = React.useState(true)
+  const [checked, setChecked] = React.useState(false)
+  const [items, setItems] = useState([])
 
   const classes = useStyles()
   const mediaStyles = useFourThreeCardMediaStyles()
@@ -119,8 +121,55 @@ export default function LostAndFound() {
   const shadowStyles = useOverShadowStyles({ inactive: true })
 
   const handleChange = (event) => {
-    setChecked(event.target.checked)
+    setChecked(!checked)
+    setItems(items.slice().reverse())
   }
+
+  const { data, loading, error } = useGoogleSheets({
+    apiKey: process.env.APIKEY,
+    sheetId: process.env.SHEET_ID,
+  })
+
+  useEffect(() => {
+    if (!loading) {
+      let temp = data[0].data
+      temp.sort(function (a, b) {
+        if (!checked) {
+          return new Date(b['撿到的時間']) - new Date(a['撿到的時間'])
+        } else {
+          return new Date(a['撿到的時間']) - new Date(b['撿到的時間'])
+        }
+      })
+      setItems(temp)
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (!loading) {
+      const [early_bound, late_bound] = value
+      const early_date = new Date(early_bound)
+      const late_date = new Date(late_bound)
+      let temp = data[0].data
+      temp = temp.filter((a) => {
+        if (
+          new Date(a['撿到的時間']) <= late_date &&
+          new Date(a['撿到的時間']) >= early_date
+        ) {
+          console.log(new Date(a['撿到的時間']), late_date, early_date)
+          return true
+        }
+        return false
+      })
+      temp.sort(function (a, b) {
+        if (!checked) {
+          return new Date(b['撿到的時間']) - new Date(a['撿到的時間'])
+        } else {
+          return new Date(a['撿到的時間']) - new Date(b['撿到的時間'])
+        }
+      })
+      setItems(temp)
+    }
+  }, [value])
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -160,25 +209,37 @@ export default function LostAndFound() {
           </Stack>
         </Box>
         <Grid container spacing={2} className={classes.items}>
-          {[0, 1, 2, 3].map(() => (
+          {loading ? (
             <Grid item xs={4}>
-              <Card className={cx(classes.cardRoot, shadowStyles.root)}>
-                <CardMedia
-                  className={cx(classes.media, mediaStyles.root)}
-                  image={
-                    'https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80'
-                  }
-                />
-                <CardContent>
-                  <Stack>
-                    <Typography>Date</Typography>
-                    <Typography>Title</Typography>
-                    <Typography>Location</Typography>
-                  </Stack>
-                </CardContent>
-              </Card>
+              <CircularProgress sx={{}} />
             </Grid>
-          ))}
+          ) : (
+            items.map((item) => (
+              <Grid item xs={4}>
+                <Card className={cx(classes.cardRoot, shadowStyles.root)}>
+                  {item['照片'] ? (
+                    <CardMedia
+                      className={cx(classes.media, mediaStyles.root)}
+                      image={`https://drive.google.com/uc?export=view&id=${
+                        item['照片'].split('=')[1]
+                      }`}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                  <CardContent>
+                    <Stack>
+                      <Typography>撿到的時間: {item['撿到的時間']}</Typography>
+                      <Typography>撿到什麼: {item['撿到什麼']}</Typography>
+                      <Typography>
+                        在哪撿到的: {item['在哪撿到的？']}
+                      </Typography>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          )}
         </Grid>
       </Box>
     </LocalizationProvider>
