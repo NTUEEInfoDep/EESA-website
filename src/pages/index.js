@@ -1,10 +1,10 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import get from 'lodash/get'
+import { CustomProvider } from 'rsuite'
 import { Helmet } from 'react-helmet'
 import Hero from '../components/hero'
 import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
 import TimeLine from '../components/timeline'
 import TimeLine3 from '../components/timeline3'
 import EventLine from '../components/EventLine/EventLine'
@@ -17,6 +17,7 @@ class RootIndex extends React.Component {
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
+
     const sportsHonorRoll = get(
       this,
       'props.data.allContentfulSportsHonorRoll.edges'
@@ -25,24 +26,27 @@ class RootIndex extends React.Component {
       this,
       'props.data.allContentfulSportsInformationBar.nodes'
     )
+
     return (
-      <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <Hero data={author.node} />
-          <Bulletin data={bulletin} />
-          <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
+      <CustomProvider theme="dark">
+        <Layout location={this.props.location}>
+          <div style={{ background: '#222' }}>
+            <Helmet title={siteTitle} />
+            <Hero data={author.node} />
+            <Bulletin data={bulletin} />
+            <div className="wrapper">
+              <h2 className="section-headline">Recent articles</h2>
+            </div>
+            <Sports
+              honorRoll={sportsHonorRoll}
+              informationBar={sportsInformationBar}
+            />
+            <TimeLine data={activities} />
+            <TimeLine3 data={activities} />
+            <EventLine data={activities} />
           </div>
-          <Sports
-            honorRoll={sportsHonorRoll}
-            informationBar={sportsInformationBar}
-          />
-          <TimeLine data={activities} />
-          <TimeLine3 data={activities} />
-          <EventLine data={activities} />
-        </div>
-      </Layout>
+        </Layout>
+      </CustomProvider>
     )
   }
 }
@@ -65,7 +69,6 @@ export const pageQuery = graphql`
         }
       }
     }
-
     allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
       edges {
         node {

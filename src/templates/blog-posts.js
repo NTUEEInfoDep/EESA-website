@@ -14,7 +14,6 @@ import {
   img,
   tag_div,
 } from './blog-post.module.css'
-import heroStyles from '../components/hero.module.css'
 
 class BlogPostTemplate extends React.Component {
   render() {
@@ -25,7 +24,6 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location}>
         <div
           style={{
-            // background: '#fff',
             height: '100vh',
             opacity: '.8',
             display: 'flex',
@@ -39,24 +37,15 @@ class BlogPostTemplate extends React.Component {
               alt={post.title}
               fluid={post.titleImage.fluid}
             />
-            {console.log(post.titleImage.fluid)}
-            <div
-              className={box_2}
-              // style={{
-              //   backgroundImage: `url(${post.titleImage.fluid})`,
-              //   backgroundSize: 'cover',
-              //   backgroundColor: 'rgba(0,0,0,0.5)',
-              // }}
-            >
+            <div className={box_2}>
               <h1 className={title}>{post.title}</h1>
+
               <div className={tag_div}>
                 {post.tag.map((item) => {
                   return (
                     <Chip
                       label={item}
                       icon={<FaceIcon />}
-                      // variant="outlined"
-                      // color="primary"
                       style={{ listStyleType: 'none' }}
                     />
                   )
@@ -78,7 +67,7 @@ class BlogPostTemplate extends React.Component {
               </div>
               <div>{post.publishDate}</div>
             </div>
-            <section className={box_3}>
+            <section className={box_3} style={{ paddingTop: '2vh' }}>
               <div
                 dangerouslySetInnerHTML={{
                   __html: post.body.childMarkdownRemark.html,
