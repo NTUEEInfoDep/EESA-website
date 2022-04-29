@@ -21,7 +21,6 @@ class RootIndex extends React.Component {
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
     const clothes = get(this, 'props.data.allContentfulClothes.edges')
-    console.log(clothes)
 
     const sportsHonorRoll = get(
       this,
@@ -197,8 +196,8 @@ export const pageQuery = graphql`
         node {
           name
           clothesPicture {
-            file {
-              url
+            fluid(maxHeight: 100, maxWidth: 196, resizingBehavior: SCALE) {
+              ...GatsbyContentfulFluid_tracedSVG
             }
           }
           left

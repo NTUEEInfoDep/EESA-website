@@ -1,11 +1,29 @@
 import React from "react";
-import Slider from "@farbenmeer/react-spring-slider";
-import PropTypes from 'prop-types'
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
+import { Navigation, Pagination, Autoplay } from 'swiper'
+import Img from 'gatsby-image'
 
-const ClothesComponent = (clothesData) => {
+import 'swiper/swiper.min.css'
+import 'swiper/modules/navigation/navigation.min.css'
+import 'swiper/modules/pagination/pagination.min.css'
+import 'swiper/modules/scrollbar/scrollbar.min.css'
+import 'swiper/modules/autoplay/autoplay.min.css'
+import 'swiper/modules/effect-cube/effect-cube.min.css'
+//import styles from './Clothes.module.css'
+
+function ClothesComponent({ clothesData }) {
     console.log(clothesData)
     return (
-        <div overflow="visible">
+        <div>
+            <Img
+                alt={clothesData.node.name}
+                fluid={clothesData.node.clothesPicture.fluid}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    float: 'center',
+                }}
+            />
             <h2>{clothesData.node.name}</h2>
             <h3>價格：{clothesData.node.price}</h3>
             <h3>還剩{clothesData.node.left}件</h3>
@@ -15,62 +33,21 @@ const ClothesComponent = (clothesData) => {
 
 
 export default function Clothes({ data }) {
-    const setSlideCustom = () => 1;
-    const onSlideChange = (index) => console.log(`changed to slide ${index}`);
-    const BulletComponent = ({ onClick, isActive }) => (
-        <li
-            style={{
-                width: "25px",
-                height: "25px",
-                backgroundColor: "white",
-                margin: "0 2px",
-                opacity: isActive && "0.5",
-            }}
-            onClick={onClick}
-            class="Slider-Bullet"
-        />
-    );
-
-    BulletComponent.propTypes = {
-        onClick: PropTypes.func.isRequired,
-        isActive: PropTypes.bool.isRequired,
-    };
-
-    const ArrowComponent = ({ onClick, direction }) => {
-        return (
-            <div
-                style={{
-                    border: "1px solid black",
-                    padding: "1em",
-                    backgroundColor: "white",
-                }}
-                onClick={onClick}
-                class="Slider-Arrow"
-            >
-                {direction}
-            </div>
-        );
-    };
-
-    ArrowComponent.propTypes = {
-        onClick: PropTypes.func.isRequired,
-        direction: PropTypes.string.isRequired,
-    };
-
     return (
-        <Slider
-            auto
-            hasBullets
-            BulletComponent={BulletComponent}
-            ArrowComponent={ArrowComponent}
-            onSlideChange={onSlideChange}
-            setSlideCustom={setSlideCustom}
-            overflow-x="visible"
-            overflow-y="visible"
+        <Swiper
+            cssMode={true}
+            navigation={true}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000 }}
+            modules={[Navigation, Pagination, Autoplay]}
+            slidesPerView={1}
         >
             {data.map((clothesData) => {
-                return ClothesComponent(clothesData)
+                console.log(clothesData)
+                return (<SwiperSlide>
+                    <ClothesComponent clothesData={clothesData} />
+                </SwiperSlide>)
             })}
-        </Slider>
+        </Swiper>
     );
 }
