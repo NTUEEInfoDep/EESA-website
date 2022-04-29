@@ -26,6 +26,13 @@ exports.createPages = ({ graphql, actions }) => {
                 }
               }
             }
+            allContentfulDepartmentMainPage {
+              nodes {
+                name
+                contentful_id
+                slug
+              }
+            }
           }
         `
       ).then((result) => {
@@ -35,7 +42,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
 
         const posts = result.data.allContentfulBlogPosts.edges
-        const departments = result.data.allContentfulDepartment.edges
+        const departments = result.data.allContentfulDepartmentMainPage.nodes
         posts.forEach((post, index) => {
           createPage({
             path: `/post/${post.node.slug}/`,
@@ -45,13 +52,12 @@ exports.createPages = ({ graphql, actions }) => {
             },
           })
         })
-
         departments.forEach((node) => {
           createPage({
-            path: `/department/${node.node.name}`,
+            path: `/department/${node.slug}`,
             component: depIntro,
             context: {
-              slug: node.node.name,
+              slug: node.slug,
             },
           })
         })

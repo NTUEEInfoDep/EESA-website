@@ -16,10 +16,11 @@ class RootIndex extends React.Component {
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
     const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
+    const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     return (
       <CustomProvider theme="dark">
-        <Layout location={this.props.location}>
+        <Layout location={this.props.location} depinfo={depinfo}>
           <div style={{ background: '#222' }}>
             <Helmet title={siteTitle} />
             <Hero data={author.node} />
@@ -126,6 +127,14 @@ export const pageQuery = graphql`
             updatedAt
           }
         }
+      }
+    }
+    allContentfulDepartmentMainPage {
+      nodes {
+        name
+        contentful_id
+        slug
+        body
       }
     }
   }
