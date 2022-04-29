@@ -21,6 +21,7 @@ class RootIndex extends React.Component {
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
     const clothes = get(this, 'props.data.allContentfulClothes.edges')
+    console.log(clothes)
 
     const sportsHonorRoll = get(
       this,
@@ -45,6 +46,15 @@ class RootIndex extends React.Component {
             <div>
               <LostAndFound />
             </div>
+<<<<<<< HEAD
+=======
+            <TimeLine data={activities} />
+            <TimeLine3 data={activities} />
+            <EventLine data={activities} />
+            <div className="wrapper">
+              <h2 className="section-headline">Clothes Selling</h2>
+            </div>
+>>>>>>> Fix some bug, but still invisible
             <Clothes data={clothes} />
           </div>
         </Layout>
