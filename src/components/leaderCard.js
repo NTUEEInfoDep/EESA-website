@@ -159,7 +159,7 @@ const CustomCard = ({ leader }) => {
         onClick={() => set((state) => !state)}
       >
         <Card className={cx(classes.cardModal, shadowStyles.root)}>
-          <CardContent sx={{ height: '50%' }}>
+          <CardContent sx={{ height: '50%', padding: 0 }}>
             <Avatar
               className={classes.avatar}
               src={leader.leaderSelfie.file.url}
