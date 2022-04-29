@@ -1,14 +1,6 @@
 const Promise = require('bluebird')
 const path = require('path')
 
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    node: {
-      child_process: 'empty',
-    },
-  })
-}
-
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
