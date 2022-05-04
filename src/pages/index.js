@@ -9,6 +9,7 @@ import TimeLine from '../components/timeline'
 import TimeLine3 from '../components/timeline3'
 import EventLine from '../components/EventLine/EventLine'
 import Bulletin from '../components/Bulletin'
+import LostAndFound from '../components/lostandfound'
 
 class RootIndex extends React.Component {
   render() {
@@ -31,6 +32,10 @@ class RootIndex extends React.Component {
             <TimeLine data={activities} />
             <TimeLine3 data={activities} />
             <EventLine data={activities} />
+            <LostAndFound />
+            {/* <TimeLine data={activities} />
+            <TimeLine3 data={activities} />
+            <EventLine data={activities} /> */}
           </div>
         </Layout>
       </CustomProvider>
