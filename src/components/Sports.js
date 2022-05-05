@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './Sports.module.css'
 import Img from 'gatsby-image'
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react'
@@ -58,18 +58,25 @@ function HonorRoll({ honorRoll }) {
 
 function InformationBar({ informationBar }) {
   const [anchorEl, setAnchorEl] = useState(null)
-  const [open, setOpen] = useState(false)
+  const [rowInfo, setRowInfo] = useState(null)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
-    setOpen(true)
   }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const open = anchorEl ? true : false
+  const id = open ? 'simple-popover' : undefined
+
   return (
     <>
       <Table
         height={400}
         data={informationBar}
-        onRowClick={(rowData) => setOpen(open)}
+        onRowClick={(rowData) => setRowInfo(rowData)}
       >
         <Column width={280} align="center">
           <HeaderCell>系隊名稱</HeaderCell>
@@ -87,7 +94,13 @@ function InformationBar({ informationBar }) {
             {(rowData) => rowData.node.practicePlace}
           </Cell>
         </Column>
-        <Column width={280} align="center" onClick={(e) => handleClick(e)}>
+        <Column
+          width={280}
+          align="center"
+          onClick={(e) => {
+            handleClick(e)
+          }}
+        >
           <HeaderCell>聯絡人</HeaderCell>
           <Cell dataKey="contact people">
             {(rowData) =>
@@ -100,14 +113,21 @@ function InformationBar({ informationBar }) {
         id="simple-popover"
         open={open}
         anchorEl={anchorEl}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'center',
         }}
       >
-        {(rowData) =>
-          `${rowData.node.contactProple1.leaderName}　email:${rowData.node.contactProple1.leaderEmail}``${rowData.node.contactProple2.leaderName}　email:${rowData.node.contactProple2.leaderEmail}`
-        }
+        <Typography>
+          {console.log('rowInfo: ', rowInfo)}
+          {rowInfo && rowInfo.node.contactPeople1
+            ? `${rowInfo.node.contactPeople1.leaderName}　email:${rowInfo.node.contactPeople1.leaderEmail}`
+            : 'no contact people'}
+          {rowInfo && rowInfo.node.contactPeople2
+            ? `${rowInfo.node.contactPeople2.leaderName}　email:${rowInfo.node.contactPeople2.leaderEmail}`
+            : 'no contact people'}
+        </Typography>
       </Popover>
     </>
   )
