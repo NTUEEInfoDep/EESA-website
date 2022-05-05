@@ -25,17 +25,18 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby Contentful starter',
+    title: 'EESA-Websote',
   },
   pathPrefix: '/gatsby-contentful-starter',
   plugins: [
-    'gatsby-transformer-remark',
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sharp',
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-transformer-remark`,
+    `gatsby-plugin-react-helmet`,
     `gatsby-theme-material-ui`,
     {
-      resolve: 'gatsby-source-contentful',
+      resolve: `gatsby-source-contentful`,
       options: contentfulConfig,
     },
   ],

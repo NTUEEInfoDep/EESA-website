@@ -34,7 +34,7 @@ function HonorRoll({ honorRoll }) {
       cssMode={true}
       navigation={true}
       pagination={{ clickable: true }}
-      autoplay={{ delay: 3000 }}
+      autoplay={{ delay: 6000 }}
       modules={[Navigation, Pagination, Autoplay]}
       slidesPerView={1}
       className={styles.swiper}

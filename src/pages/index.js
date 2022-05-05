@@ -32,22 +32,22 @@ class RootIndex extends React.Component {
     return (
       <CustomProvider theme="dark">
         <Layout location={this.props.location} depinfo={depinfo}>
-          <div style={{ background: '#222' }}>
-            <Helmet title={siteTitle} />
-            <Hero data={author.node} />
-            <Bulletin data={bulletin} />
-            <div className="wrapper">
-              <h2 className="section-headline">Recent articles</h2>
-            </div>
-            <Sports
-              honorRoll={sportsHonorRoll}
-              informationBar={sportsInformationBar}
-            />
-            <TimeLine data={activities} />
-            <TimeLine3 data={activities} />
-            <EventLine data={activities} />
-            <LostAndFound />
+          <Sports
+            honorRoll={sportsHonorRoll}
+            informationBar={sportsInformationBar}
+          />
+          {/* <div style={{ background: '#222' }}> */}
+          <Helmet title={siteTitle} />
+          {/* <Hero data={author.node} /> */}
+          <Bulletin data={bulletin} />
+          <div className="wrapper">
+            <h2 className="section-headline">Recent articles</h2>
           </div>
+          {/* <TimeLine data={activities} />
+          <TimeLine3 data={activities} />
+          <EventLine data={activities} /> */}
+          <LostAndFound />
+          {/* </div> */}
         </Layout>
       </CustomProvider>
     )
@@ -157,7 +157,7 @@ export const pageQuery = graphql`
       edges {
         node {
           honorRoll {
-            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+            fluid(maxWidth: 1920, maxHeight: 1080, quality: 100) {
               ...GatsbyContentfulFluid_tracedSVG
             }
           }
