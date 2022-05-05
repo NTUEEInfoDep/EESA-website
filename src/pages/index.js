@@ -10,6 +10,7 @@ import TimeLine3 from '../components/timeline3'
 import EventLine from '../components/EventLine/EventLine'
 import Bulletin from '../components/Bulletin'
 import LostAndFound from '../components/lostandfound'
+import Sports from '../components/Sports'
 
 class RootIndex extends React.Component {
   render() {
@@ -19,6 +20,15 @@ class RootIndex extends React.Component {
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
+    const sportsHonorRoll = get(
+      this,
+      'props.data.allContentfulSportsHonorRoll.edges'
+    )
+    const sportsInformationBar = get(
+      this,
+      'props.data.allContentfulSportsInformationBar.edges'
+    )
+    console.log('sportsInformationBar :', sportsInformationBar)
     return (
       <CustomProvider theme="dark">
         <Layout location={this.props.location} depinfo={depinfo}>
@@ -29,13 +39,14 @@ class RootIndex extends React.Component {
             <div className="wrapper">
               <h2 className="section-headline">Recent articles</h2>
             </div>
+            <Sports
+              honorRoll={sportsHonorRoll}
+              informationBar={sportsInformationBar}
+            />
             <TimeLine data={activities} />
             <TimeLine3 data={activities} />
             <EventLine data={activities} />
             <LostAndFound />
-            {/* <TimeLine data={activities} />
-            <TimeLine3 data={activities} />
-            <EventLine data={activities} /> */}
           </div>
         </Layout>
       </CustomProvider>
@@ -140,6 +151,36 @@ export const pageQuery = graphql`
         contentful_id
         slug
         body
+      }
+    }
+    allContentfulSportsHonorRoll {
+      edges {
+        node {
+          honorRoll {
+            fluid(maxWidth: 350, maxHeight: 196, resizingBehavior: SCALE) {
+              ...GatsbyContentfulFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
+    allContentfulSportsInformationBar {
+      edges {
+        node {
+          contactPeople1 {
+            leaderEmail
+            leaderFacebook
+            leaderName
+          }
+          contactPeople2 {
+            leaderName
+            leaderEmail
+            leaderFacebook
+          }
+          name
+          practicePlace
+          practiceTime
+        }
       }
     }
   }

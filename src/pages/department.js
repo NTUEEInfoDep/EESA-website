@@ -33,6 +33,7 @@ const Department = (props) => {
             <Grid item xs={12}>
               <LeaderCards depinfo={depinfo.department} />
             </Grid>
+
             <Grid item xs={12}>
               <Card sx={{ margin: '5px', padding: '15px' }}>
                 <div

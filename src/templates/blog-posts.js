@@ -87,7 +87,7 @@ export const pageQuery = graphql`
   query BlogPostsBySlug($slug: String!) {
     contentfulBlogPosts(slug: { eq: $slug }) {
       title
-      publishDate(formatString: "MMMM Do, YYYY")
+      publishDate(formatString: "MMM Do, YYYY")
       titleImage {
         fluid(maxWidth: 1180, background: "rgb:000000") {
           ...GatsbyContentfulFluid_tracedSVG
