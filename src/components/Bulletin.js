@@ -228,7 +228,7 @@ export default class Bulletin extends React.Component {
           </Panel>
           {drawerData ? (
             <Drawer
-              size="lg"
+              size="sm"
               placement="right"
               open={show}
               onClose={this.close}

@@ -12,9 +12,6 @@ export default class navigation extends Component {
           <li className={styles.navigationItem}>
             <Link to="/">Home</Link>
           </li>
-          <li className={styles.navigationItem}>
-            <Link to="/blog/">Blog</Link>
-          </li>
           {nodes.map((node) => {
             const { name, slug } = node
             return (

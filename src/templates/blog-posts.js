@@ -13,15 +13,16 @@ import {
   box_3,
   img,
   tag_div,
-} from './blog-post.module.css'
+} from './blog-posts.module.css'
 
 class BlogPostTemplate extends React.Component {
   render() {
     const post = get(this.props, 'data.contentfulBlogPosts')
     const siteTitle = get(this.props, 'data.site.siteMetadata.title')
+    const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     return (
-      <Layout location={this.props.location}>
+      <Layout location={this.props.location} depinfo={depinfo}>
         <div
           style={{
             height: '100vh',
@@ -85,6 +86,14 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostsBySlug($slug: String!) {
+    allContentfulDepartmentMainPage {
+      nodes {
+        name
+        contentful_id
+        slug
+        body
+      }
+    }
     contentfulBlogPosts(slug: { eq: $slug }) {
       title
       publishDate(formatString: "MMM Do, YYYY")
