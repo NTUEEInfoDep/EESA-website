@@ -4,10 +4,9 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
-import styles from './timeline3.module.css'
+import * as styles from './timeline3.module.css'
 import StarIcon from '@mui/icons-material/Star'
 import WorkIcon from '@mui/icons-material/Work'
-// import { borderTop } from '@mui/system'
 
 const TimeLineItem = ({ date, name, content }) => {
   return (

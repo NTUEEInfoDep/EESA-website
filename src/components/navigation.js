@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import get from 'lodash/get'
 import { graphql, Link } from 'gatsby'
-import styles from './navigation.module.css'
+import * as styles from './navigation.module.css'
 
 export default class navigation extends Component {
   render() {
