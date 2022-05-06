@@ -1,0 +1,4 @@
+c:hover {
+  box-shadow: 0 6px 12px 0 #2f2f2f;
+  transform: 'scale(0.95) rotate(-12) darken(0.2) fade(0.5)';
+}

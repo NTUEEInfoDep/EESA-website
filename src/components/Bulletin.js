@@ -159,13 +159,24 @@ export default class Bulletin extends React.Component {
           <Panel bordered header={header}>
             <Table
               width={isMobile ? 320 : undefined}
-              height={300}
+              // height={300}
+              autoHeight
               data={posts}
               onRowClick={(rowData) => {
                 this.toggleDrawer(rowData)
               }}
             >
+              <Column width={300}>
+                <HeaderCell>Title</HeaderCell>
+                <Cell dataKey="title">{(rowData) => rowData.node.title}</Cell>
+              </Column>
               <Column width={400}>
+                <HeaderCell>Date</HeaderCell>
+                <Cell dataKey="updatedAt">
+                  {(rowData) => rowData.node.publishDate}
+                </Cell>
+              </Column>
+              <Column flexGrow>
                 <HeaderCell>Tags</HeaderCell>
                 <Cell dataKey="tags">
                   {(rowData) => {
@@ -190,42 +201,35 @@ export default class Bulletin extends React.Component {
                   }}
                 </Cell>
               </Column>
-              <Column width={400}>
-                <HeaderCell>Date</HeaderCell>
-                <Cell dataKey="updatedAt">
-                  {(rowData) => rowData.node.publishDate}
-                </Cell>
-              </Column>
-              <Column width={400}>
-                <HeaderCell>Title</HeaderCell>
-                <Cell dataKey="title">{(rowData) => rowData.node.title}</Cell>
-              </Column>
             </Table>
-            <Pagination
-              lengthMenu={[
-                {
-                  value: 10,
-                  label: 10,
-                },
-                {
-                  value: 20,
-                  label: 20,
-                },
-              ]}
-              prev
-              last
-              next
-              first
-              activePage={page}
-              showInfo={!isMobile}
-              showLengthMenu={!isMobile}
-              displayLength={displayLength}
-              total={data.length}
-              limit={displayLength}
-              onChangePage={this.handleChangePage}
-              onChangeLength={this.handleChangeLength}
-            />
+            <div style={{ paddingTop: '20px' }}>
+              <Pagination
+                lengthMenu={[
+                  {
+                    value: 10,
+                    label: 10,
+                  },
+                  {
+                    value: 20,
+                    label: 20,
+                  },
+                ]}
+                prev
+                last
+                next
+                first
+                activePage={page}
+                showInfo={!isMobile}
+                showLengthMenu={!isMobile}
+                displayLength={displayLength}
+                total={data.length}
+                limit={displayLength}
+                onChangePage={this.handleChangePage}
+                onChangeLength={this.handleChangeLength}
+              />
+            </div>
           </Panel>
+
           {drawerData ? (
             <Drawer
               size="sm"

@@ -36,18 +36,14 @@ class RootIndex extends React.Component {
             honorRoll={sportsHonorRoll}
             informationBar={sportsInformationBar}
           />
-          {/* <div style={{ background: '#222' }}> */}
           <Helmet title={siteTitle} />
-          {/* <Hero data={author.node} /> */}
           <Bulletin data={bulletin} />
           <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
+            <h2 className="section-headline">Lost and Found</h2>
+            <div>
+              <LostAndFound />
+            </div>
           </div>
-          {/* <TimeLine data={activities} />
-          <TimeLine3 data={activities} />
-          <EventLine data={activities} /> */}
-          <LostAndFound />
-          {/* </div> */}
         </Layout>
       </CustomProvider>
     )
