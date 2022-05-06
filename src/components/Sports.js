@@ -116,17 +116,18 @@ function InformationBar({ informationBar }) {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'left',
         }}
       >
         <Typography>
-          {console.log('rowInfo: ', rowInfo)}
           {rowInfo && rowInfo.node.contactPeople1
-            ? `${rowInfo.node.contactPeople1.leaderName}　email:${rowInfo.node.contactPeople1.leaderEmail}`
-            : 'no contact people'}
+            ? `${rowInfo.node.contactPeople1.leaderName}　email : ${rowInfo.node.contactPeople1.leaderEmail}`
+            : 'no contact people 1'}
+        </Typography>
+        <Typography>
           {rowInfo && rowInfo.node.contactPeople2
-            ? `${rowInfo.node.contactPeople2.leaderName}　email:${rowInfo.node.contactPeople2.leaderEmail}`
-            : 'no contact people'}
+            ? `${rowInfo.node.contactPeople2.leaderName}　email : ${rowInfo.node.contactPeople2.leaderEmail}`
+            : 'no contact people 2'}
         </Typography>
       </Popover>
     </>
