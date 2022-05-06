@@ -87,6 +87,7 @@ export default class Bulletin extends React.Component {
 
   render() {
     const data = this.props.data
+    console.log(data)
     if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
         const tmp = item.tag.filter((value) =>
