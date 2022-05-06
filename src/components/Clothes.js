@@ -9,12 +9,11 @@ import 'swiper/modules/pagination/pagination.min.css'
 import 'swiper/modules/scrollbar/scrollbar.min.css'
 import 'swiper/modules/autoplay/autoplay.min.css'
 import 'swiper/modules/effect-cube/effect-cube.min.css'
-//import styles from './Clothes.module.css'
+import styles from './Clothes.module.css'
 
 function ClothesComponent({ clothesData }) {
-    console.log(clothesData)
     return (
-        <div>
+        <div className={styles.clothesComponent}>
             <Img
                 alt={clothesData.node.name}
                 fluid={clothesData.node.clothesPicture.fluid}
@@ -23,10 +22,14 @@ function ClothesComponent({ clothesData }) {
                     height: '100%',
                     float: 'center',
                 }}
+                className={styles.clothesImage}
             />
-            <h2>{clothesData.node.name}</h2>
-            <h3>價格：{clothesData.node.price}</h3>
-            <h3>還剩{clothesData.node.left}件</h3>
+            <div className={styles.clothesDetail}>
+                <h2 className={styles.clothesName}>{clothesData.node.name}</h2>
+                <h3 className={styles.clothesPrice}>價格：{clothesData.node.price}</h3>
+                <h3 className={styles.clothesLeft}>還剩{clothesData.node.left}件</h3>
+                <p className={styles.clothesDescription}></p>
+            </div>
         </div>
     )
 }
@@ -41,10 +44,10 @@ export default function Clothes({ data }) {
             autoplay={{ delay: 3000 }}
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={1}
+            className={styles.swiper}
         >
             {data.map((clothesData) => {
-                console.log(clothesData)
-                return (<SwiperSlide>
+                return (<SwiperSlide className={styles.swiperSlide}>
                     <ClothesComponent clothesData={clothesData} />
                 </SwiperSlide>)
             })}
