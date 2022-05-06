@@ -16,7 +16,7 @@ class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
-    const activities = get(this, 'props.data.allContentfulActivity.edges')
+    const activities = get(this, 'props.data.allContentfulBlogPosts.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
@@ -44,6 +44,7 @@ class RootIndex extends React.Component {
               <LostAndFound />
             </div>
           </div>
+          <TimeLine3 data={activities} />
         </Layout>
       </CustomProvider>
     )
@@ -76,7 +77,7 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMM Do, YYYY")
           tag
           titleImage {
-            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
+            fluid(resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid_tracedSVG
             }
           }
