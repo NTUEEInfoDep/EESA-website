@@ -5,11 +5,11 @@ import Bulletin from '../components/Bulletin'
 // A: [B, C]    =>  <C data={get(this, `props.data.allContentful${B}.edges`)} />
 
 const FUNC_CONST = {
-  Activity: ['Activity', TimeLine3], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
+  Activity: ['Activity', TimeLine3, 'Activity'], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
 }
 
 const CLASS_CONST = {
-  Bulletin: ['BlogPosts', Bulletin], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
+  Bulletin: ['BlogPosts', Bulletin, 'Bullitin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
 export { FUNC_CONST, CLASS_CONST }
