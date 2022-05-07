@@ -126,8 +126,8 @@ export default function LostAndFound() {
   }
 
   const { data, loading, error } = useGoogleSheets({
-    apiKey: process.env.APIKEY,
-    sheetId: process.env.SHEET_ID,
+    apiKey: process.env.GATSBY_APIKEY,
+    sheetId: process.env.GATSBY_SHEET_ID,
   })
 
   useEffect(() => {
