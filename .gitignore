@@ -70,3 +70,5 @@ public
 
 .DS_Store
 token.json
+
+.netlify
