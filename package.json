@@ -83,7 +83,7 @@
     "dev": "npm run develop",
     "develop": "gatsby develop",
     "serve": "NODE_ENV=production gatsby serve",
-    "clean": "gatsby clean & rm -rf .netlify/cache",
+    "clean": "gatsby clean && rm -rf .netlify/cache",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'src/**/*.md' 'bin/*.js'",
