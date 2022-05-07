@@ -25,9 +25,8 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: 'EESA-Websote',
+    title: 'NTU-EESA',
   },
-  pathPrefix: '/gatsby-contentful-starter',
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
