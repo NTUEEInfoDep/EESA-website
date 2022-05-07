@@ -172,7 +172,7 @@ const CustomCard = ({ leader }) => {
             <Grid
               p={2}
               xs={7}
-              flexGrow="1"
+              flexGrow={1}
               className={borderedGridStyles.item}
               sx={{ padding: 1 }}
             >
@@ -187,7 +187,7 @@ const CustomCard = ({ leader }) => {
             <Grid
               p={2}
               xs={5}
-              flexGrow="1"
+              flexGrow={1}
               className={borderedGridStyles.item}
               sx={{ padding: 1 }}
             >

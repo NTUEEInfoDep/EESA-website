@@ -37,12 +37,11 @@ function HonorRoll({ honorRoll }) {
       autoplay={{ delay: 3000 }}
       modules={[Navigation, Pagination, Autoplay]}
       slidesPerView={1}
-      className={styles.swiper}
     >
-      {honorRollArray.map((i) => (
-        <SwiperSlide className={styles.slide}>
+      {honorRollArray.map((i, index) => (
+        <SwiperSlide className={styles.slide} key={index}>
           <Img
-            alt={i}
+            // alt={i}
             fluid={i}
             style={{
               width: '100%',

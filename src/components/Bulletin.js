@@ -50,7 +50,7 @@ export default class Bulletin extends React.Component {
     }
 
     this.handleChangePage = this.handleChangePage.bind(this)
-    this.handleChangeLength = this.handleChangeLength.bind(this)
+    this.handleChangeLimit = this.handleChangeLimit.bind(this)
     this.close = this.close.bind(this)
     this.toggleDrawer = this.toggleDrawer.bind(this)
   }
@@ -59,7 +59,7 @@ export default class Bulletin extends React.Component {
       page: dataKey,
     })
   }
-  handleChangeLength(dataKey) {
+  handleChangeLimit(dataKey) {
     this.setState({
       page: 1,
       displayLength: dataKey,
@@ -87,7 +87,7 @@ export default class Bulletin extends React.Component {
 
   render() {
     const data = this.props.data
-    console.log(data)
+
     if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
         const tmp = item.tag.filter((value) =>
@@ -177,7 +177,7 @@ export default class Bulletin extends React.Component {
                   {(rowData) => rowData.node.publishDate}
                 </Cell>
               </Column>
-              <Column flexGrow>
+              <Column flexGrow={1}>
                 <HeaderCell>Tags</HeaderCell>
                 <Cell dataKey="tags">
                   {(rowData) => {
@@ -205,28 +205,27 @@ export default class Bulletin extends React.Component {
             </Table>
             <div style={{ paddingTop: '20px' }}>
               <Pagination
-                lengthMenu={[
-                  {
-                    value: 10,
-                    label: 10,
-                  },
-                  {
-                    value: 20,
-                    label: 20,
-                  },
-                ]}
+                // limit={10}
+                limit={displayLength}
+                limitOptions={[10, 20]}
+                // lengthMenu={[
+                //   {
+                //     value: 10,
+                //     label: 10,
+                //   },
+                //   {
+                //     value: 20,
+                //     label: 20,
+                //   },
+                // ]}
                 prev
                 last
                 next
                 first
                 activePage={page}
-                showInfo={!isMobile}
-                showLengthMenu={!isMobile}
-                displayLength={displayLength}
                 total={data.length}
-                limit={displayLength}
                 onChangePage={this.handleChangePage}
-                onChangeLength={this.handleChangeLength}
+                onChangeLimit={this.handleChangeLimit}
               />
             </div>
           </Panel>

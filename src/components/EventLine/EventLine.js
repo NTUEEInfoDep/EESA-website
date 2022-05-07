@@ -7,7 +7,6 @@ export default function EventLine({ data }) {
 
   const handleClick = (name) => {
     setActive(name)
-    console.log("hi")
   }
 
   const TimeLineItem = ({ date, name, content }) => {

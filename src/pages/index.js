@@ -24,7 +24,6 @@ class RootIndex extends React.Component {
       this,
       'props.data.allContentfulSportsInformationBar.edges'
     )
-    console.log('sportsInformationBar :', sportsInformationBar)
     return (
       <CustomProvider theme="dark">
         <Layout location={this.props.location} depinfo={depinfo}>

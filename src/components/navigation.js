@@ -15,7 +15,7 @@ export default class navigation extends Component {
           {nodes.map((node) => {
             const { name, slug } = node
             return (
-              <li className={styles.navigationItem}>
+              <li className={styles.navigationItem} key={name}>
                 <Link to={`/department/${slug}`}>{name}</Link>
               </li>
             )

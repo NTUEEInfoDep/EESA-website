@@ -155,7 +155,6 @@ export default function LostAndFound() {
           new Date(a['撿到的時間']) <= late_date &&
           new Date(a['撿到的時間']) >= early_date
         ) {
-          console.log(new Date(a['撿到的時間']), late_date, early_date)
           return true
         }
         return false
@@ -214,8 +213,8 @@ export default function LostAndFound() {
               <CircularProgress sx={{}} />
             </Grid>
           ) : (
-            items.map((item) => (
-              <Grid item xs={4}>
+            items.map((item, index) => (
+              <Grid item xs={4} key={index}>
                 <Card className={cx(classes.cardRoot, shadowStyles.root)}>
                   {item['照片'] ? (
                     <CardMedia
