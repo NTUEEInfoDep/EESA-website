@@ -15,6 +15,7 @@ import cx from 'clsx'
 import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { Stack } from '@mui/material'
@@ -227,14 +228,18 @@ export default function LostAndFound() {
                     <></>
                   )}
                   <CardContent>
-                    <Stack>
-                      <Typography>撿到的時間: {item['撿到的時間']}</Typography>
-                      <Typography>撿到什麼: {item['撿到什麼']}</Typography>
-                      <Typography>
-                        在哪撿到的: {item['在哪撿到的？']}
-                      </Typography>
-                    </Stack>
+                    <Typography variant="h5" component="div">
+                      {item['撿到什麼']}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {item['在哪撿到的？']}
+                    </Typography>
                   </CardContent>
+                  <CardActions style={{justifyContent: 'right'}}>
+                      <Typography variant="caption" color="text.secondary">
+                        {item['撿到的時間']}
+                      </Typography>
+                  </CardActions>
                 </Card>
               </Grid>
             ))
