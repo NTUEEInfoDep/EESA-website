@@ -8,63 +8,86 @@ import Grid from '@mui/material/Grid'
 import LeaderCards from '../components/leaderCard'
 import Box from '@mui/material/Box'
 import { CustomProvider } from 'rsuite'
+import DepartmentLayout from '../components/departmentLayout'
+import DepartmentComponentTitle from '../components/departmentComponentTitle'
 
 import { FUNC_CONST, CLASS_CONST } from '../static/constant'
 
 const Department = (props) => {
   const depinfo = props.data.contentfulDepartmentMainPage
+  const alldepinfo = props.data.allContentfulDepartmentMainPage
+
   const { body } = depinfo
 
   return (
     <CustomProvider theme="dark">
-      <Container style={{ background: '#fff' }}>
-        {/* <Navigation depinfo={depinfo} /> */}
-        <CardMedia
-          component="img"
-          height="540"
-          image={depinfo.department.backgroundImage.file.url}
-          alt="dep-image"
-        />
-        <Typography variant="h2" className="section-headline" color={'black'}>
-          {depinfo.name}
-        </Typography>
-        <Box style={{ backgroundColor: 'dimgrey' }}>
-          <Grid container>
-            <Grid item xs={12}>
-              <LeaderCards depinfo={depinfo.department} />
-            </Grid>
+      <DepartmentLayout depinfo={alldepinfo}>
+        <Container style={{ background: '#fff' }}>
+          {/* <Navigation depinfo={depinfo} /> */}
+          <CardMedia
+            component="img"
+            height="540"
+            image={depinfo.department.backgroundImage.file.url}
+            alt="dep-image"
+          />
+          <Typography variant="h2" className="section-headline" color={'black'}>
+            {depinfo.name}
+          </Typography>
+          <Box style={{ backgroundColor: 'dimgrey' }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <LeaderCards depinfo={depinfo.department} />
+              </Grid>
 
-            <Grid item xs={12}>
-              <Card sx={{ margin: '5px', padding: '15px' }}>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: depinfo.department.intro.childMarkdownRemark.html,
-                  }}
-                />
-              </Card>
+              <Grid item xs={12}>
+                <Card sx={{ margin: '5px', padding: '15px' }}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: depinfo.department.intro.childMarkdownRemark.html,
+                    }}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-        {body.map((type) => {
-          if (Object.keys(CLASS_CONST).includes(type)) {
-            const cls = new CLASS_CONST[type][1]()
-            cls.props = {
-              data: props.data[`allContentful${CLASS_CONST[type][0]}`].edges,
+          </Box>
+          {body.map((type) => {
+            if (Object.keys(CLASS_CONST).includes(type)) {
+              const cls = new CLASS_CONST[type][1]()
+              cls.props = {
+                data: props.data[`allContentful${CLASS_CONST[type][0]}`].edges,
+              }
+              return (
+                <>
+                  {CLASS_CONST[type][2] ? (
+                    <DepartmentComponentTitle title={CLASS_CONST[type][2]} />
+                  ) : (
+                    <></>
+                  )}
+                  <div key={type}>{cls.render()}</div>
+                </>
+              )
+            } else if (Object.keys(FUNC_CONST).includes(type)) {
+              return (
+                <>
+                  {FUNC_CONST[type][2] ? (
+                    <DepartmentComponentTitle title={FUNC_CONST[type][2]} />
+                  ) : (
+                    <></>
+                  )}
+                  <div key={type}>
+                    {FUNC_CONST[type][1]({
+                      data: props.data[`allContentful${FUNC_CONST[type][0]}`]
+                        .edges,
+                    })}
+                  </div>
+                </>
+              )
+            } else {
+              return <div key={type}></div>
             }
-            return <div key={type}>{cls.render()}</div>
-          } else if (Object.keys(FUNC_CONST).includes(type)) {
-            return (
-              <div key={type}>
-                {FUNC_CONST[type][1]({
-                  data: props.data[`allContentful${FUNC_CONST[type][0]}`].edges,
-                })}
-              </div>
-            )
-          } else {
-            return <div key={type}></div>
-          }
-        })}
-      </Container>
+          })}
+        </Container>
+      </DepartmentLayout>
     </CustomProvider>
   )
 }
@@ -118,6 +141,14 @@ export const pageQuery = graphql`
           dateTime(formatString: "YYYY/MM/D h:mma")
           shortIntro
         }
+      }
+    }
+    allContentfulDepartmentMainPage {
+      nodes {
+        name
+        contentful_id
+        slug
+        body
       }
     }
     allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
