@@ -8,8 +8,7 @@ import Stack from '@mui/material/Stack'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import EmailIcon from '@mui/icons-material/Email'
 import { makeStyles } from '@mui/styles'
-import Paper from '@mui/material/Paper'
-import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
 import Color from 'color'
 import cx from 'clsx'
 import CardActionArea from '@mui/material/CardActionArea'
@@ -17,11 +16,9 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree'
 import Avatar from '@mui/material/Avatar'
-import Divider from '@mui/material/Divider'
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded'
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered'
 import { useSpring, a } from '@react-spring/web'
-import style from './leaderCard.module.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,10 +66,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardModal: {
     borderRadius: 12,
-    minWidth: 256,
+    width: 256,
     height: '100%',
     textAlign: 'center',
-    maxWidth: '300px',
     backgroundColor: '#4f4f4f',
     transition: '0.2s',
   },
@@ -80,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     width: 60,
     height: 60,
     margin: 'auto',
+    marginTop: 8,
   },
   heading: {
     fontSize: 18,
@@ -105,6 +102,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     letterSpacing: '1px',
     wordWrap: 'break-word',
+    padding: '0px 8px',
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  border: {
+    borderBottom: '2px solid lightgray',
+    width: '100%',
+  },
+  titleContent: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    fontWeight: 500,
+    fontSize: 12,
+    color: 'lightgray',
   },
 }))
 
@@ -113,7 +128,7 @@ export default function LeaderCards(props) {
   const classes = useStyles({ color: '#2f2f2f' })
 
   return (
-    <Grid container flex justifyContent="space-evenly" classes={classes.root}>
+    <Grid container flex justifyContent="space-evenly" sx={{ padding: '8px' }}>
       {depinfo.leaders.map((leader, index) => {
         return (
           <>
@@ -159,41 +174,34 @@ const CustomCard = ({ leader }) => {
         onClick={() => set((state) => !state)}
       >
         <Card className={cx(classes.cardModal, shadowStyles.root)}>
-          <CardContent sx={{ height: '50%', padding: 0 }}>
-            <Avatar
-              className={classes.avatar}
-              src={leader.leaderSelfie.file.url}
-            />
-            <h3 className={classes.heading}>{leader.leaderName}</h3>
-            <span className={classes.subheader}>{leader.title}</span>
-          </CardContent>
-          <Divider light sx={{ color: 'white' }} />
-          <Grid container sx={{ height: '50%' }}>
-            <Grid
-              p={2}
-              xs={7}
-              flexGrow={1}
-              className={borderedGridStyles.item}
-              sx={{ padding: 1 }}
+          <Box
+            sx={{
+              height: '100%',
+              padding: 0,
+            }}
+          >
+            <Box sx={{ height: '35%' }}>
+              <Avatar
+                className={classes.avatar}
+                src={leader.leaderSelfie.file.url}
+              />
+              <h3 className={classes.heading}>{leader.leaderName}</h3>
+              <span className={classes.subheader}>{leader.title}</span>
+            </Box>
+            <Box
+              sx={{ height: '40%', paddingBottom: '10px', overflow: 'hidden' }}
             >
-              <p className={classes.statLabel}>Introdution</p>
+              <DividerWithText>Introdution</DividerWithText>
               <div
                 dangerouslySetInnerHTML={{
                   __html: leader.leaderIntroduction.childMarkdownRemark.html,
                 }}
                 className={classes.statValue}
               />
-            </Grid>
-            <Grid
-              p={2}
-              xs={5}
-              flexGrow={1}
-              className={borderedGridStyles.item}
-              sx={{ padding: 1 }}
-            >
-              <p className={classes.statLabel} style={{ marginBottom: '10px' }}>
-                Contact
-              </p>
+            </Box>
+            <Box sx={{ height: '20%' }}>
+              <DividerWithText>Contact</DividerWithText>
+
               <a href={leader.leaderGithub} style={{ margin: 2 }}>
                 <GitHubIcon fontSize="large" />
               </a>
@@ -203,8 +211,8 @@ const CustomCard = ({ leader }) => {
               <a href={leader.leaderEmail} style={{ margin: 2 }}>
                 <EmailIcon fontSize="large" />
               </a>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Card>
       </a.div>
       <a.div
@@ -223,10 +231,13 @@ const CustomCard = ({ leader }) => {
               image={leader.leaderSelfie.file.url}
             />
             <CardContent className={classes.content}>
-              <Typography className={classes.title} variant={'h2'}>
+              <Typography className={classes.title} variant={'h4'}>
                 {leader.leaderName}
               </Typography>
-              <Typography className={classes.subtitle}>
+              <Typography
+                className={classes.subtitle}
+                sx={{ marginLeft: '1px' }}
+              >
                 {leader.title}
               </Typography>
             </CardContent>
@@ -234,5 +245,15 @@ const CustomCard = ({ leader }) => {
         </CardActionArea>
       </a.div>
     </>
+  )
+}
+const DividerWithText = ({ children }) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.container}>
+      <div className={classes.border} />
+      <span className={classes.titleContent}>{children}</span>
+      <div className={classes.border} />
+    </div>
   )
 }
