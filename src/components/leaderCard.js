@@ -21,10 +21,6 @@ import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBor
 import { useSpring, a } from '@react-spring/web'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: '20px',
-    padding: '10px',
-  },
   item: {
     margin: '10px',
     position: 'relative',
@@ -173,36 +169,43 @@ const CustomCard = ({ leader }) => {
         }}
         onClick={() => set((state) => !state)}
       >
-        <Card className={cx(classes.cardModal, shadowStyles.root)}>
+        <Card className={classes.cardModal}>
           <Box
             sx={{
               height: '100%',
               padding: 0,
             }}
           >
-            <Box sx={{ height: '35%' }}>
-              <Avatar
-                className={classes.avatar}
-                src={leader.leaderSelfie.file.url}
-              />
-              <h3 className={classes.heading}>{leader.leaderName}</h3>
-              <span className={classes.subheader}>{leader.title}</span>
-            </Box>
-            <Box
-              sx={{ height: '40%', paddingBottom: '10px', overflow: 'hidden' }}
-            >
-              <DividerWithText>Introdution</DividerWithText>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: leader.leaderIntroduction.childMarkdownRemark.html,
+            <>
+              <Box sx={{ height: '35%' }}>
+                <Avatar
+                  className={classes.avatar}
+                  src={leader.leaderSelfie.file.url}
+                />
+                <h3 className={classes.heading}>{leader.leaderName}</h3>
+                <span className={classes.subheader}>{leader.title}</span>
+              </Box>
+              <Box
+                sx={{
+                  height: '40%',
+                  paddingBottom: '10px',
+                  overflow: 'hidden',
+                  marginTop: '4px',
                 }}
-                className={classes.statValue}
-              />
-            </Box>
+              >
+                <DividerWithText>Introdution</DividerWithText>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: leader.leaderIntroduction.childMarkdownRemark.html,
+                  }}
+                  className={classes.statValue}
+                />
+              </Box>
+            </>
             <Box sx={{ height: '20%' }}>
               <DividerWithText>Contact</DividerWithText>
 
-              <a href={leader.leaderGithub} style={{ margin: 2 }}>
+              <a href={leader.leaderGithub} style={{ margin: 2 }} zIndex={1}>
                 <GitHubIcon fontSize="large" />
               </a>
               <a href={leader.leaderFacebook} style={{ margin: 2 }}>
@@ -224,8 +227,8 @@ const CustomCard = ({ leader }) => {
         }}
         onClick={() => set((state) => !state)}
       >
-        <CardActionArea className={cx(classes.cardModal, shadowStyles.root)}>
-          <Card className={classes.card}>
+        <CardActionArea className={cx(classes.cardModal)}>
+          <Card className={classes.card} sx={{ padding: 0, margin: 0 }}>
             <CardMedia
               classes={mediaStyles}
               image={leader.leaderSelfie.file.url}
