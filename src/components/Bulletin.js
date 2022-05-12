@@ -203,6 +203,15 @@ export default function Bulletin({ data }) {
               onChangePage={handleChangePage}
               onChangeLimit={handleChangeLimit}
             />
+            <Button
+              style={{
+                marginTop: 'auto',
+                marginLeft: 'auto',
+              }}
+              href="/post"
+            >
+              view all posts
+            </Button>
           </div>
         </Panel>
 
