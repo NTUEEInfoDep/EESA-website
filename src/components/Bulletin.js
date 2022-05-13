@@ -67,11 +67,13 @@ export default class Bulletin extends React.Component {
   }
   getData(datas) {
     const { displayLength, page } = this.state
-    return datas.filter((v, i) => {
-      const start = displayLength * (page - 1)
-      const end = start + displayLength
-      return i >= start && i < end
-    })
+    if (datas) {
+      return datas.filter((v, i) => {
+        const start = displayLength * (page - 1)
+        const end = start + displayLength
+        return i >= start && i < end
+      })
+    }
   }
   close() {
     this.setState({
@@ -87,34 +89,31 @@ export default class Bulletin extends React.Component {
 
   render() {
     const data = this.props.data
+    let datas = data
     if (this.state.filter_tag.length > 0) {
       datas = datas.filter((item) => {
-        const tmp = item.tag.filter((value) =>
-          this.state.filter_tag.includes(value)
-        )
-        if (tmp.length > 0) {
-          return true
-        }
-        return false
+        let tmp = item.node.tag.filter((value) => {
+          return this.state.filter_tag.includes(value)
+        })
+        if (tmp.length > 0) return true
+        else return false
       })
     }
     if (this.state.filter_department.length > 0) {
-      data = data.filter((item) => {
-        const tmp = item.departments.filter((value) =>
-          this.state.filter_department.includes(value)
-        )
-        if (tmp.length > 0) {
-          return true
-        }
-        return false
+      datas = datas.filter((item) => {
+        let tmp = item.node.departments.filter((value) => {
+          return this.state.filter_department.includes(value)
+        })
+        if (tmp.length > 0) return true
+        else return false
       })
     }
     if (this.state.keyword !== '') {
-      data = data.filter((item) => {
+      datas = datas.filter((item) => {
         return item.title.search(this.state.keyword) > -1
       })
     }
-    const posts = this.getData(data)
+    const posts = this.getData(datas)
     const { loading, displayLength, page, size, placement, show, drawerData } =
       this.state
     const header = (
