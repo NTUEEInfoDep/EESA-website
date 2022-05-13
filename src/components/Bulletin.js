@@ -110,7 +110,7 @@ export default class Bulletin extends React.Component {
     }
     if (this.state.keyword !== '') {
       datas = datas.filter((item) => {
-        return item.title.search(this.state.keyword) > -1
+        return item.node.title.search(this.state.keyword) > -1
       })
     }
     const posts = this.getData(datas)
