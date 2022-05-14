@@ -71,7 +71,7 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMM Do, YYYY")
           tag
           titleImage {
-            gatsbyImageData
+            gatsbyImageData(width: 100, height: 196)
           }
           description {
             raw
@@ -91,7 +91,7 @@ export const pageQuery = graphql`
           }
           title
           heroImage: image {
-            gatsbyImageData
+            gatsbyImageData(width: 1180, height: 480)
           }
         }
       }
@@ -131,7 +131,7 @@ export const pageQuery = graphql`
       edges {
         node {
           honorRoll {
-            gatsbyImageData
+            gatsbyImageData(width: 1920, height: 1080)
           }
         }
       }
