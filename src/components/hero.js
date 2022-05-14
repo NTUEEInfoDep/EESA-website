@@ -1,14 +1,14 @@
 import React from 'react'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 
 import styles from './hero.module.css'
 
 export default ({ data }) => (
   <div className={styles.hero}>
-    <Img
+    <GatsbyImage
       className={styles.heroImage}
       alt={data.name}
-      fluid={data.heroImage.fluid}
+      image={data.heroImage.gatsbyImageData}
     />
     <div className={styles.heroDetails}>
       <h3 className={styles.heroHeadline}>{data.name}</h3>

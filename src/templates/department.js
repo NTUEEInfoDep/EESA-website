@@ -159,16 +159,10 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMM Do, YYYY")
           tag
           titleImage {
-            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData
           }
           description {
-            content {
-              content {
-                value
-              }
-            }
+            raw
           }
           departments
         }

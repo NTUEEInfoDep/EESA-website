@@ -259,9 +259,8 @@ export default class Bulletin extends React.Component {
                   <div className="details">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html:
-                          drawerData.node.description.content[0].content[0]
-                            .value,
+                        __html: JSON.parse(drawerData.node.description.raw)
+                          .content[0].content[0].value,
                       }}
                     ></div>
                   </div>
