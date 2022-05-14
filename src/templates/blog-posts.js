@@ -2,7 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import get from 'lodash/get'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import Layout from '../components/layout'
 import Chip from '@mui/material/Chip'
 import FaceIcon from '@mui/icons-material/Face'
@@ -33,10 +33,10 @@ class BlogPostTemplate extends React.Component {
         >
           <Helmet title={`${post.title} | ${siteTitle}`} />
           <div className={container}>
-            <Img
+            <GatsbyImage
               className={img}
               alt={post.title}
-              fluid={post.titleImage.fluid}
+              image={post.titleImage.gatsbyImageData}
             />
             <div className={box_2}>
               <h1 className={title}>{post.title}</h1>
@@ -98,9 +98,7 @@ export const pageQuery = graphql`
       title
       publishDate(formatString: "MMM Do, YYYY")
       titleImage {
-        fluid(maxWidth: 1180, background: "rgb:000000") {
-          ...GatsbyContentfulFluid_tracedSVG
-        }
+        gatsbyImageData
       }
       body {
         childMarkdownRemark {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as styles from './Sports.module.css'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
@@ -27,7 +27,7 @@ function Sports({ honorRoll, informationBar }) {
 function HonorRoll({ honorRoll }) {
   let honorRollArray = []
   for (let i = 0; i < honorRoll.length; i++) {
-    honorRollArray.push(honorRoll[i].node.honorRoll.fluid)
+    honorRollArray.push(honorRoll[i].node.honorRoll.gatsbyImageData)
   }
   return (
     <Swiper
@@ -40,9 +40,9 @@ function HonorRoll({ honorRoll }) {
     >
       {honorRollArray.map((i, index) => (
         <SwiperSlide className={styles.slide} key={index}>
-          <Img
-            // alt={i}
-            fluid={i}
+          <GatsbyImage
+            alt=""
+            image={i}
             style={{
               width: '100%',
               height: '100%',

@@ -71,16 +71,10 @@ export const pageQuery = graphql`
           publishDate(formatString: "MMM Do, YYYY")
           tag
           titleImage {
-            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData
           }
           description {
-            content {
-              content {
-                value
-              }
-            }
+            raw
           }
           departments
         }
@@ -97,14 +91,7 @@ export const pageQuery = graphql`
           }
           title
           heroImage: image {
-            fluid(
-              maxWidth: 1180
-              maxHeight: 480
-              resizingBehavior: PAD
-              background: "rgb:000000"
-            ) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData
           }
         }
       }
@@ -118,11 +105,7 @@ export const pageQuery = graphql`
             title
             slug
             description {
-              content {
-                content {
-                  value
-                }
-              }
+              raw
             }
             body {
               childMarkdownRemark {
@@ -148,9 +131,7 @@ export const pageQuery = graphql`
       edges {
         node {
           honorRoll {
-            fluid(maxWidth: 1920, maxHeight: 1080, quality: 100) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
+            gatsbyImageData
           }
         }
       }
