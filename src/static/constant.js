@@ -7,10 +7,11 @@ import Bulletin from '../components/Bulletin'
 
 const FUNC_CONST = {
   Activity: ['Activity', TimeLine3, ''], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
+  Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
 const CLASS_CONST = {
-  Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
+  // Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
 export { FUNC_CONST, CLASS_CONST }

@@ -15,71 +15,69 @@ import {
   tag_div,
 } from './blog-posts.module.css'
 
-class BlogPostTemplate extends React.Component {
-  render() {
-    const post = get(this.props, 'data.contentfulBlogPosts')
-    const siteTitle = get(this.props, 'data.site.siteMetadata.title')
-    const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
+function BlogPostTemplate({ data, location }) {
+  const post = get(data, 'contentfulBlogPosts')
+  const siteTitle = get(data, 'site.siteMetadata.title')
+  const depinfo = get(data, 'allContentfulDepartmentMainPage')
 
-    return (
-      <Layout location={this.props.location} depinfo={depinfo}>
-        <div
-          style={{
-            height: '100vh',
-            opacity: '.8',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Helmet title={`${post.title} | ${siteTitle}`} />
-          <div className={container}>
-            <GatsbyImage
-              className={img}
-              alt={post.title}
-              image={post.titleImage.gatsbyImageData}
-            />
-            <div className={box_2}>
-              <h1 className={title}>{post.title}</h1>
+  return (
+    <Layout location={this.props.location} depinfo={depinfo}>
+      <div
+        style={{
+          height: '100vh',
+          opacity: '.8',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Helmet title={`${post.title} | ${siteTitle}`} />
+        <div className={container}>
+          <GatsbyImage
+            className={img}
+            alt={post.title}
+            image={post.titleImage.gatsbyImageData}
+          />
+          <div className={box_2}>
+            <h1 className={title}>{post.title}</h1>
 
-              <div className={tag_div}>
-                {post.tag.map((item) => {
-                  return (
-                    <Chip
-                      label={item}
-                      icon={<FaceIcon />}
-                      style={{ listStyleType: 'none' }}
-                    />
-                  )
-                })}
-              </div>
-              <div>
-                {post.departments.map((item) => {
-                  return (
-                    <p
-                      style={{
-                        display: 'inline-block',
-                        padding: '0rem 0.5rem',
-                      }}
-                    >
-                      {item}
-                    </p>
-                  )
-                })}
-              </div>
-              <div>{post.publishDate}</div>
+            <div className={tag_div}>
+              {post.tag.map((item) => {
+                return (
+                  <Chip
+                    label={item}
+                    icon={<FaceIcon />}
+                    style={{ listStyleType: 'none' }}
+                  />
+                )
+              })}
             </div>
-            <section className={box_3} style={{ paddingTop: '2vh' }}>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: post.body.childMarkdownRemark.html,
-                }}
-              />
-            </section>
+            <div>
+              {post.departments.map((item) => {
+                return (
+                  <p
+                    style={{
+                      display: 'inline-block',
+                      padding: '0rem 0.5rem',
+                    }}
+                  >
+                    {item}
+                  </p>
+                )
+              })}
+            </div>
+            <div>{post.publishDate}</div>
           </div>
+          <section className={box_3} style={{ paddingTop: '2vh' }}>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: post.body.childMarkdownRemark.html,
+              }}
+            />
+          </section>
         </div>
-      </Layout>
-    )
-  }
+      </div>
+    </Layout>
+  )
 }
 
 export default BlogPostTemplate
