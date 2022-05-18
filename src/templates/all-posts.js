@@ -1,25 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { graphql, Link } from 'gatsby'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
+import { Button, Input, InputGroup } from 'rsuite'
+import SearchIcon from '@rsuite/icons/Search'
 import { CustomProvider } from 'rsuite'
 
 const allPosts = (props) => {
   const posts = props.data.allContentfulBlogPosts.edges
-  console.log(posts)
+  const [keyword, setKeyword] = useState('')
   return (
     <CustomProvider theme="dark">
       <Typography variant="h2" className="section-headline">
         All Posts
       </Typography>
       <Container>
+        <InputGroup style={{ marginTop: '20px' }}>
+          <Input placeholder="search" onChange={(value) => setKeyword(value)} />
+          <InputGroup.Button
+            onClick={() => {
+              // TODO: search for keyword
+            }}
+          >
+            <SearchIcon />
+          </InputGroup.Button>
+        </InputGroup>
         <List>
           {posts.map(({ node: post }) => {
             return (
-              <ListItem key={post.title}>
+              <ListItem
+                key={post.title}
+                style={{ border: '2px solid', margin: '20px' }}
+              >
                 <Link to={`/post/${post.slug}`}>
                   <ListItemText
                     primary={
