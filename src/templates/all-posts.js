@@ -1,25 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { graphql, Link } from 'gatsby'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
-import { Button, Input, InputGroup } from 'rsuite'
+import { Input, InputGroup } from 'rsuite'
 import SearchIcon from '@rsuite/icons/Search'
 import { CustomProvider } from 'rsuite'
+import Navigation from '../components/navigation'
 
 const allPosts = (props) => {
   const posts = props.data.allContentfulBlogPosts.edges
+  const depinfo = props.data.allContentfulDepartmentMainPage
   const [keyword, setKeyword] = useState('')
+  const [content, setContent] = useState([])
+
+  useEffect(() => {
+    console.log(window.__FLEXSEARCH__)
+  }, [content])
+
   return (
     <CustomProvider theme="dark">
+      <Navigation depinfo={depinfo} />
       <Typography variant="h2" className="section-headline">
         All Posts
       </Typography>
       <Container>
         <InputGroup style={{ marginTop: '20px' }}>
-          <Input placeholder="search" onChange={(value) => setKeyword(value)} />
+          <Input
+            placeholder="search"
+            type="search"
+            onChange={(value) => setKeyword(value)}
+          />
           <InputGroup.Button
             onClick={() => {
               // TODO: search for keyword
@@ -66,18 +79,18 @@ export default allPosts
 
 export const pageQuery = graphql`
   query AllPosts {
+    allContentfulDepartmentMainPage {
+      nodes {
+        name
+        slug
+      }
+    }
     allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
       edges {
         node {
           title
           slug
           publishDate(formatString: "MMM Do, YYYY")
-          tag
-          titleImage {
-            fluid(maxWidth: 100, maxHeight: 196, resizingBehavior: SCALE) {
-              ...GatsbyContentfulFluid_tracedSVG
-            }
-          }
           description {
             content {
               content {
@@ -85,7 +98,11 @@ export const pageQuery = graphql`
               }
             }
           }
-          departments
+          childContentfulBlogPostsBodyTextNode {
+            childMarkdownRemark {
+              html
+            }
+          }
         }
       }
     }
