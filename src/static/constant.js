@@ -5,9 +5,9 @@ import Bulletin from '../components/Bulletin'
 // A: [B, C, D]    =>  <C data={get(this, `props.data.allContentful${B}.edges`)} />
 // D is the title of the component. If not want to use it, keep it an empty string('')
 
-const FUNC_CONST = {
+const MODULE_LIST = {
   Activity: ['Activity', TimeLine3, ''], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
   Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
-export { FUNC_CONST }
+export { MODULE_LIST }

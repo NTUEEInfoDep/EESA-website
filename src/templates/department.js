@@ -11,7 +11,7 @@ import { CustomProvider } from 'rsuite'
 import DepartmentLayout from '../components/departmentLayout'
 import DepartmentComponentTitle from '../components/departmentComponentTitle'
 
-import { FUNC_CONST } from '../static/constant'
+import { MODULE_LIST } from '../static/constant'
 
 const Department = (props) => {
   const depinfo = props.data.contentfulDepartmentMainPage
@@ -51,17 +51,17 @@ const Department = (props) => {
             </Grid>
           </Box>
           {body.map((type) => {
-            if (Object.keys(FUNC_CONST).includes(type)) {
+            if (Object.keys(MODULE_LIST).includes(type)) {
               return (
                 <>
-                  {FUNC_CONST[type][2] ? (
-                    <DepartmentComponentTitle title={FUNC_CONST[type][2]} />
+                  {MODULE_LIST[type][2] ? (
+                    <DepartmentComponentTitle title={MODULE_LIST[type][2]} />
                   ) : (
                     <></>
                   )}
                   <div key={type}>
-                    {FUNC_CONST[type][1]({
-                      data: props.data[`allContentful${FUNC_CONST[type][0]}`]
+                    {MODULE_LIST[type][1]({
+                      data: props.data[`allContentful${MODULE_LIST[type][0]}`]
                         .edges,
                     })}
                   </div>
