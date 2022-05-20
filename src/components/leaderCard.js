@@ -8,8 +8,7 @@ import Stack from '@mui/material/Stack'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import EmailIcon from '@mui/icons-material/Email'
 import { makeStyles } from '@mui/styles'
-import Paper from '@mui/material/Paper'
-import Modal from '@mui/material/Modal'
+import Box from '@mui/material/Box'
 import Color from 'color'
 import cx from 'clsx'
 import CardActionArea from '@mui/material/CardActionArea'
@@ -17,17 +16,11 @@ import Card from '@mui/material/Card'
 import CardMedia from '@mui/material/CardMedia'
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree'
 import Avatar from '@mui/material/Avatar'
-import Divider from '@mui/material/Divider'
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded'
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered'
 import { useSpring, a } from '@react-spring/web'
-import style from './leaderCard.module.css'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: '20px',
-    padding: '10px',
-  },
   item: {
     margin: '10px',
     position: 'relative',
@@ -36,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
   },
   card: ({ color }) => ({
+    height: '100%',
     minWidth: 256,
     borderRadius: 16,
     boxShadow: 'none',
@@ -44,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
         .rotate(-12)
         .darken(0.2)
         .fade(0.5)}`,
+      cursor: 'pointer',
     },
   }),
   content: ({ color }) => {
@@ -69,10 +64,9 @@ const useStyles = makeStyles((theme) => ({
   },
   cardModal: {
     borderRadius: 12,
-    minWidth: 256,
+    width: 256,
     height: '100%',
     textAlign: 'center',
-    maxWidth: '300px',
     backgroundColor: '#4f4f4f',
     transition: '0.2s',
   },
@@ -80,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     width: 60,
     height: 60,
     margin: 'auto',
+    marginTop: 8,
   },
   heading: {
     fontSize: 18,
@@ -105,6 +100,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     letterSpacing: '1px',
     wordWrap: 'break-word',
+    padding: '0px 8px',
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  border: {
+    borderBottom: '2px solid lightgray',
+    width: '100%',
+  },
+  titleContent: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    fontWeight: 500,
+    fontSize: 12,
+    color: 'lightgray',
   },
 }))
 
@@ -113,7 +126,7 @@ export default function LeaderCards(props) {
   const classes = useStyles({ color: '#2f2f2f' })
 
   return (
-    <Grid container flex justifyContent="space-evenly" classes={classes.root}>
+    <Grid container flex justifyContent="space-evenly" sx={{ padding: '8px' }}>
       {depinfo.leaders.map((leader, index) => {
         return (
           <>
@@ -146,6 +159,36 @@ const CustomCard = ({ leader }) => {
 
   return (
     <>
+      {' '}
+      <a.div
+        className={classes.card}
+        style={{
+          opacity: opacity.to((o) => 1 - o),
+          transform,
+          zIndex: 2,
+        }}
+        onClick={() => set((state) => !state)}
+      >
+        <CardActionArea className={cx(classes.cardModal)}>
+          <Card className={classes.card} sx={{ padding: 0, margin: 0 }}>
+            <CardMedia
+              classes={mediaStyles}
+              image={leader.leaderSelfie.file.url}
+            />
+            <CardContent className={classes.content}>
+              <Typography className={classes.title} variant={'h4'}>
+                {leader.leaderName}
+              </Typography>
+              <Typography
+                className={classes.subtitle}
+                sx={{ marginLeft: '1px' }}
+              >
+                {leader.title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </CardActionArea>
+      </a.div>
       <a.div
         className={classes.card}
         style={{
@@ -158,81 +201,67 @@ const CustomCard = ({ leader }) => {
         }}
         onClick={() => set((state) => !state)}
       >
-        <Card className={cx(classes.cardModal, shadowStyles.root)}>
-          <CardContent sx={{ height: '50%', padding: 0 }}>
-            <Avatar
-              className={classes.avatar}
-              src={leader.leaderSelfie.file.url}
-            />
-            <h3 className={classes.heading}>{leader.leaderName}</h3>
-            <span className={classes.subheader}>{leader.title}</span>
-          </CardContent>
-          <Divider light sx={{ color: 'white' }} />
-          <Grid container sx={{ height: '50%' }}>
-            <Grid
-              p={2}
-              xs={7}
-              flexGrow={1}
-              className={borderedGridStyles.item}
-              sx={{ padding: 1 }}
-            >
-              <p className={classes.statLabel}>Introdution</p>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: leader.leaderIntroduction.childMarkdownRemark.html,
+        <Card className={classes.cardModal}>
+          <Box
+            sx={{
+              height: '100%',
+              padding: 0,
+            }}
+          >
+            <>
+              <Box sx={{ height: '28%' }}>
+                <Avatar
+                  className={classes.avatar}
+                  src={leader.leaderSelfie.file.url}
+                />
+                <h3 className={classes.heading}>{leader.leaderName}</h3>
+                {/* <span className={classes.subheader}>{leader.title}</span> */}
+              </Box>
+              <Box
+                sx={{
+                  height: '30%',
+                  paddingBottom: '10px',
+                  overflow: 'hidden',
+                  marginTop: '8px',
                 }}
-                className={classes.statValue}
-              />
-            </Grid>
-            <Grid
-              p={2}
-              xs={5}
-              flexGrow={1}
-              className={borderedGridStyles.item}
-              sx={{ padding: 1 }}
-            >
-              <p className={classes.statLabel} style={{ marginBottom: '10px' }}>
-                Contact
+              >
+                <DividerWithText>Introdution</DividerWithText>
+                <Typography className={classes.statValue}>
+                  {' '}
+                  {leader.leaderIntroduction}
+                </Typography>
+              </Box>
+            </>
+            <Box sx={{ height: '20%' }}>
+              <DividerWithText>Contact</DividerWithText>
+
+              <a
+                href={leader.leaderGithub}
+                style={{ marginRight: '5%' }}
+                zIndex={1}
+              >
+                <GitHubIcon sx={{ marginTop: '5px' }} fontSize="large" />
+              </a>
+              <a href={leader.leaderFacebook}>
+                <FacebookIcon sx={{ marginTop: '5px' }} fontSize="large" />
+              </a>
+              <p style={{ marginTop: '1%' }}>
+                <EmailIcon fontSize="small" /> {leader.leaderEmail}
               </p>
-              <a href={leader.leaderGithub} style={{ margin: 2 }}>
-                <GitHubIcon fontSize="large" />
-              </a>
-              <a href={leader.leaderFacebook} style={{ margin: 2 }}>
-                <FacebookIcon fontSize="large" />
-              </a>
-              <a href={leader.leaderEmail} style={{ margin: 2 }}>
-                <EmailIcon fontSize="large" />
-              </a>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
         </Card>
       </a.div>
-      <a.div
-        className={classes.card}
-        style={{
-          opacity: opacity.to((o) => 1 - o),
-          transform,
-          zIndex: 2,
-        }}
-        onClick={() => set((state) => !state)}
-      >
-        <CardActionArea className={cx(classes.cardModal, shadowStyles.root)}>
-          <Card className={classes.card}>
-            <CardMedia
-              classes={mediaStyles}
-              image={leader.leaderSelfie.file.url}
-            />
-            <CardContent className={classes.content}>
-              <Typography className={classes.title} variant={'h2'}>
-                {leader.leaderName}
-              </Typography>
-              <Typography className={classes.subtitle}>
-                {leader.title}
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardActionArea>
-      </a.div>
     </>
+  )
+}
+const DividerWithText = ({ children }) => {
+  const classes = useStyles()
+  return (
+    <div className={classes.container}>
+      <div className={classes.border} />
+      <span className={classes.titleContent}>{children}</span>
+      <div className={classes.border} />
+    </div>
   )
 }
