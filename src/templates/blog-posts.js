@@ -18,10 +18,9 @@ import {
 function BlogPostTemplate({ data, location }) {
   const post = get(data, 'contentfulBlogPosts')
   const siteTitle = get(data, 'site.siteMetadata.title')
-  const depinfo = get(data, 'allContentfulDepartmentMainPage')
 
   return (
-    <Layout location={this.props.location} depinfo={depinfo}>
+    <Layout location={location}>
       <div
         style={{
           height: '100vh',

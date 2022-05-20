@@ -15,15 +15,13 @@ import { MODULE_LIST } from '../static/constant'
 
 const Department = (props) => {
   const depinfo = props.data.contentfulDepartmentMainPage
-  const alldepinfo = props.data.allContentfulDepartmentMainPage
 
   const { body } = depinfo
 
   return (
     <CustomProvider theme="dark">
-      <DepartmentLayout depinfo={alldepinfo}>
+      <DepartmentLayout>
         <Container style={{ background: '#fff' }}>
-          {/* <Navigation depinfo={depinfo} /> */}
           <CardMedia
             component="img"
             height="540"
@@ -122,14 +120,6 @@ export const pageQuery = graphql`
           dateTime(formatString: "YYYY/MM/D h:mma")
           shortIntro
         }
-      }
-    }
-    allContentfulDepartmentMainPage {
-      nodes {
-        name
-        contentful_id
-        slug
-        body
       }
     }
     allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
