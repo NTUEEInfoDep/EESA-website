@@ -10,8 +10,4 @@ const FUNC_CONST = {
   Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
-const CLASS_CONST = {
-  // Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
-}
-
-export { FUNC_CONST, CLASS_CONST }
+export { FUNC_CONST }

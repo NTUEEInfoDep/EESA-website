@@ -19,24 +19,3 @@ export default function Layout({ location, children, depinfo }) {
     </Container>
   )
 }
-
-// class Template extends React.Component {
-//   render() {
-//     const { location, children, depinfo } = this.props
-//     let header
-
-//     let rootPath = `/`
-//     if (typeof __PREFIX_PATHS__ !== `undefined` && __PREFIX_PATHS__) {
-//       rootPath = __PATH_PREFIX__ + `/`
-//     }
-
-//     return (
-//       <Container>
-//         <Navigation depinfo={depinfo} />
-//         {children}
-//       </Container>
-//     )
-//   }
-// }
-
-// export default Template

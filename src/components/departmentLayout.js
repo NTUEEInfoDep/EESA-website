@@ -10,18 +10,3 @@ export default function DepartmentLayout({ children, depinfo }) {
     </Container>
   )
 }
-
-// class DepartmentLayout extends React.Component {
-//   render() {
-//     const { children, depinfo } = this.props
-
-//     return (
-//       <Container>
-//         <Navigation depinfo={depinfo} />
-//         {children}
-//       </Container>
-//     )
-//   }
-// }
-
-// export default DepartmentLayout
