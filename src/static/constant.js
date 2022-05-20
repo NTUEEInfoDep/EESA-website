@@ -1,4 +1,4 @@
-import TimeLine3 from '../components/timeline3'
+import TimeLine from '../components/timeline'
 import Bulletin from '../components/Bulletin'
 
 // A is the value of the Body of the Department Main Page on contentful
@@ -6,7 +6,7 @@ import Bulletin from '../components/Bulletin'
 // D is the title of the component. If not want to use it, keep it an empty string('')
 
 const MODULE_LIST = {
-  Activity: ['Activity', TimeLine3, ''], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
+  Activity: ['Activity', TimeLine, ''], // <TimeLine data={get(this, 'props.data.allContentfulActivity.edges')} />
   Bulletin: ['BlogPosts', Bulletin, 'Bulletin'], // <Bulletin data={get(this, 'props.data.allContentfulBlogPosts.edges')} />
 }
 
