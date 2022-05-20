@@ -179,7 +179,7 @@ export default function Bulletin({ data }) {
               </Cell>
             </Column>
           </Table>
-          <div style={{ paddingTop: '20px' }}>
+          <div style={{ paddingTop: '20px', display: 'flex' }}>
             <Pagination
               // limit={10}
               limit={displayLength}
