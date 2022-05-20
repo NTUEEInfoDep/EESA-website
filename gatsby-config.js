@@ -50,5 +50,57 @@ module.exports = {
         generateMatchPathRewrites: true, // boolean to turn off automatic creation of redirect rules for client only paths
       },
     },
+    {
+      resolve: 'gatsby-plugin-flexsearch',
+      options: {
+        languages: ['en'],
+        type: 'ContentfulBlogPosts',
+        // encode: (str) => str.replace(/[\x00-\x7F]/g, '').split(''),
+        fields: [
+          {
+            name: 'title',
+            indexed: false,
+            resolver: 'title',
+            attributes: {
+              encode: 'balance',
+              tokenize: 'strict',
+              threshold: 6,
+              depth: 3,
+            },
+            store: true,
+          },
+          {
+            name: 'slug',
+            indexed: false,
+            resolver: 'slug',
+            store: true,
+          },
+          {
+            name: 'description',
+            indexed: false,
+            resolver: 'description.raw',
+            attributes: {
+              encode: 'balance',
+              tokenize: 'strict',
+              threshold: 6,
+              depth: 3,
+            },
+            store: true,
+          },
+          {
+            name: 'body',
+            indexed: true,
+            resolver: 'body.body',
+            attributes: {
+              encode: 'balance',
+              tokenize: 'strict',
+              threshold: 6,
+              depth: 3,
+            },
+            store: true,
+          },
+        ],
+      },
+    },
   ],
 }

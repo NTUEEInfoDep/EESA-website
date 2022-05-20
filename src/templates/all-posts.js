@@ -11,7 +11,7 @@ import { CustomProvider } from 'rsuite'
 import Navigation from '../components/navigation'
 
 const allPosts = (props) => {
-  const posts = props.data.allContentfulBlogPosts.edges
+  const posts = props.data.allContentfulBlogPosts.nodes
   const depinfo = props.data.allContentfulDepartmentMainPage
   const [keyword, setKeyword] = useState('')
   const [content, setContent] = useState([])
@@ -42,7 +42,7 @@ const allPosts = (props) => {
           </InputGroup.Button>
         </InputGroup>
         <List>
-          {posts.map(({ node: post }) => {
+          {posts.map((post) => {
             return (
               <ListItem
                 key={post.title}
@@ -62,7 +62,12 @@ const allPosts = (props) => {
                       </h3>
                     }
                     secondary={
-                      <p>{post.description.content[0].content[0].value}</p>
+                      <p>
+                        {
+                          JSON.parse(post.description.raw).content[0].content[0]
+                            .value
+                        }
+                      </p>
                     }
                   />
                 </Link>
@@ -86,22 +91,17 @@ export const pageQuery = graphql`
       }
     }
     allContentfulBlogPosts(sort: { fields: [publishDate], order: DESC }) {
-      edges {
-        node {
-          title
-          slug
-          publishDate(formatString: "MMM Do, YYYY")
-          description {
-            content {
-              content {
-                value
-              }
-            }
-          }
-          childContentfulBlogPostsBodyTextNode {
-            childMarkdownRemark {
-              html
-            }
+      nodes {
+        title
+        slug
+        publishDate(formatString: "MMM Do, YYYY")
+        description {
+          raw
+        }
+        body {
+          body
+          childrenMarkdownRemark {
+            excerpt(pruneLength: 10)
           }
         }
       }
