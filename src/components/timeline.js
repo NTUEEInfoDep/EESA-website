@@ -4,11 +4,12 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
-import * as styles from './timeline.module.css'
+// import * as styles from './timeline.module.css'
 import StarIcon from '@mui/icons-material/Star'
 import WorkIcon from '@mui/icons-material/Work'
-import Img from 'gatsby-image'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { Button } from 'rsuite'
+import { StaticQuery, graphql } from 'gatsby'
 
 const TimeLineItem = ({ date, title, content, slug, image }) => {
   return (
@@ -23,7 +24,7 @@ const TimeLineItem = ({ date, title, content, slug, image }) => {
       }}
       contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
       date={date}
-      dateClassName={styles.timelineDate}
+      // dateClassName={styles.timelineDate}
       iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
       icon={<WorkIcon />}
     >
@@ -52,38 +53,66 @@ const TimeLineItem = ({ date, title, content, slug, image }) => {
       </div>
 
       <div>
-        <Img fluid={image} style={{ top: '10%' }}></Img>
+        <GatsbyImage alt="" image={image} style={{ top: '10%' }}></GatsbyImage>
       </div>
     </VerticalTimelineElement>
   )
 }
 
-export default function TimeLine3({ data }) {
+export default function TimeLine({ name }) {
   return (
-    <VerticalTimeline lineColor={'grey'} layout="1-column-left">
-      {data.map((element) => {
-        const e = element.node
-        const match = element.node.tag.indexOf('重要') > -1
-        if (!e || !match) return
-        return (
-          <TimeLineItem
-            date={e.publishDate}
-            title={e.title}
-            content={
-              e.description.content
-                ? e.description.content[0].content[0].value
-                : ''
+    <StaticQuery
+      query={graphql`
+        query {
+          allContentfulTimeline {
+            edges {
+              node {
+                name
+                blogPosts {
+                  title
+                  slug
+                  publishDate(formatString: "MMM Do, YYYY")
+                  tag
+                  titleImage {
+                    gatsbyImageData
+                  }
+                  description {
+                    raw
+                  }
+                  departments
+                }
+              }
             }
-            slug={e.slug}
-            image={e.titleImage.fluid}
-            key={e.title}
+          }
+        }
+      `}
+      render={(data) => (
+        <VerticalTimeline lineColor={'grey'} layout="1-column-left">
+          {data.allContentfulTimeline.edges.map((edge) => {
+            if (edge.node.name !== name) return
+            return edge.node.blogPosts.map((e) => {
+              // const match = element.node.tag.indexOf('重要') > -1
+              // if (!e || !match) return
+              return (
+                <TimeLineItem
+                  date={e.publishDate}
+                  title={e.title}
+                  content={
+                    JSON.parse(e.description.raw).content[0].content[0].value
+                  }
+                  slug={e.slug}
+                  image={e.titleImage.gatsbyImageData}
+                  key={e.title}
+                />
+              )
+            })
+          })}
+          <VerticalTimelineElement
+            iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
+            icon={<StarIcon />}
           />
-        )
-      })}
-      <VerticalTimelineElement
-        iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-        icon={<StarIcon />}
-      />
-    </VerticalTimeline>
+        </VerticalTimeline>
+      )}
+    />
   )
 }
