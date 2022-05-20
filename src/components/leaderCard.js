@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 16,
   },
   card: ({ color }) => ({
+    height: '100%',
     minWidth: 256,
     borderRadius: 16,
     boxShadow: 'none',
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
         .rotate(-12)
         .darken(0.2)
         .fade(0.5)}`,
+      cursor: 'pointer',
     },
   }),
   content: ({ color }) => {
@@ -157,67 +159,7 @@ const CustomCard = ({ leader }) => {
 
   return (
     <>
-      <a.div
-        className={classes.card}
-        style={{
-          position: 'absolute',
-          top: 0,
-          opacity,
-          transform,
-          rotateX: '180deg',
-          height: '100%',
-        }}
-        onClick={() => set((state) => !state)}
-      >
-        <Card className={classes.cardModal}>
-          <Box
-            sx={{
-              height: '100%',
-              padding: 0,
-            }}
-          >
-            <>
-              <Box sx={{ height: '35%' }}>
-                <Avatar
-                  className={classes.avatar}
-                  src={leader.leaderSelfie.file.url}
-                />
-                <h3 className={classes.heading}>{leader.leaderName}</h3>
-                <span className={classes.subheader}>{leader.title}</span>
-              </Box>
-              <Box
-                sx={{
-                  height: '40%',
-                  paddingBottom: '10px',
-                  overflow: 'hidden',
-                  marginTop: '4px',
-                }}
-              >
-                <DividerWithText>Introdution</DividerWithText>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: leader.leaderIntroduction.childMarkdownRemark.html,
-                  }}
-                  className={classes.statValue}
-                />
-              </Box>
-            </>
-            <Box sx={{ height: '20%' }}>
-              <DividerWithText>Contact</DividerWithText>
-
-              <a href={leader.leaderGithub} style={{ margin: 2 }} zIndex={1}>
-                <GitHubIcon fontSize="large" />
-              </a>
-              <a href={leader.leaderFacebook} style={{ margin: 2 }}>
-                <FacebookIcon fontSize="large" />
-              </a>
-              <a href={leader.leaderEmail} style={{ margin: 2 }}>
-                <EmailIcon fontSize="large" />
-              </a>
-            </Box>
-          </Box>
-        </Card>
-      </a.div>
+      {' '}
       <a.div
         className={classes.card}
         style={{
@@ -246,6 +188,69 @@ const CustomCard = ({ leader }) => {
             </CardContent>
           </Card>
         </CardActionArea>
+      </a.div>
+      <a.div
+        className={classes.card}
+        style={{
+          position: 'absolute',
+          top: 0,
+          opacity,
+          transform,
+          rotateX: '180deg',
+          height: '100%',
+        }}
+        onClick={() => set((state) => !state)}
+      >
+        <Card className={classes.cardModal}>
+          <Box
+            sx={{
+              height: '100%',
+              padding: 0,
+            }}
+          >
+            <>
+              <Box sx={{ height: '28%' }}>
+                <Avatar
+                  className={classes.avatar}
+                  src={leader.leaderSelfie.file.url}
+                />
+                <h3 className={classes.heading}>{leader.leaderName}</h3>
+                {/* <span className={classes.subheader}>{leader.title}</span> */}
+              </Box>
+              <Box
+                sx={{
+                  height: '30%',
+                  paddingBottom: '10px',
+                  overflow: 'hidden',
+                  marginTop: '8px',
+                }}
+              >
+                <DividerWithText>Introdution</DividerWithText>
+                <Typography className={classes.statValue}>
+                  {' '}
+                  {leader.leaderIntroduction}
+                </Typography>
+              </Box>
+            </>
+            <Box sx={{ height: '20%' }}>
+              <DividerWithText>Contact</DividerWithText>
+
+              <a
+                href={leader.leaderGithub}
+                style={{ marginRight: '5%' }}
+                zIndex={1}
+              >
+                <GitHubIcon sx={{ marginTop: '5px' }} fontSize="large" />
+              </a>
+              <a href={leader.leaderFacebook}>
+                <FacebookIcon sx={{ marginTop: '5px' }} fontSize="large" />
+              </a>
+              <p style={{ marginTop: '1%' }}>
+                <EmailIcon fontSize="small" /> {leader.leaderEmail}
+              </p>
+            </Box>
+          </Box>
+        </Card>
       </a.div>
     </>
   )

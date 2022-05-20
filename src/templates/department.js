@@ -107,11 +107,7 @@ export const pageQuery = graphql`
           leaderFacebook
           leaderGithub
           leaderName
-          leaderIntroduction {
-            childMarkdownRemark {
-              html
-            }
-          }
+          leaderIntroduction
           leaderSelfie {
             file {
               url
