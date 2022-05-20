@@ -40,7 +40,7 @@ class RootIndex extends React.Component {
               <LostAndFound />
             </div>
           </div>
-          <TimeLine data={activities} />
+          <TimeLine name={"行銷部"} />
         </Layout>
       </CustomProvider>
     )
