@@ -1,57 +1,87 @@
-import * as React from 'react'
-import Timeline from '@mui/lab/Timeline'
-import TimelineItem from '@mui/lab/TimelineItem'
-import TimelineSeparator from '@mui/lab/TimelineSeparator'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import TimelineContent from '@mui/lab/TimelineContent'
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent'
-import TimelineDot from '@mui/lab/TimelineDot'
-// import FastfoodIcon from '@mui/icons-material/Fastfood'
-import LaptopMacIcon from '@mui/icons-material/LaptopMac'
-// import HotelIcon from '@mui/icons-material/Hotel'
-// import RepeatIcon from '@mui/icons-material/Repeat'
-import Typography from '@mui/material/Typography'
-// import { render } from 'react-dom'
+import React from 'react'
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from 'react-vertical-timeline-component'
+import 'react-vertical-timeline-component/style.min.css'
+import * as styles from './timeline.module.css'
+import StarIcon from '@mui/icons-material/Star'
+import WorkIcon from '@mui/icons-material/Work'
+import Img from 'gatsby-image'
+import { Button } from 'rsuite'
 
-const TimeLineItem = ({ date, name, content }) => {
+// const handleClick = () => {
+//   location.href=`/post/${slug}`
+// }
+
+const TimeLineItem = ({ date, title, content, slug, image }) => {
   return (
-    <TimelineItem>
-      <TimelineOppositeContent
-        sx={{ m: 'auto 0' }}
-        align="right"
-        variant="body2"
-        color="text.secondary"
-      >
-        {date}
-      </TimelineOppositeContent>
-      <TimelineSeparator>
-        <TimelineConnector />
-        <TimelineDot color="primary">
-          <LaptopMacIcon />
-        </TimelineDot>
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent sx={{ py: '12px', px: 2 }}>
-        <Typography variant="h6" component="span" color="gray">
-          {name}
-        </Typography>
-        <Typography>{content}</Typography>
-      </TimelineContent>
-    </TimelineItem>
+    <VerticalTimelineElement
+      className="vertical-timeline-element--work"
+      contentStyle={{
+        borderTop: '3px solid rgb(33, 150, 243)',
+        background: 'rgb(250, 250, 250)',
+        color: 'gray',
+        display: 'grid',
+        gridTemplateColumns: '75% 25%',
+      }}
+      contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
+      date={date}
+      dateClassName={styles.timelineDate}
+      iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
+      icon={<WorkIcon />}
+    >
+      <div style={{ display: 'grid', gridTemplateRows: '90% 10%', marginBottom: '10px' }}>
+        <div>
+          <h3 className="vertical-timeline-element-title">{title}</h3>
+          {/* <h4 className="vertical-timeline-element-subtitle">{slug}</h4> */}
+          <p>{content}</p>
+        </div>
+        <div>
+          <Button
+            size="sm"
+            appearance="ghost"
+            color="green"
+            href={`/post/${slug}`}
+          >
+            View Details
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <Img fluid={image}></Img>
+      </div>
+    </VerticalTimelineElement>
   )
 }
 
-export default function TimeLine({ data }) {
+export default function TimeLine3({ data }) {
   return (
-    <Timeline position="alternate">
-      {data.map((element) => (
-        <TimeLineItem
-          date={element.node.dateTime}
-          name={element.node.name}
-          content={element.node.shortIntro}
-          key={element.node.name}
-        />
-      ))}
-    </Timeline>
+    <VerticalTimeline lineColor={'grey'} layout="1-column-left">
+      {data.map((element) => {
+        const e = element.node
+        const match = (element.node.tag.indexOf('重要') > -1)
+        if (!e || !match) return
+        return (
+          <TimeLineItem
+            date={e.publishDate}
+            title={e.title}
+            content={
+              e.description.content
+                ? e.description.content[0].content[0].value
+                : ''
+            }
+            slug={e.slug}
+            image={e.titleImage.fluid}
+            key={e.title}
+          />
+        )
+      })}
+      <VerticalTimelineElement
+        iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
+        icon={<StarIcon />}
+      />
+    </VerticalTimeline>
   )
 }
