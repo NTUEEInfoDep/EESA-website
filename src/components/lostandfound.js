@@ -24,6 +24,8 @@ import { useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css' // main style file
 import 'react-date-range/dist/theme/default.css' // theme css file
 import { DateRangePicker } from 'react-date-range'
+import CancelIcon from '@mui/icons-material/Cancel'
+import IconButton from '@mui/material/IconButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,8 +118,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 export default function LostAndFound() {
   const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: new Date(3000, 1, 1),
     key: 'selection',
   })
   const [checked, setChecked] = useState(false)
@@ -138,7 +140,6 @@ export default function LostAndFound() {
     setItems(items.slice().reverse())
   }
   const handleSelect = (range) => {
-    console.log(range)
     setSelectionRange({ ...range.selection, key: 'selection' })
   }
   const handleOpenRangePicker = () => {
@@ -165,6 +166,7 @@ export default function LostAndFound() {
     if (!loading) {
       const early_date = selectionRange.startDate
       const late_date = selectionRange.endDate
+
       let temp = data[0].data
       temp = temp.filter((a) => {
         if (
@@ -212,17 +214,41 @@ export default function LostAndFound() {
       <Box className={classes.navbar}>
         <Stack spacing={1}>
           <Typography fontWeight={'bold'}> Choose date range </Typography>
-          <Button
-            onClick={handleOpenRangePicker}
-            variant="outlined"
-            sx={{
-              padding: '5px 30px',
-              color: 'white',
-              border: '2px solid rgba(144, 202, 249, 0.5)',
-            }}
-          >
-            Date Range Picker
-          </Button>
+          <Box flex flexDirection="row">
+            <Button
+              onClick={handleOpenRangePicker}
+              variant="outlined"
+              sx={{
+                padding: '5px 30px',
+                color: 'white',
+                border: '2px solid rgba(144, 202, 249, 0.5)',
+              }}
+            >
+              {selectionRange.startDate === null
+                ? 'Date Range Picker'
+                : `${formatDate(selectionRange.startDate)} - ${formatDate(
+                    selectionRange.endDate
+                  )}`}
+            </Button>
+            {selectionRange.startDate === null ? (
+              <></>
+            ) : (
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                onClick={() => {
+                  setSelectionRange({
+                    startDate: null,
+                    endDate: new Date(3000, 1, 1),
+                    key: 'selection',
+                  })
+                }}
+              >
+                <CancelIcon />
+              </IconButton>
+            )}
+          </Box>
         </Stack>
         <Stack spacing={1} alignItems="flex-end">
           <Typography fontWeight={'bold'}> Choose order </Typography>
@@ -283,4 +309,15 @@ export default function LostAndFound() {
       </Grid>
     </Box>
   )
+}
+
+function formatDate(d) {
+  var month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear()
+
+  if (month.length < 2) month = '0' + month
+  if (day.length < 2) day = '0' + day
+
+  return [year, month, day].join('-')
 }
