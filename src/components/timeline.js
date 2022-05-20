@@ -10,10 +10,6 @@ import WorkIcon from '@mui/icons-material/Work'
 import Img from 'gatsby-image'
 import { Button } from 'rsuite'
 
-// const handleClick = () => {
-//   location.href=`/post/${slug}`
-// }
-
 const TimeLineItem = ({ date, title, content, slug, image }) => {
   return (
     <VerticalTimelineElement
@@ -31,11 +27,17 @@ const TimeLineItem = ({ date, title, content, slug, image }) => {
       iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
       icon={<WorkIcon />}
     >
-      <div style={{ display: 'grid', gridTemplateRows: '90% 10%', marginBottom: '10px' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateRows: '90% 10%',
+          marginBottom: '10px',
+        }}
+      >
         <div>
           <h3 className="vertical-timeline-element-title">{title}</h3>
           {/* <h4 className="vertical-timeline-element-subtitle">{slug}</h4> */}
-          <p>{content}</p>
+          <p style={{ paddingRight: '7%' }}>{content}</p>
         </div>
         <div>
           <Button
@@ -50,7 +52,7 @@ const TimeLineItem = ({ date, title, content, slug, image }) => {
       </div>
 
       <div>
-        <Img fluid={image}></Img>
+        <Img fluid={image} style={{ top: '10%' }}></Img>
       </div>
     </VerticalTimelineElement>
   )
@@ -61,7 +63,7 @@ export default function TimeLine3({ data }) {
     <VerticalTimeline lineColor={'grey'} layout="1-column-left">
       {data.map((element) => {
         const e = element.node
-        const match = (element.node.tag.indexOf('重要') > -1)
+        const match = element.node.tag.indexOf('重要') > -1
         if (!e || !match) return
         return (
           <TimeLineItem
