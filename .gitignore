@@ -72,3 +72,5 @@ public
 token.json
 
 .netlify
+
+yarn.lock
