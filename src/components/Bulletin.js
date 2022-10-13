@@ -179,7 +179,7 @@ export default function Bulletin({ data }) {
               </Cell>
             </Column>
           </Table>
-          <div style={{ paddingTop: '20px' }}>
+          <div style={{ paddingTop: '20px', display: 'flex' }}>
             <Pagination
               // limit={10}
               limit={displayLength}
@@ -203,6 +203,15 @@ export default function Bulletin({ data }) {
               onChangePage={handleChangePage}
               onChangeLimit={handleChangeLimit}
             />
+            <Button
+              style={{
+                marginTop: 'auto',
+                marginLeft: 'auto',
+              }}
+              href="/post"
+            >
+              view all posts
+            </Button>
           </div>
         </Panel>
 
