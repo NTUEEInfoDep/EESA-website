@@ -1,9 +1,7 @@
 import * as React from 'react'
-import TextField from '@mui/material/TextField'
-import DateRangePicker from '@mui/lab/DateRangePicker'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 import Switch from '@mui/material/Switch'
 import { styled } from '@mui/material/styles'
@@ -22,10 +20,16 @@ import { Stack } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import useGoogleSheets from 'use-google-sheets'
 import { useEffect, useState } from 'react'
+// date range picker
+import 'react-date-range/dist/styles.css' // main style file
+import 'react-date-range/dist/theme/default.css' // theme css file
+import { DateRangePicker } from 'react-date-range'
+import CancelIcon from '@mui/icons-material/Cancel'
+import IconButton from '@mui/material/IconButton'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '80%',
+    width: '100%',
     height: '80vh',
     display: 'flex',
     flexDirection: 'column',
@@ -61,7 +65,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     overflow: 'auto',
     margin: 0,
-    padding: 4,
+    padding: 20,
+    paddingTop: 0,
   },
 }))
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -112,25 +117,37 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }))
 
 export default function LostAndFound() {
-  const [value, setValue] = React.useState([null, null])
-  const [checked, setChecked] = React.useState(false)
+  const [selectionRange, setSelectionRange] = useState({
+    startDate: null,
+    endDate: new Date(3000, 1, 1),
+    key: 'selection',
+  })
+  const [checked, setChecked] = useState(false)
   const [items, setItems] = useState([])
+  const [openRangePicker, setOpenRangePicker] = useState(false)
 
   const classes = useStyles()
   const mediaStyles = useFourThreeCardMediaStyles()
   const textCardContentStyles = useN04TextInfoContentStyles()
   const shadowStyles = useOverShadowStyles({ inactive: true })
 
-  const handleChange = (event) => {
-    setChecked(!checked)
-    setItems(items.slice().reverse())
-  }
-
   const { data, loading, error } = useGoogleSheets({
     apiKey: process.env.GATSBY_APIKEY,
     sheetId: process.env.GATSBY_SHEET_ID,
   })
-
+  const handleChange = (event) => {
+    setChecked(!checked)
+    setItems(items.slice().reverse())
+  }
+  const handleSelect = (range) => {
+    setSelectionRange({ ...range.selection, key: 'selection' })
+  }
+  const handleOpenRangePicker = () => {
+    setOpenRangePicker(true)
+  }
+  const handleCloseRangePicker = () => {
+    setOpenRangePicker(false)
+  }
   useEffect(() => {
     if (!loading) {
       let temp = data[0].data
@@ -147,9 +164,9 @@ export default function LostAndFound() {
 
   useEffect(() => {
     if (!loading) {
-      const [early_bound, late_bound] = value
-      const early_date = new Date(early_bound)
-      const late_date = new Date(late_bound)
+      const early_date = selectionRange.startDate
+      const late_date = selectionRange.endDate
+
       let temp = data[0].data
       temp = temp.filter((a) => {
         if (
@@ -169,83 +186,138 @@ export default function LostAndFound() {
       })
       setItems(temp)
     }
-  }, [value])
+  }, [selectionRange])
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box className={classes.root}>
-        <Box className={classes.navbar}>
-          <Stack spacing={1}>
-            <Typography fontWeight={'bold'}> Choose date range </Typography>
-            <DateRangePicker
-              startText="From"
-              endText="To"
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue)
-              }}
-              renderInput={(startProps, endProps) => (
-                <React.Fragment>
-                  <TextField {...startProps} />
-                  <Box sx={{ mx: 2 }}> to </Box>
-                  <TextField {...endProps} />
-                </React.Fragment>
-              )}
-            />
-          </Stack>
-          <Stack spacing={1} alignItems="flex-end">
-            <Typography fontWeight={'bold'}> Choose order </Typography>
-            <FormControlLabel
-              control={
-                <MaterialUISwitch
-                  sx={{ m: 1 }}
-                  checked={checked}
-                  onChange={handleChange}
-                />
-              }
-              label={checked ? '舊到新' : '新到舊'}
-              labelPlacement="start"
-            />
-          </Stack>
+    <Box className={classes.root}>
+      <Modal
+        open={openRangePicker}
+        onClose={handleCloseRangePicker}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            border: '2px solid #444444',
+            boxShadow: 24,
+            p: 2,
+            color: 'black',
+          }}
+        >
+          <DateRangePicker ranges={[selectionRange]} onChange={handleSelect} />
         </Box>
-        <Grid container spacing={2} className={classes.items}>
-          {loading ? (
-            <Grid item xs={4}>
-              <CircularProgress sx={{}} />
-            </Grid>
-          ) : (
-            items.map((item, index) => (
-              <Grid item xs={4} key={index}>
-                <Card className={cx(classes.cardRoot, shadowStyles.root)}>
-                  {item['照片'] ? (
-                    <CardMedia
-                      className={cx(classes.media, mediaStyles.root)}
-                      image={`https://drive.google.com/uc?export=view&id=${
-                        item['照片'].split('=')[1]
-                      }`}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {item['撿到什麼']}
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary">
-                      {item['在哪撿到的？']}
-                    </Typography>
-                  </CardContent>
-                  <CardActions style={{justifyContent: 'right'}}>
-                      <Typography variant="caption" color="text.secondary">
-                        {item['撿到的時間']}
-                      </Typography>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))
-          )}
-        </Grid>
+      </Modal>
+      <Box className={classes.navbar}>
+        <Stack spacing={1}>
+          <Typography fontWeight={'bold'}> Choose date range </Typography>
+          <Box flex flexDirection="row">
+            <Button
+              onClick={handleOpenRangePicker}
+              variant="outlined"
+              sx={{
+                padding: '5px 30px',
+                color: 'white',
+                border: '2px solid rgba(144, 202, 249, 0.5)',
+              }}
+            >
+              {selectionRange.startDate === null
+                ? 'Date Range Picker'
+                : `${formatDate(selectionRange.startDate)} - ${formatDate(
+                    selectionRange.endDate
+                  )}`}
+            </Button>
+            {selectionRange.startDate === null ? (
+              <></>
+            ) : (
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="span"
+                onClick={() => {
+                  setSelectionRange({
+                    startDate: null,
+                    endDate: new Date(3000, 1, 1),
+                    key: 'selection',
+                  })
+                }}
+              >
+                <CancelIcon />
+              </IconButton>
+            )}
+          </Box>
+        </Stack>
+        <Stack spacing={1} alignItems="flex-end">
+          <Typography fontWeight={'bold'}> Choose order </Typography>
+          <FormControlLabel
+            control={
+              <MaterialUISwitch
+                sx={{ m: 1 }}
+                checked={checked}
+                onChange={handleChange}
+              />
+            }
+            label={checked ? '舊到新' : '新到舊'}
+            labelPlacement="start"
+          />
+        </Stack>
       </Box>
-    </LocalizationProvider>
+      <Grid
+        container
+        spacing={2}
+        className={classes.items}
+        onChange={handleSelect}
+      >
+        {loading ? (
+          <Grid item xs={4}>
+            <CircularProgress sx={{}} />
+          </Grid>
+        ) : (
+          items.map((item, index) => (
+            <Grid item xs={4} key={index} sx={{ padding: 0 }}>
+              <Card className={cx(classes.cardRoot, shadowStyles.root)}>
+                {item['照片'] ? (
+                  <CardMedia
+                    className={cx(classes.media, mediaStyles.root)}
+                    image={`https://drive.google.com/uc?export=view&id=${
+                      item['照片'].split('=')[1]
+                    }`}
+                  />
+                ) : (
+                  <></>
+                )}
+                <CardContent>
+                  <Typography variant="h5" component="div">
+                    {item['撿到什麼']}
+                  </Typography>
+                  <Typography variant="body1" color="text.secondary">
+                    {item['在哪撿到的？']}
+                  </Typography>
+                </CardContent>
+                <CardActions style={{ justifyContent: 'right' }}>
+                  <Typography variant="caption" color="text.secondary">
+                    {item['撿到的時間']}
+                  </Typography>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))
+        )}
+      </Grid>
+    </Box>
   )
+}
+
+function formatDate(d) {
+  var month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear()
+
+  if (month.length < 2) month = '0' + month
+  if (day.length < 2) day = '0' + day
+
+  return [year, month, day].join('-')
 }

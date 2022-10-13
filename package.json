@@ -35,6 +35,7 @@
     "lodash-es": "^4.17.21",
     "mozjpeg": "^7.1.1",
     "react": "^18.1.0",
+    "react-date-range": "^1.4.0",
     "react-device-detect": "^2.1.2",
     "react-dom": "^18.1.0",
     "react-elastic-carousel": "^0.11.5",
