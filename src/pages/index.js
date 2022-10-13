@@ -7,12 +7,13 @@ import Layout from '../components/layout'
 import Bulletin from '../components/Bulletin'
 import LostAndFound from '../components/lostandfound'
 import Sports from '../components/Sports'
+import TimeLine from '../components/timeline'
 
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
     const [author] = get(this, 'props.data.allContentfulPerson.edges')
-    const activities = get(this, 'props.data.allContentfulActivity.edges')
+    const activities = get(this, 'props.data.allContentfulBlogPosts.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
@@ -39,6 +40,7 @@ class RootIndex extends React.Component {
               <LostAndFound />
             </div>
           </div>
+          <TimeLine name={"行銷部"} />
         </Layout>
       </CustomProvider>
     )
