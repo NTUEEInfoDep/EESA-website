@@ -216,7 +216,7 @@ export default function Bulletin({ data }) {
         </Panel>
 
         {drawerData ? (
-          <Drawer size="sm" placement="right" open={show} onClose={this.close}>
+          <Drawer size="sm" placement="right" open={show} onClose={close}>
             <Drawer.Header>
               <Drawer.Title className="title">
                 <h1>{drawerData.node.title}</h1>

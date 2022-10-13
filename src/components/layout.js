@@ -4,7 +4,7 @@ import base from './base.css'
 import Container from './container'
 import Navigation from './navigation'
 
-export default function Layout({ location, children, depinfo }) {
+export default function Layout({ children }) {
   let header
 
   let rootPath = `/`
@@ -14,7 +14,7 @@ export default function Layout({ location, children, depinfo }) {
 
   return (
     <Container>
-      <Navigation depinfo={depinfo} />
+      <Navigation />
       {children}
     </Container>
   )

@@ -11,10 +11,7 @@ import Sports from '../components/Sports'
 class RootIndex extends React.Component {
   render() {
     const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const [author] = get(this, 'props.data.allContentfulPerson.edges')
-    const activities = get(this, 'props.data.allContentfulActivity.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
-    const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
 
     const sportsHonorRoll = get(
       this,
@@ -26,7 +23,7 @@ class RootIndex extends React.Component {
     )
     return (
       <CustomProvider theme="dark">
-        <Layout location={this.props.location} depinfo={depinfo}>
+        <Layout location={this.props.location}>
           <Sports
             honorRoll={sportsHonorRoll}
             informationBar={sportsInformationBar}
