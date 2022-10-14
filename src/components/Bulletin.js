@@ -78,7 +78,7 @@ export default function Bulletin({ data }) {
   }
   if (filter_department.length > 0) {
     data = data.filter((item) => {
-      const tmp = item.departments.filter((value) =>
+      const tmp = item.node.departments.filter((value) =>
         filter_department.includes(value)
       )
       if (tmp.length > 0) {
