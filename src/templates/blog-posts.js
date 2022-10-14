@@ -21,7 +21,7 @@ function BlogPostTemplate({ data, location }) {
   const depinfo = get(data, 'allContentfulDepartmentMainPage')
 
   return (
-    <Layout location={this.props.location} depinfo={depinfo}>
+    <Layout location={location} depinfo={depinfo}>
       <div
         style={{
           height: '100vh',

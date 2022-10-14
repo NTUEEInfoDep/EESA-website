@@ -68,8 +68,8 @@ export default function Bulletin({ data }) {
   }
 
   if (filter_tag.length > 0) {
-    datas = datas.filter((item) => {
-      const tmp = item.tag.filter((value) => filter_tag.includes(value))
+    data = data.filter((item) => {
+      const tmp = item.node.tag.filter((value) => filter_tag.includes(value))
       if (tmp.length > 0) {
         return true
       }
@@ -216,7 +216,7 @@ export default function Bulletin({ data }) {
         </Panel>
 
         {drawerData ? (
-          <Drawer size="sm" placement="right" open={show} onClose={this.close}>
+          <Drawer size="sm" placement="right" open={show} onClose={close}>
             <Drawer.Header>
               <Drawer.Title className="title">
                 <h1>{drawerData.node.title}</h1>
