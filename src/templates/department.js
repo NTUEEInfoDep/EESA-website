@@ -5,11 +5,11 @@ import CardMedia from '@mui/material/CardMedia'
 import Card from '@mui/material/Card'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import LeaderCards from '../components/leaderCard'
 import Box from '@mui/material/Box'
 import { CustomProvider } from 'rsuite'
-import DepartmentLayout from '../components/departmentLayout'
 import DepartmentComponentTitle from '../components/departmentComponentTitle'
+import DepartmentLayout from '../components/departmentLayout'
+import LeaderCards from '../components/leaderCard'
 
 import { MODULE_LIST } from '../static/constant'
 
