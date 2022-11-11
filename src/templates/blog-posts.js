@@ -40,7 +40,7 @@ function BlogPostTemplate({ data, location }) {
           <div className={box_2}>
             <h1 className={title}>{post.title}</h1>
 
-            <div className={tag_div}>
+            <div className={tag_div} style={{ margin: '2vh' }}>
               {post.tag.map((item) => {
                 return (
                   <Chip
