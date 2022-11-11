@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Table,
   Tag,
@@ -12,10 +12,15 @@ import {
 } from 'rsuite'
 
 import SearchIcon from '@rsuite/icons/Search'
+import SiteIcon from '@rsuite/icons/Site'
+import CalenderIcon from '@rsuite/icons/Calendar'
+import TagIcon from '@rsuite/icons/Tag'
+import AttachmentIcon from '@rsuite/icons/Attachment'
+import SpeakerIcon from '@rsuite/icons/Speaker'
 import { isMobile } from 'react-device-detect'
 import 'rsuite/dist/rsuite.min.css'
 const { Column, HeaderCell, Cell } = Table
-import { Pagination } from 'rsuite'
+import { Pagination, IconButton } from 'rsuite'
 import tags from './type.json'
 import departments from './department.json'
 
@@ -103,7 +108,10 @@ export default function Bulletin({ data }) {
         }}
       >
         <InputGroup style={{ width: 300, marginLeft: 'auto' }}>
-          <Input onChange={(value) => (keyword = value)} />
+          <Input
+            onChange={(value) => (keyword = value)}
+            placeholder={`Search`}
+          />
           <InputGroup.Button
             onClick={(value) => {
               setKeyword(keyword)
@@ -117,7 +125,7 @@ export default function Bulletin({ data }) {
             setFilter_tag(value)
           }}
           data={tags}
-          style={{ width: 170 }}
+          style={{ width: 170, margin: '5px' }}
         />
         <TagPicker
           onSelect={(value) => {
@@ -144,17 +152,25 @@ export default function Bulletin({ data }) {
             }}
           >
             <Column width={300}>
-              <HeaderCell>Title</HeaderCell>
-              <Cell dataKey="title">{(rowData) => rowData.node.title}</Cell>
+              <HeaderCell>
+                <AttachmentIcon /> Title
+              </HeaderCell>
+              <Cell dataKey="title">
+                {(rowData) => `【${rowData.node.title}】`}
+              </Cell>
             </Column>
             <Column width={400}>
-              <HeaderCell>Date</HeaderCell>
+              <HeaderCell>
+                <CalenderIcon /> Date
+              </HeaderCell>
               <Cell dataKey="updatedAt">
                 {(rowData) => rowData.node.publishDate}
               </Cell>
             </Column>
             <Column flexGrow={1}>
-              <HeaderCell>Tags</HeaderCell>
+              <HeaderCell>
+                <TagIcon /> Tags
+              </HeaderCell>
               <Cell dataKey="tags">
                 {(rowData) => {
                   return (
@@ -203,15 +219,16 @@ export default function Bulletin({ data }) {
               onChangePage={handleChangePage}
               onChangeLimit={handleChangeLimit}
             />
-            <Button
+            <IconButton
               style={{
                 marginTop: 'auto',
                 marginLeft: 'auto',
               }}
               href="/post"
+              icon={<SiteIcon />}
             >
-              view all posts
-            </Button>
+              View all posts
+            </IconButton>
           </div>
         </Panel>
 
@@ -219,22 +236,31 @@ export default function Bulletin({ data }) {
           <Drawer size="sm" placement="right" open={show} onClose={close}>
             <Drawer.Header>
               <Drawer.Title className="title">
-                <h1>{drawerData.node.title}</h1>
+                <h1
+                  style={{
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                  }}
+                >{`【${drawerData.node.title}】`}</h1>
               </Drawer.Title>
               <span className="date">
                 <i className="fas fa-calendar-alt"></i>{' '}
               </span>
               <Drawer.Actions>
-                <Button
+                <IconButton
                   size="lg"
                   appearance="primary"
                   href={`/post/${drawerData.node.slug}`}
+                  icon={<SiteIcon />}
+                  style={{ marginTop: '1vh' }}
+                  color="blue"
                 >
                   View Full Post
-                </Button>
+                </IconButton>
               </Drawer.Actions>
             </Drawer.Header>
-            <Drawer.Body style={{ margin: '20px' }}>
+            <Drawer.Body style={{ margin: '0px', backgroundColor: '#212429' }}>
               <div className="container blog-post">
                 <div className="details">
                   <div
@@ -242,6 +268,7 @@ export default function Bulletin({ data }) {
                       __html: JSON.parse(drawerData.node.description.raw)
                         .content[0].content[0].value,
                     }}
+                    style={{ fontSize: '18px' }}
                   ></div>
                 </div>
               </div>
