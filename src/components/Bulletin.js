@@ -72,6 +72,15 @@ export default function Bulletin({ data }) {
     setDrawerData(dataKey)
   }
 
+  const getDiscription = (dataObj) => {
+    let temp = ''
+    dataObj.content.map((para) => {
+      temp += para.content[0].value;
+      temp += '</br>'
+    })
+    return temp
+  }
+
   if (filter_tag.length > 0) {
     data = data.filter((item) => {
       const tmp = item.node.tag.filter((value) => filter_tag.includes(value))
@@ -265,8 +274,7 @@ export default function Bulletin({ data }) {
                 <div className="details">
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: JSON.parse(drawerData.node.description.raw)
-                        .content[0].content[0].value,
+                      __html: getDiscription(JSON.parse(drawerData.node.description.raw))
                     }}
                     style={{ fontSize: '18px' }}
                   ></div>

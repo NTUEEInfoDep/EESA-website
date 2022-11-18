@@ -150,15 +150,17 @@ export default function LostAndFound() {
   }
   useEffect(() => {
     if (!loading) {
-      let temp = data[0].data
-      temp.sort(function (a, b) {
-        if (!checked) {
-          return new Date(b['撿到的時間']) - new Date(a['撿到的時間'])
-        } else {
-          return new Date(a['撿到的時間']) - new Date(b['撿到的時間'])
-        }
-      })
-      setItems(temp)
+      if (data.length > 0) {
+        let temp = data[0].data
+        temp.sort(function (a, b) {
+          if (!checked) {
+            return new Date(b['撿到的時間']) - new Date(a['撿到的時間'])
+          } else {
+            return new Date(a['撿到的時間']) - new Date(b['撿到的時間'])
+          }
+        })
+        setItems(temp)
+      }
     }
   }, [loading])
 
@@ -227,8 +229,8 @@ export default function LostAndFound() {
               {selectionRange.startDate === null
                 ? 'Date Range Picker'
                 : `${formatDate(selectionRange.startDate)} - ${formatDate(
-                    selectionRange.endDate
-                  )}`}
+                  selectionRange.endDate
+                )}`}
             </Button>
             {selectionRange.startDate === null ? (
               <></>
@@ -282,9 +284,8 @@ export default function LostAndFound() {
                 {item['照片'] ? (
                   <CardMedia
                     className={cx(classes.media, mediaStyles.root)}
-                    image={`https://drive.google.com/uc?export=view&id=${
-                      item['照片'].split('=')[1]
-                    }`}
+                    image={`https://drive.google.com/uc?export=view&id=${item['照片'].split('=')[1]
+                      }`}
                   />
                 ) : (
                   <></>
