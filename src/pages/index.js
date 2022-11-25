@@ -8,6 +8,7 @@ import Layout from '../components/layout'
 import LostAndFound from '../components/lostandfound'
 import Sports from '../components/Sports'
 import TimeLine from '../components/timeline'
+import Clothes from '../components/clothes'
 
 class RootIndex extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class RootIndex extends React.Component {
     const activities = get(this, 'props.data.allContentfulBlogPosts.edges')
     const bulletin = get(this, 'props.data.allContentfulBlogPosts.edges')
     const depinfo = get(this.props, 'data.allContentfulDepartmentMainPage')
+    const clothes = get(this, 'props.data.allContentfulClothes.edges')
 
     const sportsHonorRoll = get(
       this,
@@ -38,6 +40,12 @@ class RootIndex extends React.Component {
             <h2 className="section-headline">Lost and Found</h2>
             <div>
               <LostAndFound />
+            </div>
+          </div>
+          <div className="wrapper">
+            <h2 className="section-headline">Clothes Selling</h2>
+            <div>
+              <Clothes data={clothes} />
             </div>
           </div>
           <TimeLine name={"行銷部"} />
@@ -154,6 +162,18 @@ export const pageQuery = graphql`
           name
           practicePlace
           practiceTime
+        }
+      }
+    }
+    allContentfulClothes {
+      edges {
+        node {
+          name          
+          left
+          clothesPicture {
+            gatsbyImageData
+          }
+          price
         }
       }
     }

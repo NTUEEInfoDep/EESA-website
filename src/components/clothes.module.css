@@ -1,0 +1,69 @@
+.root {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+}
+
+.clothesImage {
+    width: 50%;
+    height: 50vh;
+    float: left;
+}
+
+.clothesDetail {
+    width: 50%;
+    height: 50vh;
+    float: right;
+}
+
+.clothesName {
+    font-size: 30px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.clothesPrice {
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.clothesLeft {
+    font-size: 24px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.clothesDescription {
+    font-size: 20px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 28px;
+    background: #5e5e5e;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.page>div {
+    touch-action: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    box-shadow: 0 62.5px 125px -25px rgba(50, 50, 73, 0.5),
+        0 37.5px 75px -37.5px rgba(0, 0, 0, 0.6);
+}
