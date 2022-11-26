@@ -4,7 +4,7 @@ import {
   VerticalTimelineElement,
 } from 'react-vertical-timeline-component'
 import 'react-vertical-timeline-component/style.min.css'
-import * as styles from './timeline3.module.css'
+import * as styles from './timeline.module.css'
 import StarIcon from '@mui/icons-material/Star'
 import WorkIcon from '@mui/icons-material/Work'
 
@@ -38,8 +38,7 @@ const TimeLineItem = ({ date, name, content }) => {
 }
 
 const MonthTag = ({ date, prevDate }) => {
-  console.log("prevDateTime at monthtag");
-  console.log(prevDate);
+  
   const DateData = date.split('/');
   const prevDateData = prevDate.split('/');
 
@@ -70,11 +69,7 @@ const MonthTag = ({ date, prevDate }) => {
   )
 }
 
-export default function TimeLine3({ data }) {
-  console.log("DataTime at Timeline3 function");
-  data.map((element) => {
-    console.log(element.node.dateTime)
-  })
+export default function departmentTimeline({ data }) {
 
   return (
     <VerticalTimeline lineColor={'grey'} layout="1-column-left">
