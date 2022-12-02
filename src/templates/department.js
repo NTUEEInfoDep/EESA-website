@@ -15,8 +15,10 @@ import { MODULE_LIST } from '../static/constant'
 
 const Department = (props) => {
   const depinfo = props.data.contentfulDepartmentMainPage
+  // const depActivity = props.data.allContentfulActivity.edges
   const alldepinfo = props.data.allContentfulDepartmentMainPage
-
+  // console.log("depActivity")
+  // console.log(depinfo) 
   const { body } = depinfo
 
   return (
@@ -50,7 +52,7 @@ const Department = (props) => {
               </Grid>
             </Grid>
           </Box>
-          {body.map((type) => {
+          {body.map((type) => { 
             if (Object.keys(MODULE_LIST).includes(type)) {
               return (
                 <>
